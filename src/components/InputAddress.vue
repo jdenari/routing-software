@@ -119,7 +119,7 @@
                 axios
                 .get('http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' + this.address.origin + '&wp.1=' + this.address.destiny + '/&key=' + this.bindKey)
                 .then(response => {
-                    console.log(this.calculateDistance = response.data['resourceSets'][0]['resources'][0]['travelDistance'])
+                    this.$store.state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
                 })                    
             },
             addAddressField() {

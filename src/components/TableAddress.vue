@@ -11,9 +11,9 @@
             </thead>
             <tbody>
                 <tr>
-                <th scope="row">1</th>
+                <th scope="row"> 1 </th>
                 <td>RUA EDGARD WERNECK, 1016 - CIDADE DE DEUS, RIO DE JANEIRO - RJ, 22763011</td>
-                <td>27.2 km</td>
+                <td> {{ $store.state.distancia}} </td>
                 <td>R$ 9,89</td>
                 </tr>
                 <tr>
