@@ -3,6 +3,7 @@
       <!-- <RoutingComponent /> -->
       <HeaderMain />
       <IntroSection />
+      <LittleTutorial />
       <!-- <InputAddress />
       <TableAddress /> -->
   </div>
@@ -11,13 +12,15 @@
 <script>
     import HeaderMain from './components/HeaderMain.vue';
     import IntroSection from './components/IntroSection.vue';
+    import LittleTutorial from './components/LittleTutorial.vue';
 //   import InputAddress from './components/InputAddress.vue';
 //   import TableAddress from './components/TableAddress.vue';
   export default {
       name: 'App',
       components: {
     HeaderMain,
-    IntroSection
+    IntroSection,
+    LittleTutorial
     //   InputAddress,
     //   TableAddress
 }
