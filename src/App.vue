@@ -4,8 +4,8 @@
       <HeaderMain />
       <IntroSection />
       <LittleTutorial />
-      <!-- <InputAddress />
-      <TableAddress /> -->
+      <InputAddress />
+      <TableAddress />
   </div>
 </template>
 
@@ -13,16 +13,16 @@
     import HeaderMain from './components/HeaderMain.vue';
     import IntroSection from './components/IntroSection.vue';
     import LittleTutorial from './components/LittleTutorial.vue';
-//   import InputAddress from './components/InputAddress.vue';
-//   import TableAddress from './components/TableAddress.vue';
+    import InputAddress from './components/InputAddress.vue';
+    import TableAddress from './components/TableAddress.vue';
   export default {
       name: 'App',
       components: {
     HeaderMain,
     IntroSection,
-    LittleTutorial
-    //   InputAddress,
-    //   TableAddress
+    LittleTutorial,
+    InputAddress,
+    TableAddress
 }
   }
 </script>
