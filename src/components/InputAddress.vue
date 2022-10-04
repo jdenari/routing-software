@@ -110,7 +110,7 @@
 </template>
 <script>
         import AddressField from './AddressField.vue';
-        import axios from 'axios'
+        // import axios from 'axios'
         export default {
         name: 'InputAddress',
         components: { AddressField },
@@ -130,11 +130,7 @@
         },   
         methods: {
             calculateDistance(){
-                axios
-                .get('http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' + this.address.origin + '&wp.1=' + this.address.destiny + '/&key=' + this.bindKey)
-                .then(response => {
-                    this.$store.state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
-                })                    
+                this.$store.dispatch('mainCalculateDistance')
             },
             addAddressField() {
                 this.AddressFieldObject.push({
@@ -148,6 +144,6 @@
                 })
                 this.newAddressField = ''
             }
-        }
+        },
     }
 </script>
