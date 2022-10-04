@@ -9,7 +9,7 @@
                 <th scope="col">COST</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
                 <tr>
                 <th scope="row"> 1 </th>
                 <td>RUA EDGARD WERNECK, 1016 - CIDADE DE DEUS, RIO DE JANEIRO - RJ, 22763011</td>

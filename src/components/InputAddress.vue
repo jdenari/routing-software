@@ -75,14 +75,26 @@
             <!-- Other fields inputs (fuel price and the button calculate) -->
             <div class="input-group w-75 m-auto">
                 <div class="w-100 d-flex justify-content-between">
-                    <div class="col-2 p-1">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">$</span>
-                            <input 
-                                type="text" 
-                                class="form-control" 
-                                aria-label="Amount (to the nearest reais) " 
-                                placeholder="Fuel Price">
+                    <div class="col-6 p-1 d-flex">
+                        <div class="col-6 p-1">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">km/l</span>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    aria-label="Amount (to the nearest reais) " 
+                                    placeholder="Fuel Consumption">
+                            </div>
+                        </div>
+                        <div class="col-6 p-1">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">$</span>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    aria-label="Amount (to the nearest reais) " 
+                                    placeholder="Fuel Price">
+                            </div>
                         </div>
                     </div>
                     <div class="col-3 p-1">
