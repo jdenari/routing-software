@@ -124,13 +124,14 @@
                     origin: 'Rua Edgard Werneck, 1016, Cidade de Deus, Rio de Janeiro - Rio de Janeiro, 22763, Brazil',
                     destiny: 'R. Bárbara Knippelberg Loureiro, 203 - Vila Ema, São José dos Campos - SP, 12243-040'
                 },
+                adressList: ['Rua Edgard Werneck, 1016, Cidade de Deus, Rio de Janeiro - Rio de Janeiro, 22763, Brazil', 'R. Bárbara Knippelberg Loureiro, 203 - Vila Ema, São José dos Campos - SP, 12243-040'],
                 bindKey: '',
                 distanceCalculated: ''
             }
         },   
         methods: {
             calculateDistance(){
-                this.$store.dispatch('mainCalculateDistance')
+                this.$store.dispatch('mainCalculateDistance', this.adressList)
             },
             addAddressField() {
                 this.AddressFieldObject.push({

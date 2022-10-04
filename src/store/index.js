@@ -10,16 +10,17 @@ export default createStore({
     getters: {
     },
     mutations: {
-        mainCalculateDistance(state){
-            axios.get('http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' + 'Rua Edgard Werneck, 1016, Cidade de Deus, Rio de Janeiro - Rio de Janeiro, 22763, Brazil' + '&wp.1=' + 'R. Bárbara Knippelberg Loureiro, 203 - Vila Ema, São José dos Campos - SP, 12243-040' + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS')
+        mainCalculateDistance(state, payload){
+            axios.get('http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' + payload[0] + '&wp.1=' + payload[1] + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS')
             .then(response => {
                 state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
+                console.log(response)
             })
         }
     },
     actions: {
-        mainCalculateDistance(state){
-            state.commit('mainCalculateDistance');
+        mainCalculateDistance(state, payload){
+            state.commit('mainCalculateDistance', payload);
         }
     },
     modules: {
