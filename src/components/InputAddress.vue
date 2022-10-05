@@ -149,13 +149,18 @@
                         id,
                         title: this.newAddressField
                         })
-                this.arr.valueOf[id] = ''
+                this.arr[id] = ''
                 this.newAddressField = ''
             },
             removeAddressField() {
-                this.AddressFieldObject.pop({
-                    id: this.nextAddressFieldID--,
-                })
+                this.nextAddressFieldID = this.nextAddressFieldID - 1
+                const id = 'deliveryPoint' + this.nextAddressFieldID
+                console.log(id)
+                    this.AddressFieldObject.pop({
+                        id,
+                        title: this.newAddressField
+                        })
+                delete this.arr[id]
                 this.newAddressField = ''
             },
         },
