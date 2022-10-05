@@ -11,11 +11,61 @@ export default createStore({
     },
     mutations: {
         mainCalculateDistance(state, payload){
-            axios.get('http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' + payload.origin + '&wp.1=' + payload.deliveryPoint1 + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS')
-            .then(response => {
+
+            if(Object.keys(payload).length === 2){
+                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
+                + payload.origin 
+                + '&wp.1=' + payload.destiny
+                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+
+                axios.get(url)
+                .then(response => {
                 state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
-                console.log(response)
             })
+        
+            } if(Object.keys(payload).length === 3){
+
+                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
+                + payload.origin 
+                + '&wp.1=' + payload.deliveryPoint1 
+                + '&wp.2=' + payload.destiny
+                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+                
+                axios.get(url)
+                .then(response => {
+                state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
+            })
+
+            } if(Object.keys(payload).length === 4){
+
+                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
+                + payload.origin 
+                + '&wp.1=' + payload.deliveryPoint1 
+                + '&wp.2=' + payload.deliveryPoint2
+                + '&wp.3=' + payload.destiny
+                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+                
+                axios.get(url)
+                .then(response => {
+                state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
+            })
+
+            } if(Object.keys(payload).length === 5){
+
+                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
+                + payload.origin 
+                + '&wp.1=' + payload.deliveryPoint1 
+                + '&wp.2=' + payload.deliveryPoint2 
+                + '&wp.3=' + payload.deliveryPoint3
+                + '&wp.4=' + payload.destiny
+                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+                
+                axios.get(url)
+                .then(response => {
+                state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
+            })
+
+            }
         }
     },
     actions: {

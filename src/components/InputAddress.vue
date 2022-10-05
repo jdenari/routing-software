@@ -140,6 +140,7 @@
             },
 
             calculateDistance(){
+                console.log(this.allAddressObject)
                 this.$store.dispatch('mainCalculateDistance', this.allAddressObject)
             },
 
