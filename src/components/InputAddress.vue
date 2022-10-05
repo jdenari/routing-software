@@ -10,7 +10,7 @@
                             class="form-control" 
                             aria-label="Text input with dropdown button" 
                             placeholder="Fill the address"
-                            v-model="addressOriginDestiny.origin">
+                            v-model="originAddress">
                     </div>
                 </div>
                 <div class="col-2">
@@ -35,7 +35,7 @@
                             class="form-control" 
                             aria-label="Text input with dropdown button" 
                             placeholder="Fill the address"
-                            v-model="addressOriginDestiny.destiny">
+                            v-model="destinyAddress">
                     </div>
                 </div>
                 <div class="col-2">
@@ -119,29 +119,33 @@
         components: { AddressField },
         data() {
             return {
+                // single
                 newAddressField: ref(''), 
                 arr: ref({}),
-                AddressFieldObject: [],
+                distanceCalculated: '',
                 nextAddressFieldID: ref(1),
                 nextAddressFieldTitle: ref([]),
-                addressOriginDestiny: {
-                    origin: 'Rua Edgard Werneck, 1016, Cidade de Deus, Rio de Janeiro - Rio de Janeiro, 22763, Brazil',
-                    destiny: 'R. Bárbara Knippelberg Loureiro, 203 - Vila Ema, São José dos Campos - SP, 12243-040'
-                },
                 bindKey: '',
-                distanceCalculated: '',  
+                originAddress: '',
+                destinyAddress: '',
+
+                // arrays
+
+                // objects
+                AddressFieldObject: [],
                 allAddressObject: []             
             }
         },   
         methods: {
             createallAddressObject(){
-                this.allAddressObject = Object.assign(this.addressOriginDestiny, this.arr)
-                console.log(this.allAddressObject)
+                this.allAddressObject = Object.assign({origin: this.originAddress}, {destiny: this.destinyAddress}, this.arr)
+                
             },
 
             calculateDistance(){
-                console.log(this.allAddressObject)
+                
                 this.$store.dispatch('mainCalculateDistance', this.allAddressObject)
+                this.allAddressObject = []
             },
 
             addAddressField() {

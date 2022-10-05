@@ -12,16 +12,21 @@ export default createStore({
     mutations: {
         mainCalculateDistance(state, payload){
 
+            console.log(Object.keys(payload).length)
+
             if(Object.keys(payload).length === 2){
+
                 let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
                 + payload.origin 
                 + '&wp.1=' + payload.destiny
                 + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+                console.log(url)
 
                 axios.get(url)
                 .then(response => {
                 state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
             })
+            
         
             } if(Object.keys(payload).length === 3){
 
@@ -30,11 +35,13 @@ export default createStore({
                 + '&wp.1=' + payload.deliveryPoint1 
                 + '&wp.2=' + payload.destiny
                 + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+                console.log(url)
                 
                 axios.get(url)
                 .then(response => {
                 state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
             })
+            
 
             } if(Object.keys(payload).length === 4){
 
@@ -44,11 +51,13 @@ export default createStore({
                 + '&wp.2=' + payload.deliveryPoint2
                 + '&wp.3=' + payload.destiny
                 + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+                console.log(url)
                 
                 axios.get(url)
                 .then(response => {
                 state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
             })
+            
 
             } if(Object.keys(payload).length === 5){
 
@@ -59,11 +68,13 @@ export default createStore({
                 + '&wp.3=' + payload.deliveryPoint3
                 + '&wp.4=' + payload.destiny
                 + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+                console.log(url)
                 
                 axios.get(url)
                 .then(response => {
                 state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
             })
+            
 
             }
         }
