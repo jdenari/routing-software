@@ -10,7 +10,7 @@
                             class="form-control" 
                             aria-label="Text input with dropdown button" 
                             placeholder="Fill the address"
-                            v-model="address.origin">
+                            v-model="addressOriginDestiny.origin">
                     </div>
                 </div>
                 <div class="col-2">
@@ -35,7 +35,7 @@
                             class="form-control" 
                             aria-label="Text input with dropdown button" 
                             placeholder="Fill the address"
-                            v-model="address.destiny">
+                            v-model="addressOriginDestiny.destiny">
                     </div>
                 </div>
                 <div class="col-2">
@@ -56,7 +56,8 @@
                 <address-field
                     v-for="(addressfield) in AddressFieldObject"
                     :key="addressfield.id"
-                    :title="addressfield.title"
+                    :title="'otherField' + addressfield.title"
+                    v-model="arr[addressfield.id]"
                 ></address-field>
             </ul>
             <div class="input-group w-75 m-auto">
@@ -101,7 +102,8 @@
                         <button 
                             type="button" 
                             class="btn btn-success col-12" 
-                            @click="calculateDistance">Calculate</button>
+                            @click="createallAddressObject();calculateDistance()">Calculate
+                        </button>
                     </div>
                 </div>
             </div>
@@ -110,33 +112,44 @@
 </template>
 <script>
         import AddressField from './AddressField.vue';
+        import { ref } from 'vue'
         // import axios from 'axios'
         export default {
         name: 'InputAddress',
         components: { AddressField },
         data() {
             return {
-                newAddressField: '', 
-                AddressFieldObject: [
-                ],
-                nextAddressFieldID: 1,
-                address: {
+                newAddressField: ref(''), 
+                arr: ref({}),
+                AddressFieldObject: [],
+                nextAddressFieldID: ref(1),
+                nextAddressFieldTitle: ref([]),
+                addressOriginDestiny: {
                     origin: 'Rua Edgard Werneck, 1016, Cidade de Deus, Rio de Janeiro - Rio de Janeiro, 22763, Brazil',
                     destiny: 'R. Bárbara Knippelberg Loureiro, 203 - Vila Ema, São José dos Campos - SP, 12243-040'
                 },
-                adressList: ['Rua Edgard Werneck, 1016, Cidade de Deus, Rio de Janeiro - Rio de Janeiro, 22763, Brazil', 'R. Bárbara Knippelberg Loureiro, 203 - Vila Ema, São José dos Campos - SP, 12243-040'],
                 bindKey: '',
-                distanceCalculated: ''
+                distanceCalculated: '',  
+                allAddressObject: []             
             }
         },   
         methods: {
-            calculateDistance(){
-                this.$store.dispatch('mainCalculateDistance', this.adressList)
+            createallAddressObject(){
+                this.allAddressObject = Object.assign(this.addressOriginDestiny, this.arr)
+                console.log(this.allAddressObject)
             },
+
+            calculateDistance(){
+                this.$store.dispatch('mainCalculateDistance', this.allAddressObject)
+            },
+
             addAddressField() {
-                this.AddressFieldObject.push({
-                    id: this.nextAddressFieldID++,
-                })
+                const id = 'deliveryPoint' + this.nextAddressFieldID++
+                    this.AddressFieldObject.push({
+                        id,
+                        title: this.newAddressField
+                        })
+                this.arr.valueOf[id] = ''
                 this.newAddressField = ''
             },
             removeAddressField() {
@@ -144,7 +157,7 @@
                     id: this.nextAddressFieldID--,
                 })
                 this.newAddressField = ''
-            }
+            },
         },
     }
 </script>

@@ -11,7 +11,7 @@ export default createStore({
     },
     mutations: {
         mainCalculateDistance(state, payload){
-            axios.get('http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' + payload[0] + '&wp.1=' + payload[1] + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS')
+            axios.get('http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' + payload.origin + '&wp.1=' + payload.deliveryPoint1 + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS')
             .then(response => {
                 state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
                 console.log(response)
