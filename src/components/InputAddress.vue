@@ -102,7 +102,7 @@
                         <button 
                             type="button" 
                             class="btn btn-success col-12" 
-                            @click="createallAddressObject();calculateDistance()">Calculate
+                            @click="createallAddressObject(); calculateDistance()">Calculate
                         </button>
                     </div>
                 </div>
@@ -130,21 +130,29 @@
                 destinyAddress: '',
 
                 // arrays
+                array: [],
+                allAddressObjectValues: [],
+                permutationAddress: [],
 
                 // objects
                 AddressFieldObject: [],
-                allAddressObject: []             
+                allAddressObject: [],           
             }
         },   
         methods: {
             createallAddressObject(){
+
+                // grouping the origin, destiny and delivery points
                 this.allAddressObject = Object.assign({origin: this.originAddress}, {destiny: this.destinyAddress}, this.arr)
-                
+
+                // transforming a object to an array object
+                this.allAddressObjectValues = Object.values(this.allAddressObject);
+
             },
 
             calculateDistance(){
                 
-                this.$store.dispatch('mainCalculateDistance', this.allAddressObject)
+                this.$store.dispatch('mainCalculateDistance', this.allAddressObjectValues)
                 this.allAddressObject = []
             },
 

@@ -5,78 +5,69 @@ export default createStore({
         distancia: 0,
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
         addressOrigin: '-',
-        addressDeliveryPoint: ''
+        addressDeliveryPoint: '',
+        distancesList: [], 
+        distancesBetweenAllCombinationList: 0,
+        checkPoints: 0,
+        list: [],
+        b: 0,
+        destinyCheckpoints: [],
+        listDestinyCheckpoint: [],
+        listOriginCheckpoint: ''
     },
     getters: {
     },
     mutations: {
-        mainCalculateDistance(state, payload){
+        async mainCalculateDistance(state, payload){
 
-            console.log(Object.keys(payload).length)
+            // variation to the origin point
+            for (let c = 0; c < payload.length; c++){
 
-            if(Object.keys(payload).length === 2){
+                if (c === 0){
+                    state.listDestinyCheckpoint = payload.slice(1)
+                    state.listOriginCheckpoint = payload[0]
+                }
 
-                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
-                + payload.origin 
-                + '&wp.1=' + payload.destiny
-                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
-                console.log(url)
+                // variation to the destiny point
+                for (let e = 0; e < state.listDestinyCheckpoint.length; e++){
+                    
+                    // creating the url for all combinations
+                    let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0='
+                    + state.listOriginCheckpoint
+                    + '&wp.1=' + state.listDestinyCheckpoint[e]
+                    + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
 
-                axios.get(url)
-                .then(response => {
-                state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
-            })
-            
-        
-            } if(Object.keys(payload).length === 3){
+                    console.log(url)
 
-                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
-                + payload.origin 
-                + '&wp.1=' + payload.deliveryPoint1 
-                + '&wp.2=' + payload.destiny
-                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
-                console.log(url)
+                    // calculating the distance using the API
+                    try{
+                        const response = await axios.get(url)
+                        let distance = response.data['resourceSets'][0]['resources'][0]['travelDistance']
+                        
+                        if (e === 0){
+                            state.distancesBetweenAllCombinationList = distance
+                            state.checkPoints = state.listDestinyCheckpoint[e]
+                        } else if (state.distancesBetweenAllCombinationList > distance){
+                            state.distancesBetweenAllCombinationList = distance
+                            state.checkPoints = state.destinyCheckpoints[e]
+                        }
+                    } catch(error){
+                        console.log('Erro na requisição da API')
+                    }
                 
-                axios.get(url)
-                .then(response => {
-                state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
-            })
-            
+                }
 
-            } if(Object.keys(payload).length === 4){
+                if (c === 0){
+                    state.list[state.listOriginCheckpoint] = 0
+                }
 
-                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
-                + payload.origin 
-                + '&wp.1=' + payload.deliveryPoint1 
-                + '&wp.2=' + payload.deliveryPoint2
-                + '&wp.3=' + payload.destiny
-                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
-                console.log(url)
-                
-                axios.get(url)
-                .then(response => {
-                state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
-            })
-            
+                state.list[state.checkPoints] = state.distancesBetweenAllCombinationList
+                state.distancesBetweenAllCombinationList = 0
 
-            } if(Object.keys(payload).length === 5){
-
-                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0=' 
-                + payload.origin 
-                + '&wp.1=' + payload.deliveryPoint1 
-                + '&wp.2=' + payload.deliveryPoint2 
-                + '&wp.3=' + payload.deliveryPoint3
-                + '&wp.4=' + payload.destiny
-                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
-                console.log(url)
-                
-                axios.get(url)
-                .then(response => {
-                state.distancia = response.data['resourceSets'][0]['resources'][0]['travelDistance']
-            })
-            
-
+                state.listOriginCheckpoint = state.checkPoints
+                delete state.listDestinyCheckpoint[state.checkPoints]
             }
+            console.log(state.list)
         }
     },
     actions: {
