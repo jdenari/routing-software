@@ -7,6 +7,7 @@
       <InputAddress />
       <TableAddress />
       <benefitsLogin />
+      <MainFooter />
   </div>
 </template>
 
@@ -17,6 +18,7 @@
     import InputAddress from './components/InputAddress.vue';
     import TableAddress from './components/TableAddress.vue';
     import benefitsLogin from './components/benefitsLogin.vue'
+    import MainFooter from './components/MainFooter.vue'
   export default {
       name: 'App',
       components: {
@@ -25,7 +27,8 @@
     LittleTutorial,
     InputAddress,
     TableAddress,
-    benefitsLogin
+    benefitsLogin,
+    MainFooter
 }
   }
 </script>
