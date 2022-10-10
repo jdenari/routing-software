@@ -11,6 +11,9 @@
                 <li class="nav-item px-3">
                     <a href="#" class="nav-link">Contact</a>
                 </li>
+                <li class="nav-item px-3">
+                    <a href="#" class="nav-link">Documentation</a>
+                </li>
             </ul>
             <div class="navbar-nav lg-auto">
                 <button type="button" class="btn btn-light me-2">Register</button>

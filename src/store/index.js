@@ -5,44 +5,44 @@ export default createStore({
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
         finalDistancesObject: {
             0: {
-                address: 0,
-                distance: 0,
-                cost: 0
+                address: '-',
+                distance: '-',
+                cost: '-'
             },
             1: {
-                address: 0,
-                distance: 0,
-                cost: 0
+                address: '-',
+                distance: '-',
+                cost: '-'
             },
             2: {
-                address: 0,
-                distance: 0,
-                cost: 0
+                address: '-',
+                distance: '-',
+                cost: '-'
             },
             3: {
-                address: 0,
-                distance: 0,
-                cost: 0
+                address: '-',
+                distance: '-',
+                cost: '-'
             },
             4: {
-                address: 0,
-                distance: 0,
-                cost: 0
+                address: '-',
+                distance: '-',
+                cost: '-'
             },
             5: {
-                address: 0,
-                distance: 0,
-                cost: 0
+                address: '-',
+                distance: '-',
+                cost: '-'
             },
             6: {
-                address: 0,
-                distance: 0,
-                cost: 0
+                address: '-',
+                distance: '-',
+                cost: '-'
             },
             7: {
-                address: 0,
-                distance: 0,
-                cost: 0
+                address: '-',
+                distance: '-',
+                cost: '-'
             },
         }
     },
@@ -65,10 +65,10 @@ export default createStore({
             }
 
             // adding the origin address and 0 distance as 1st value object
-            state.finalDistancesObject[originCheckpoint] = 0
+            // state.finalDistancesObject[originCheckpoint] = 0
 
             // variation to the origin point
-            for (let c = 0; c < payload.length; c++){
+            for (let c = 0; c < payload.length -1; c++){
 
                 // variation to the destiny point
                 for (let e = 0; e < destinyCheckpoint.length; e++){
@@ -105,11 +105,13 @@ export default createStore({
                 destinyCheckpoint.pop(shortestAddress)
                 originCheckpoint = shortestAddress
 
-                // adding the checkpoint to the final object
-                state.finalDistancesObject[c + 1] = { 
-                    address: shortestAddress,
-                    distance: shortestDistance,
-                    cost: 0
+                // adding the checkpoint info to the final object
+                if (c < payload.length) {
+                    state.finalDistancesObject[c + 1] = { 
+                        address: shortestAddress,
+                        distance: shortestDistance.toFixed(1),
+                        cost: 0
+                    }
                 }
             }
         console.log(state.finalDistancesObject)

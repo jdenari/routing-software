@@ -22,7 +22,7 @@
             </div>
             <div class="card text-center m-3 col-4">
                 <div class="card-body">
-                    <h5 class="card-title">Excel Export</h5>
+                    <h5 class="card-title">Excel Export and Import</h5>
                     <p class="card-text">Cursus sit amet dictum sit amet.</p>
                 </div>
                 <div class="card-footer text-muted">

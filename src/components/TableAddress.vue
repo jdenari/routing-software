@@ -5,8 +5,8 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">ROUTE</th>
-                    <th scope="col" class="text-center">DISTANCE</th>
-                    <th scope="col" class="text-center">COST</th>
+                    <th scope="col" class="text-center">DISTANCE (KM)</th>
+                    <th scope="col" class="text-center">COST (R$)</th>
                 </tr>
             </thead>
             <lineResultTable />
