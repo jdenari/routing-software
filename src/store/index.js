@@ -3,15 +3,53 @@ import axios from 'axios'
 export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
-        finalDistancesObject: []
+        finalDistancesObject: {
+            0: {
+                address: 0,
+                distance: 0,
+                cost: 0
+            },
+            1: {
+                address: 0,
+                distance: 0,
+                cost: 0
+            },
+            2: {
+                address: 0,
+                distance: 0,
+                cost: 0
+            },
+            3: {
+                address: 0,
+                distance: 0,
+                cost: 0
+            },
+            4: {
+                address: 0,
+                distance: 0,
+                cost: 0
+            },
+            5: {
+                address: 0,
+                distance: 0,
+                cost: 0
+            },
+            6: {
+                address: 0,
+                distance: 0,
+                cost: 0
+            },
+            7: {
+                address: 0,
+                distance: 0,
+                cost: 0
+            },
+        }
     },
     getters: {
     },
     mutations: {
         async travellingSalesmanProblem(state, payload){
-
-            console.log(payload[1])
-
 
             // creating variables address to use inside the for's
             let originCheckpoint = payload[0]
@@ -19,6 +57,12 @@ export default createStore({
 
             let shortestDistance
             let shortestAddress
+
+            state.finalDistancesObject[0] = { 
+                address: originCheckpoint,
+                distance: 0,
+                cost: 0
+            }
 
             // adding the origin address and 0 distance as 1st value object
             state.finalDistancesObject[originCheckpoint] = 0
@@ -62,8 +106,13 @@ export default createStore({
                 originCheckpoint = shortestAddress
 
                 // adding the checkpoint to the final object
-                state.finalDistancesObject[shortestAddress] = shortestDistance
+                state.finalDistancesObject[c + 1] = { 
+                    address: shortestAddress,
+                    distance: shortestDistance,
+                    cost: 0
+                }
             }
+        console.log(state.finalDistancesObject)
         }
     },
     actions: {
