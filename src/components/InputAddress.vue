@@ -113,7 +113,6 @@
 <script>
         import AddressField from './AddressField.vue';
         import { ref } from 'vue'
-        // import axios from 'axios'
         export default {
         name: 'InputAddress',
         components: { AddressField },
@@ -130,9 +129,7 @@
                 destinyAddress: '',
 
                 // arrays
-                array: [],
                 allAddressObjectValues: [],
-                permutationAddress: [],
 
                 // objects
                 AddressFieldObject: [],
@@ -140,22 +137,22 @@
             }
         },   
         methods: {
+
+            // create a object to send the address input
             createallAddressObject(){
 
-                // grouping the origin, destiny and delivery points
                 this.allAddressObject = Object.assign({origin: this.originAddress}, {destiny: this.destinyAddress}, this.arr)
-
-                // transforming a object to an array object
                 this.allAddressObjectValues = Object.values(this.allAddressObject);
-
             },
 
+            // active the calculation of travellingSalesmanProblem
             calculateDistance(){
                 
-                this.$store.dispatch('mainCalculateDistance', this.allAddressObjectValues)
+                this.$store.dispatch('travellingSalesmanProblem', this.allAddressObjectValues)
                 this.allAddressObject = []
             },
 
+            // create a new field address inside the html
             addAddressField() {
                 const id = 'deliveryPoint' + this.nextAddressFieldID++
                     this.AddressFieldObject.push({
@@ -165,10 +162,11 @@
                 this.arr[id] = ''
                 this.newAddressField = ''
             },
+
+            // remove a field address inside the html
             removeAddressField() {
                 this.nextAddressFieldID = this.nextAddressFieldID - 1
                 const id = 'deliveryPoint' + this.nextAddressFieldID
-                console.log(id)
                     this.AddressFieldObject.pop({
                         id,
                         title: this.newAddressField
