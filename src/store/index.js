@@ -64,6 +64,11 @@ export default createStore({
                     }
                 }
             }
+        },
+
+        fuelPrice( {fuelVariables }) {
+            console.log('oi bbbbbbbb')
+            console.log(fuelVariables)
         }
     },
     actions: {
@@ -71,11 +76,18 @@ export default createStore({
         async travellingSalesmanProblem( {commit}, payload){
 
             // creating variables address to use inside the for's
+            let fuelConsumption = payload.shift()
+            let fuelPrice = payload.shift()
+
+            let fuelVariables = [fuelConsumption, fuelPrice]
+
             let originCheckpoint = payload[0]
             let destinyCheckpoint = payload.slice(1)
 
             let shortestDistance
             let shortestAddress
+
+            let total = 0
 
             let finalDistancesObjectAction = { 
                 0: {
@@ -131,7 +143,16 @@ export default createStore({
                 }              
             }
 
+            for (let i = 0; i < Object.keys(finalDistancesObjectAction).length; i++){
+
+                total += Number(finalDistancesObjectAction[i].distance)
+            }
+
+            fuelVariables.push(total)
+            console.log(fuelVariables)
+
             commit('travellingSalesmanProblemMutation', { finalDistancesObjectAction })
+            commit('fuelPrice', { fuelVariables } )
         }
     },
     modules: {

@@ -84,7 +84,8 @@
                                     type="text" 
                                     class="form-control" 
                                     aria-label="Amount (to the nearest reais) " 
-                                    placeholder="Fuel Consumption">
+                                    placeholder="Fuel Consumption"
+                                    v-model="fuelConsumption">
                             </div>
                         </div>
                         <div class="col-6 p-1">
@@ -94,7 +95,8 @@
                                     type="text" 
                                     class="form-control" 
                                     aria-label="Amount (to the nearest reais) " 
-                                    placeholder="Fuel Price">
+                                    placeholder="Fuel Price"
+                                    v-model="fuelPrice">
                             </div>
                         </div>
                     </div>
@@ -127,6 +129,8 @@
                 bindKey: '',
                 originAddress: '',
                 destinyAddress: '',
+                fuelPrice: '',
+                fuelConsumption: '',
 
                 // arrays
                 allAddressObjectValues: [],
@@ -141,7 +145,10 @@
             // create a object to send the address input
             createallAddressObject(){
 
-                this.allAddressObject = Object.assign({origin: this.originAddress}, {destiny: this.destinyAddress}, this.arr)
+                console.log(this.fuelPrice)
+                console.log(typeof(this.fuelConsumption))
+
+                this.allAddressObject = Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice}, {origin: this.originAddress}, {destiny: this.destinyAddress}, this.arr)
                 this.allAddressObjectValues = Object.values(this.allAddressObject);
             },
 
