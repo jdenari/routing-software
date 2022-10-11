@@ -50,7 +50,25 @@ export default createStore({
     getters: {
     },
     mutations: {
-        async travellingSalesmanProblem(state, payload){
+        travellingSalesmanProblemMutation: (state, { finalDistancesObjectAction }) => {
+            
+            // updating the items states with values and '-' (an empty space)
+            for (let n = 0; n < Object.keys(state.finalDistancesObject).length; n++){
+                if (n < Object.keys(finalDistancesObjectAction).length){
+                    state.finalDistancesObject[n] = finalDistancesObjectAction[n]
+                } else {
+                    state.finalDistancesObject[n] = {
+                        address: '-',
+                        distance: '-',
+                        cost: '-'
+                    }
+                }
+            }
+        }
+    },
+    actions: {
+
+        async travellingSalesmanProblem( {commit}, payload){
 
             // creating variables address to use inside the for's
             let originCheckpoint = payload[0]
@@ -59,14 +77,13 @@ export default createStore({
             let shortestDistance
             let shortestAddress
 
-            state.finalDistancesObject[0] = { 
-                address: originCheckpoint,
-                distance: 0,
-                cost: 0
+            let finalDistancesObjectAction = { 
+                0: {
+                    address: originCheckpoint,
+                    distance: 0,
+                    cost: 0
+                }  
             }
-
-            // adding the origin address and 0 distance as 1st value object
-            // state.finalDistancesObject[originCheckpoint] = 0
 
             // variation to the origin point
             for (let c = 0; c < payload.length -1; c++){
@@ -101,26 +118,20 @@ export default createStore({
                     } catch(error){console.log('Erro na requisição da API')
                     }
                 }
-                
+
                 // removing the shorstest address and adding the next origin to check next checkpoint
                 destinyCheckpoint.pop(shortestAddress)
                 originCheckpoint = shortestAddress
 
                 // adding the checkpoint info to the final object
-                if (c < payload.length) {
-                    state.finalDistancesObject[c + 1] = { 
-                        address: shortestAddress,
-                        distance: shortestDistance.toFixed(1),
-                        cost: 0
-                    }
-                }
+                finalDistancesObjectAction[c + 1] = { 
+                    address: shortestAddress,
+                    distance: shortestDistance.toFixed(1),
+                    cost: 0
+                }              
             }
-        console.log(state.finalDistancesObject)
-        }
-    },
-    actions: {
-        travellingSalesmanProblem(state, payload){
-            state.commit('travellingSalesmanProblem', payload);
+
+            commit('travellingSalesmanProblemMutation', { finalDistancesObjectAction })
         }
     },
     modules: {
