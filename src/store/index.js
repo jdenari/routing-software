@@ -4,63 +4,81 @@ export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
         fuelPrice: '',
-        finalDistancesObject: {
+        output: {
             0: {
                 address: '-',
                 distance: '-',
-                cost: '-'
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
             },
             1: {
                 address: '-',
                 distance: '-',
-                cost: '-'
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
             },
             2: {
                 address: '-',
                 distance: '-',
-                cost: '-'
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
             },
             3: {
                 address: '-',
                 distance: '-',
-                cost: '-'
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
             },
             4: {
                 address: '-',
                 distance: '-',
-                cost: '-'
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
             },
             5: {
                 address: '-',
                 distance: '-',
-                cost: '-'
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
             },
             6: {
                 address: '-',
                 distance: '-',
-                cost: '-'
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
             },
             7: {
                 address: '-',
                 distance: '-',
-                cost: '-'
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
             },
         }
     },
     getters: {
     },
     mutations: {
-        travellingSalesmanProblemMutation: (state, { finalDistancesObjectAction }) => {
+        travellingSalesmanProblemMutation: (state, { output }) => {
             
             // updating the items states with values and '-' (an empty space)
-            for (let n = 0; n < Object.keys(state.finalDistancesObject).length; n++){
-                if (n < Object.keys(finalDistancesObjectAction).length){
-                    state.finalDistancesObject[n] = finalDistancesObjectAction[n]
+            for (let n = 0; n < Object.keys(state.output).length; n++){
+                if (n < Object.keys(output).length){
+                    state.output[n] = output[n]
                 } else {
-                    state.finalDistancesObject[n] = {
+                    state.output[n] = {
                         address: '-',
                         distance: '-',
-                        cost: '-'
+                        cost: '-',
+                        fuelConsumption: '-',
+                        fuelPrice: '-'
                     }
                 }
             }
@@ -73,86 +91,72 @@ export default createStore({
     },
     actions: {
 
-        async travellingSalesmanProblem( {commit}, payload){
-
-            // creating variables address to use inside the for's
-            let fuelConsumption = payload.shift()
-            let fuelPrice = payload.shift()
-
-            let fuelVariables = [fuelConsumption, fuelPrice]
-
-            let originCheckpoint = payload[0]
-            let destinyCheckpoint = payload.slice(1)
-
+        async travellingSalesmanProblem({commit}, input){
+    
+            let destinyVariable
+            let originVariable
             let shortestDistance
             let shortestAddress
+            let shortestFuel
+            let output
 
-            let total = 0
+            for (let c = 0; c < Object.keys(input.address).length -1; c++){
 
-            let finalDistancesObjectAction = { 
-                0: {
-                    address: originCheckpoint,
-                    distance: 0,
-                    cost: 0
-                }  
-            }
+                if (c === 0){
 
-            // variation to the origin point
-            for (let c = 0; c < payload.length -1; c++){
+                    output = {
+                        0: {
+                            address: input.address.deliveryPoint0,
+                            distance: 0,
+                            cost: 0,
+                            fuelConsumption: input.otherParameters.fuelConsumption,
+                            fuelPrice: 0
+                        }
+                    }
 
-                // variation to the destiny point
-                for (let e = 0; e < destinyCheckpoint.length; e++){
-                    
-                    // creating the url for all combinations
+                    originVariable = input.address.deliveryPoint0
+                    destinyVariable = Object.values(input.address)
+                } 
+
+                for (let n = 0; n < Object.values(destinyVariable).length; n++){
+                    console.log(Object.values(destinyVariable).length)
                     let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0='
-                    + originCheckpoint
-                    + '&wp.1=' + destinyCheckpoint[e]
+                    + originVariable
+                    + '&wp.1=' + Object.values(destinyVariable)[n]
                     + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
 
-                    // calculating the distance using the API
                     try{
-                        const response = await axios.get(url)
-                        let distance = response.data['resourceSets'][0]['resources'][0]['travelDistance']
-                        
-                        // Attributes the first distance and address inside a variable
-                        if (e === 0){
-                            
-                            shortestDistance = distance
-                            shortestAddress = destinyCheckpoint[e]
+                        const responseAPI = await axios.get(url)
+                        let response = responseAPI.data['resourceSets'][0]['resources'][0]['travelDistance']
 
-                        // Attributes the shortest distance and address inside a variable
-                        } else if (shortestDistance > distance){
+                        if (n === 1){
 
-                            shortestDistance = distance
-                            shortestAddress = destinyCheckpoint[e]
+                            shortestDistance = response
+                            shortestAddress = input.address[`deliveryPoint${n}`]
+                            shortestFuel = input.otherParameters.fuelConsumption * shortestDistance
 
+                        } else if (shortestDistance > response){
+
+                            shortestDistance = response
+                            shortestAddress = input.address[`deliveryPoint${n}`]
+                            shortestFuel = input.otherParameters.fuelConsumption * shortestDistance
                         }
-                    } catch(error){console.log('Erro na requisição da API')
-                    }
+                    } catch(error){console.log('Erro na requisição da API')}
                 }
+                
+                destinyVariable.pop(shortestAddress)
 
-                // removing the shorstest address and adding the next origin to check next checkpoint
-                destinyCheckpoint.pop(shortestAddress)
-                originCheckpoint = shortestAddress
-
-                // adding the checkpoint info to the final object
-                finalDistancesObjectAction[c + 1] = { 
+                output[c + 1] = { 
                     address: shortestAddress,
-                    distance: shortestDistance.toFixed(1),
-                    cost: 0
-                }              
+                    distance: shortestDistance,
+                    cost: 0,
+                    fuelConsumption: input.otherParameters.fuelConsumption,
+                    fuelPrice: shortestFuel.toFixed(2)
+                } 
             }
 
-            for (let i = 0; i < Object.keys(finalDistancesObjectAction).length; i++){
-
-                total += Number(finalDistancesObjectAction[i].distance)
-            }
-
-            fuelVariables.push(total)
-            console.log(fuelVariables)
-
-            commit('travellingSalesmanProblemMutation', { finalDistancesObjectAction })
-            commit('fuelPrice', { fuelVariables } )
+            console.log(output)
+            commit('travellingSalesmanProblemMutation', { output })
         }
     },
     modules: {

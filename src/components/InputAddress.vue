@@ -10,7 +10,7 @@
                             class="form-control" 
                             aria-label="Text input with dropdown button" 
                             placeholder="Fill the address"
-                            v-model="originAddress">
+                            v-model="deliveryPoint0">
                     </div>
                 </div>
                 <div class="col-2">
@@ -35,7 +35,7 @@
                             class="form-control" 
                             aria-label="Text input with dropdown button" 
                             placeholder="Fill the address"
-                            v-model="destinyAddress">
+                            v-model="deliveryPoint1">
                     </div>
                 </div>
                 <div class="col-2">
@@ -104,7 +104,7 @@
                         <button 
                             type="button" 
                             class="btn btn-success col-12" 
-                            @click="createallAddressObject(); calculateDistance()">Calculate
+                            @click="createallAddressObject()">Calculate
                         </button>
                     </div>
                 </div>
@@ -123,17 +123,15 @@
                 // single
                 newAddressField: ref(''), 
                 arr: ref({}),
-                distanceCalculated: '',
-                nextAddressFieldID: ref(1),
+                nextAddressFieldID: ref(2),
                 nextAddressFieldTitle: ref([]),
                 bindKey: '',
-                originAddress: '',
-                destinyAddress: '',
+                deliveryPoint0: '',
+                deliveryPoint1: '',
                 fuelPrice: '',
                 fuelConsumption: '',
 
                 // arrays
-                allAddressObjectValues: [],
 
                 // objects
                 AddressFieldObject: [],
@@ -145,17 +143,15 @@
             // create a object to send the address input
             createallAddressObject(){
 
-                console.log(this.fuelPrice)
-                console.log(typeof(this.fuelConsumption))
+                this.allAddressObject = {
+                    address: 
+                        Object.assign({deliveryPoint0: this.deliveryPoint0}, {deliveryPoint1: this.deliveryPoint1}, this.arr),
+                    otherParameters: 
+                        Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice})
+                }
 
-                this.allAddressObject = Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice}, {origin: this.originAddress}, {destiny: this.destinyAddress}, this.arr)
-                this.allAddressObjectValues = Object.values(this.allAddressObject);
-            },
-
-            // active the calculation of travellingSalesmanProblem
-            calculateDistance(){
-                
-                this.$store.dispatch('travellingSalesmanProblem', this.allAddressObjectValues)
+                console.log(this.allAddressObject)
+                this.$store.dispatch('travellingSalesmanProblem', this.allAddressObject)
                 this.allAddressObject = []
             },
 
