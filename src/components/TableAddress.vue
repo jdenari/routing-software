@@ -1,7 +1,7 @@
 <template>
     <div class="bg-light">
         <div class="container p-3 py-5">
-            <table class="table table-striped w-100">
+            <table class="table table-striped w-75 m-auto">
                 <thead>
                     <tr class="table-dark">
                         <th scope="col" class="text-nowrap">ID</th>

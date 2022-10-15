@@ -119,6 +119,9 @@
                         </button>
                     </div>
                 </div>
+                <div class="alert alert-warning m-auto d-flex align-items-center" role="alert" v-if="this.awesome">     
+                    You must be logged to have access to more ckeckpoints!
+                </div>
             </div>
         </div>
     </div>
@@ -141,6 +144,7 @@
                 deliveryPoint1: '',
                 fuelPrice: '',
                 fuelConsumption: '',
+                awesome: false,
 
                 // arrays
 
@@ -176,6 +180,11 @@
                             })
                     this.arr[id] = ''
                     this.newAddressField = ''
+                } else {
+                    this.awesome = !this.awesome
+                    setTimeout(() => {
+                        this.awesome = false;
+                    }, "4000")
                 }
             },
 
