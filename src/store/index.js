@@ -89,31 +89,30 @@ export default createStore({
     
             let destinyVariable
             let originVariable
-            let shortestDistance
+            let shortestDistance = 0
             let shortestAddress
             let shortestFuel
+            let index
             let output
 
+            output = {
+                0: {
+                    address: input.address.deliveryPoint0.toUpperCase(),
+                    distance: 0,
+                    cost: 0,
+                    fuelConsumption: input.otherParameters.fuelConsumption,
+                    fuelPrice: 0
+                }
+            }
+
+            originVariable = input.address.deliveryPoint0
+            destinyVariable = Object.values(input.address)
+            destinyVariable.splice(0,1)
+            
             for (let c = 0; c < Object.keys(input.address).length -1; c++){
 
-                if (c === 0){
-
-                    output = {
-                        0: {
-                            address: input.address.deliveryPoint0,
-                            distance: 0,
-                            cost: 0,
-                            fuelConsumption: input.otherParameters.fuelConsumption,
-                            fuelPrice: 0
-                        }
-                    }
-
-                    originVariable = input.address.deliveryPoint0
-                    destinyVariable = Object.values(input.address)
-                } 
-
                 for (let n = 0; n < Object.values(destinyVariable).length; n++){
-                    console.log(Object.values(destinyVariable).length)
+                    
                     let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0='
                     + originVariable
                     + '&wp.1=' + Object.values(destinyVariable)[n]
@@ -123,33 +122,39 @@ export default createStore({
                         const responseAPI = await axios.get(url)
                         let response = responseAPI.data['resourceSets'][0]['resources'][0]['travelDistance']
 
-                        if (n === 1){
+                        if (shortestDistance === 0){
 
                             shortestDistance = response
-                            shortestAddress = input.address[`deliveryPoint${n}`]
+                            shortestAddress = destinyVariable[n]
                             shortestFuel = input.otherParameters.fuelConsumption * shortestDistance
+                            index = n
 
                         } else if (shortestDistance > response){
 
                             shortestDistance = response
-                            shortestAddress = input.address[`deliveryPoint${n}`]
+                            shortestAddress = destinyVariable[n]
                             shortestFuel = input.otherParameters.fuelConsumption * shortestDistance
+                            index = n
                         }
                     } catch(error){console.log('Erro na requisição da API')}
                 }
-                
-                destinyVariable.pop(shortestAddress)
 
                 output[c + 1] = { 
-                    address: shortestAddress,
+                    address: shortestAddress.toUpperCase(),
                     distance: shortestDistance,
                     cost: 0,
                     fuelConsumption: input.otherParameters.fuelConsumption,
                     fuelPrice: shortestFuel.toFixed(2)
-                } 
+                }
+
+                originVariable = destinyVariable[index]
+                destinyVariable.splice(index,1)
+                shortestDistance = 0
+                shortestAddress = ''
+                shortestFuel = ''
+                index = 0
             }
 
-            console.log(output)
             commit('travellingSalesmanProblemMutation', { output })
         }
     },

@@ -168,13 +168,15 @@
 
             // create a new field address inside the html
             addAddressField() {
-                const id = 'deliveryPoint' + this.nextAddressFieldID++
-                    this.AddressFieldObject.push({
-                        id,
-                        title: this.newAddressField
-                        })
-                this.arr[id] = ''
-                this.newAddressField = ''
+                if (this.nextAddressFieldID < 8) {
+                    const id = 'deliveryPoint' + this.nextAddressFieldID++
+                        this.AddressFieldObject.push({
+                            id,
+                            title: this.newAddressField
+                            })
+                    this.arr[id] = ''
+                    this.newAddressField = ''
+                }
             },
 
             // remove a field address inside the html
