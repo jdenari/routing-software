@@ -3,7 +3,6 @@ import axios from 'axios'
 export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
-        fuelPrice: '',
         output: {
             0: {
                 address: '-',
@@ -83,11 +82,6 @@ export default createStore({
                 }
             }
         },
-
-        fuelPrice( {fuelVariables }) {
-            console.log('oi bbbbbbbb')
-            console.log(fuelVariables)
-        }
     },
     actions: {
 

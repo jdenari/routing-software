@@ -1,8 +1,11 @@
 <template>
     <div class="bg-light">
-        <div class="container p-3">
+        <div class="container p-3 py-5">
+            <div class="h1 text-center p-3">Your distance calculator</div>
+            <div class="h6 w-75 m-auto p-2">Input all address</div>
             <!-- First origin address field -->
             <div class="input-group w-75 m-auto">
+                
                 <div class="col-9">
                     <div class="p-1">
                         <input 
@@ -60,6 +63,7 @@
                     v-model="arr[addressfield.id]"
                 ></address-field>
             </ul>
+            <div class="h6 w-75 m-auto p-2">Bind Maps Key</div>
             <div class="input-group w-75 m-auto">
                 <div class="col-9">
                     <div class="p-1">
@@ -75,8 +79,15 @@
 
             <!-- Other fields inputs (fuel price and the button calculate) -->
             <div class="input-group w-75 m-auto">
+                <div class="w-100 d-flex">
+                    <div class="col-6 d-flex p-1">
+                        <div class="col-6 d-flex">Fuel Consumption</div>
+                        <div class="col-6 d-flex">Fuel Price</div>
+                    </div>
+                    
+                </div>
                 <div class="w-100 d-flex justify-content-between">
-                    <div class="col-6 p-1 d-flex">
+                    <div class="col-6 d-flex">
                         <div class="col-6 p-1">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">km/l</span>

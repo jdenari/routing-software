@@ -1,6 +1,6 @@
 <template>
     <tbody>
-        <tr>
+        <tr class="table-default">
             <th scope="row" class="text-end"> Origin </th>
             <td> {{ $store.state.output[0].address }} </td>
             <td class="text-center"> {{ $store.state.output[0].distance }} </td>
