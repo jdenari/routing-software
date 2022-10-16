@@ -9,69 +9,79 @@ export default createStore({
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
             1: {
                 address: '-',
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
             2: {
                 address: '-',
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
             3: {
                 address: '-',
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
             4: {
                 address: '-',
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
             5: {
                 address: '-',
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
             6: {
                 address: '-',
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
             7: {
                 address: '-',
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
             8: {
                 address: '-',
                 distance: '-',
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: '-'
+                fuelPrice: '-',
+                fuelCost: '-'
             },
         }
     },
     getters: {
     },
     mutations: {
+        
         travellingSalesmanProblemMutation: (state, { output }) => {
             
             // updating the items states
@@ -96,23 +106,33 @@ export default createStore({
             }
         },
 
+        async calculateFuelCost({state}, output ){
+
+            for (let c = 0; c < Object.keys(output).length - 1; c++){
+                
+                if (state.output[c].distance != '-'){
+
+                    state.output[c].fuelCost = Number(output[c].distance) * Number(state.output[c].fuelPrice) / Number(state.output[c].fuelConsumption)
+                }
+            }
+        },
+
         async calculateTotal ({state}, output ){
 
             output[8].distance = 0
-            output[8].fuelPrice = 0
+            output[8].fuelCost = 0
             
             for (let c = 0; c < Object.keys(output).length - 1; c++){
                 
                 if (output[c].distance != '-'){
 
                     output[8].distance = Number(output[8].distance) + Number(output[c].distance)
-                    output[8].fuelPrice = Number(output[8].fuelPrice) + Number(output[c].fuelPrice)
+                    output[8].fuelCost = Number(output[8].fuelCost) + Number(output[c].fuelCost)
                 }
             }
 
             state.output[8].distance = output[8].distance.toFixed(2)
-            state.output[8].fuelPrice = output[8].fuelPrice.toFixed(2)
-
+            state.output[8].fuelCost = output[8].fuelCost.toFixed(2)
         },
 
         async travellingSalesmanProblem({commit, state, dispatch}, input){
@@ -123,11 +143,8 @@ export default createStore({
             let originVariable
             let shortestDistance = 0
             let shortestAddress
-            let shortestFuel
             let index
-            let output
-
-            output = state.output
+            let output = state.output
 
             output[0] = {
             
@@ -135,7 +152,7 @@ export default createStore({
                 distance: 0,
                 cost: 0,
                 fuelConsumption: input.otherParameters.fuelConsumption,
-                fuelPrice: 0
+                fuelPrice: input.otherParameters.fuelPrice
             }
 
             originVariable = input.address.deliveryPoint0
@@ -159,14 +176,12 @@ export default createStore({
 
                             shortestDistance = response
                             shortestAddress = destinyVariable[n]
-                            shortestFuel = shortestDistance * input.otherParameters.fuelPrice / input.otherParameters.fuelConsumption
                             index = n
 
                         } else if (shortestDistance > response){
 
                             shortestDistance = response
                             shortestAddress = destinyVariable[n]
-                            shortestFuel = shortestDistance * input.otherParameters.fuelPrice / input.otherParameters.fuelConsumption
                             index = n
                         }
                     } catch(error){console.log('Erro na requisição da API')}
@@ -177,16 +192,17 @@ export default createStore({
                     distance: shortestDistance.toFixed(2), 
                     cost: 0,
                     fuelConsumption: input.otherParameters.fuelConsumption,
-                    fuelPrice: shortestFuel.toFixed(2)
+                    fuelPrice: input.otherParameters.fuelPrice
                 }
 
                 originVariable = destinyVariable[index]
                 destinyVariable.splice(index,1)
                 shortestDistance = 0
                 shortestAddress = ''
-                shortestFuel = ''
                 index = 0
             }
+
+            await dispatch('calculateFuelCost', output)
 
             await dispatch('calculateTotal', output)
 
