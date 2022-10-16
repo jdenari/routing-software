@@ -176,10 +176,10 @@ export default createStore({
 
             output[8] = { 
                 address: '-',
-                distance: totalDistance,
+                distance: totalDistance.toFixed(2),
                 cost: '-',
                 fuelConsumption: '-',
-                fuelPrice: totalFuelCost
+                fuelPrice: totalFuelCost.toFixed(2)
             }
 
             commit('travellingSalesmanProblemMutation', { output })

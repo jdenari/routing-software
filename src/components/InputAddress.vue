@@ -111,14 +111,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 p-1">
+                </div>
+                <div class="col-12 p-1 d-flex justify-content-md-end">
                         <button 
                             type="button" 
-                            class="btn btn-success col-12" 
+                            class="btn btn-secondary col-1 m-1" 
+                            @click="cleanInput()">Clean
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-success col-3 me-md-2 m-1" 
                             @click="createallAddressObject()">Calculate
                         </button>
                     </div>
-                </div>
                 <div class="alert alert-warning m-auto d-flex align-items-center" role="alert" v-if="this.awesome">     
                     You must be logged to have access to more ckeckpoints!
                 </div>
@@ -199,6 +204,14 @@
                 delete this.arr[id]
                 this.newAddressField = ''
             },
+            cleanInput(){
+                this.deliveryPoint0 = ''
+                this.deliveryPoint1 = ''
+
+                for (let e = 2; e < this.nextAddressFieldID; e++){
+                    this.arr['deliveryPoint' + e] = ''
+                }
+            }
         },
     }
 </script>
