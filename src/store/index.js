@@ -92,8 +92,23 @@ export default createStore({
     },
     actions: {
 
-        async travellingSalesmanProblem({commit, state}, input){
+        async cleanLatestValues ({ state }) {
+
+            for (let e = 0; e < Object.keys(state.output).length; e++){
+                state.output[e] = { 
+                    address: '-',
+                    distance: '-',
+                    cost: '-',
+                    fuelConsumption: '-',
+                    fuelPrice: '-'
+                }
+            }
+        },
+
+        async travellingSalesmanProblem({commit, state, dispatch}, input){
     
+            await dispatch('cleanLatestValues')
+
             let destinyVariable
             let originVariable
             let shortestDistance = 0

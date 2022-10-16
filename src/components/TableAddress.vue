@@ -4,8 +4,8 @@
             <table class="table table-striped w-75 m-auto">
                 <thead>
                     <tr class="table-dark">
-                        <th scope="col" class="text-nowrap">ID</th>
-                        <th scope="col" class="text-nowrap">ROUTE</th>
+                        <th scope="col" class="text-center text-nowrap">ID</th>
+                        <th scope="col" class="text-center text-nowrap">ROUTE</th>
                         <th scope="col" class="text-center text-nowrap">DISTANCE (KM)</th>
                         <th scope="col" class="text-center text-nowrap">COST (R$)</th>
                     </tr>
