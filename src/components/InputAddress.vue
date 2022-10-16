@@ -204,6 +204,8 @@
                 delete this.arr[id]
                 this.newAddressField = ''
             },
+
+            // clean all the info inside the inputs
             cleanInput(){
                 this.deliveryPoint0 = ''
                 this.deliveryPoint1 = ''
@@ -211,6 +213,9 @@
                 for (let e = 2; e < this.nextAddressFieldID; e++){
                     this.arr['deliveryPoint' + e] = ''
                 }
+
+                this.fuelPrice = '',
+                this.fuelConsumption = ''
             }
         },
     }

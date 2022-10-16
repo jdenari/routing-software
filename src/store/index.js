@@ -74,25 +74,16 @@ export default createStore({
     mutations: {
         travellingSalesmanProblemMutation: (state, { output }) => {
             
-            // updating the items states with values and '-' (an empty space)
+            // updating the items states
             for (let n = 0; n < Object.keys(state.output).length; n++){
-                if (n < Object.keys(output).length){
-                    state.output[n] = output[n]
-                } else {
-                    state.output[n] = {
-                        address: '-',
-                        distance: '-',
-                        cost: '-',
-                        fuelConsumption: '-',
-                        fuelPrice: '-'
-                    }
-                }
+
+                state.output[n] = output[n]
             }
         },
     },
     actions: {
 
-        async cleanLatestValues ({ state }) {
+        async cleanLatestValues ({ state}) {
 
             for (let e = 0; e < Object.keys(state.output).length; e++){
                 state.output[e] = { 
@@ -103,6 +94,25 @@ export default createStore({
                     fuelPrice: '-'
                 }
             }
+        },
+
+        async calculateTotal ({state}, output ){
+
+            output[8].distance = 0
+            output[8].fuelPrice = 0
+            
+            for (let c = 0; c < Object.keys(output).length - 1; c++){
+                
+                if (output[c].distance != '-'){
+
+                    output[8].distance = Number(output[8].distance) + Number(output[c].distance)
+                    output[8].fuelPrice = Number(output[8].fuelPrice) + Number(output[c].fuelPrice)
+                }
+            }
+
+            state.output[8].distance = output[8].distance.toFixed(2)
+            state.output[8].fuelPrice = output[8].fuelPrice.toFixed(2)
+
         },
 
         async travellingSalesmanProblem({commit, state, dispatch}, input){
@@ -116,8 +126,6 @@ export default createStore({
             let shortestFuel
             let index
             let output
-            let totalDistance = 0
-            let totalFuelCost = 0
 
             output = state.output
 
@@ -180,22 +188,7 @@ export default createStore({
                 index = 0
             }
 
-            for (let e = 0; e < Object.keys(input.address).length; e++){
-
-                if (output[e].distance != ''){
-                    totalDistance = totalDistance + Number(output[e].distance)
-                    totalFuelCost = totalFuelCost + Number(output[e].fuelPrice)
-                }
-
-            }
-
-            output[8] = { 
-                address: '-',
-                distance: totalDistance.toFixed(2),
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: totalFuelCost.toFixed(2)
-            }
+            await dispatch('calculateTotal', output)
 
             commit('travellingSalesmanProblemMutation', { output })
         }
