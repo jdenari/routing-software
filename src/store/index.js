@@ -60,6 +60,13 @@ export default createStore({
                 fuelConsumption: '-',
                 fuelPrice: '-'
             },
+            8: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-'
+            },
         }
     },
     getters: {
@@ -85,7 +92,7 @@ export default createStore({
     },
     actions: {
 
-        async travellingSalesmanProblem({commit}, input){
+        async travellingSalesmanProblem({commit, state}, input){
     
             let destinyVariable
             let originVariable
@@ -94,15 +101,18 @@ export default createStore({
             let shortestFuel
             let index
             let output
+            let totalDistance = 0
+            let totalFuelCost = 0
 
-            output = {
-                0: {
-                    address: input.address.deliveryPoint0.toUpperCase(),
-                    distance: 0,
-                    cost: 0,
-                    fuelConsumption: input.otherParameters.fuelConsumption,
-                    fuelPrice: 0
-                }
+            output = state.output
+
+            output[0] = {
+            
+                address: input.address.deliveryPoint0.toUpperCase(),
+                distance: 0,
+                cost: 0,
+                fuelConsumption: input.otherParameters.fuelConsumption,
+                fuelPrice: 0
             }
 
             originVariable = input.address.deliveryPoint0
@@ -126,14 +136,14 @@ export default createStore({
 
                             shortestDistance = response
                             shortestAddress = destinyVariable[n]
-                            shortestFuel = input.otherParameters.fuelConsumption * shortestDistance
+                            shortestFuel = shortestDistance * input.otherParameters.fuelPrice / input.otherParameters.fuelConsumption
                             index = n
 
                         } else if (shortestDistance > response){
 
                             shortestDistance = response
                             shortestAddress = destinyVariable[n]
-                            shortestFuel = input.otherParameters.fuelConsumption * shortestDistance
+                            shortestFuel = shortestDistance * input.otherParameters.fuelPrice / input.otherParameters.fuelConsumption
                             index = n
                         }
                     } catch(error){console.log('Erro na requisição da API')}
@@ -141,7 +151,7 @@ export default createStore({
 
                 output[c + 1] = { 
                     address: shortestAddress.toUpperCase(),
-                    distance: shortestDistance,
+                    distance: shortestDistance.toFixed(2), 
                     cost: 0,
                     fuelConsumption: input.otherParameters.fuelConsumption,
                     fuelPrice: shortestFuel.toFixed(2)
@@ -153,6 +163,23 @@ export default createStore({
                 shortestAddress = ''
                 shortestFuel = ''
                 index = 0
+            }
+
+            for (let e = 0; e < Object.keys(input.address).length; e++){
+
+                if (output[e].distance != ''){
+                    totalDistance = totalDistance + Number(output[e].distance)
+                    totalFuelCost = totalFuelCost + Number(output[e].fuelPrice)
+                }
+
+            }
+
+            output[8] = { 
+                address: '-',
+                distance: totalDistance,
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: totalFuelCost
             }
 
             commit('travellingSalesmanProblemMutation', { output })

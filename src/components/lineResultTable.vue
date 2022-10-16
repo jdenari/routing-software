@@ -50,9 +50,9 @@
         </tr>
         <tr class="table-light">
             <th scope="row" class="text-end">Total</th>
-            <td> {{ $store.state.output }} </td>
-            <td class="text-center"> {{ $store.state.output[0].distance }} </td>
-            <td class="text-center">{{ $store.state.output[0].fuelPrice }}</td>
+            <td> {{ $store.state.output[8].address }} </td>
+            <td class="text-center"> {{ $store.state.output[8].distance }} </td>
+            <td class="text-center">{{ $store.state.output[8].fuelPrice }}</td>
         </tr>
     </tbody>
 </template>
