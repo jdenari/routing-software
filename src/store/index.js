@@ -3,6 +3,7 @@ import axios from 'axios'
 export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
+        cepFullAddress: 'oi',
         output: {
             0: {
                 address: '-',
@@ -90,10 +91,15 @@ export default createStore({
                 state.output[n] = output[n]
             }
         },
+
+        cepSearchAPIMutation: (state, {response}) => {
+            
+            state.cepFullAddress = response
+        }
     },
     actions: {
 
-        async cleanLatestValues ({ state}) {
+        async cleanLatestValues ({ state }) {
 
             for (let e = 0; e < Object.keys(state.output).length; e++){
                 state.output[e] = { 
@@ -207,6 +213,24 @@ export default createStore({
             await dispatch('calculateTotal', output)
 
             commit('travellingSalesmanProblemMutation', { output })
+        },
+        async cepSearchAPI ({commit}, cepObject){
+            
+            let url = `https://viacep.com.br/ws/${cepObject.cepAddress}/json/`
+
+            let response
+
+            try{
+
+                const responseAPI = await axios.get(url)
+
+                response = `${responseAPI.data['logradouro']}, ${cepObject.cepNumber},  ${responseAPI.data['bairro']}, ${responseAPI.data['localidade']} - ${responseAPI.data['uf']}, ${responseAPI.data['cep']}`
+                
+                response = response.toUpperCase()
+                
+            } catch(error){console.log('Erro na requisição da API')}
+
+            commit('cepSearchAPIMutation', { response })
         }
     },
     modules: {

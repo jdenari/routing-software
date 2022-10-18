@@ -92,22 +92,22 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text">km/l</span>
                                 <input 
-                                    type="text" 
+                                    type="number" 
                                     class="form-control" 
                                     aria-label="Amount (to the nearest reais) " 
                                     placeholder="Fuel Consumption"
-                                    v-model="fuelConsumption">
+                                    v-model.number="fuelConsumption">
                             </div>
                         </div>
                         <div class="col-6 p-1">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">$</span>
                                 <input 
-                                    type="text" 
+                                    type="number" 
                                     class="form-control" 
                                     aria-label="Amount (to the nearest reais) " 
                                     placeholder="Fuel Price"
-                                    v-model="fuelPrice">
+                                    v-model.number="fuelPrice">
                             </div>
                         </div>
                     </div>
@@ -170,7 +170,6 @@
                         Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice})
                 }
 
-                console.log(this.allAddressObject)
                 this.$store.dispatch('travellingSalesmanProblem', this.allAddressObject)
                 this.allAddressObject = []
             },

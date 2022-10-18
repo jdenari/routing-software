@@ -5,6 +5,7 @@
       <IntroSection />
       <LittleTutorial />
       <InputAddress />
+      <SearchAddress />
       <TableAddress />
       <benefitsLogin />
       <MainFooter />
@@ -19,6 +20,8 @@
     import TableAddress from './components/TableAddress.vue';
     import benefitsLogin from './components/benefitsLogin.vue'
     import MainFooter from './components/MainFooter.vue'
+    import SearchAddress from './components/SearchAddress.vue';
+
   export default {
       name: 'App',
       components: {
@@ -28,7 +31,8 @@
     InputAddress,
     TableAddress,
     benefitsLogin,
-    MainFooter
+    MainFooter,
+    SearchAddress
 }
   }
 </script>
