@@ -3,6 +3,7 @@ import axios from 'axios'
 export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
+        cepFullAddress: '-',
         alertMessageText: 'There is an address with a error!',
         alertVisibility: false,
         output: {

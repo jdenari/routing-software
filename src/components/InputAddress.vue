@@ -125,7 +125,7 @@
                         </button>
                         <button 
                             type="button" 
-                            class="btn btn-success col-3 me-md-2 m-1" 
+                            class="btn btn-success col-3 m-1" 
                             @click="checkBlankForm();createallAddressObject()">Calculate
                         </button>
                     </div>
