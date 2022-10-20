@@ -2,6 +2,9 @@
     <div class="bg-light">
         <div class="container p-3 py-5">
             <div class="h1 text-center p-3">Your distance calculator</div>
+            <div class="alert alert-warning m-auto d-flex align-items-center w-50 m-5" role="alert" v-if="this.awesome">     
+                <div class="p w-100 text-center">You must be logged to have access to more ckeckpoints!</div>
+            </div>
             <div class="h6 w-75 m-auto p-2">Input all address</div>
             <!-- First origin address field -->
             <div class="input-group w-75 m-auto">
@@ -13,7 +16,8 @@
                             class="form-control" 
                             aria-label="Text input with dropdown button" 
                             placeholder="Fill the address"
-                            v-model="deliveryPoint0">
+                            v-model="deliveryPoint0"
+                            required>
                     </div>
                 </div>
                 <div class="col-2">
@@ -114,19 +118,16 @@
                 </div>
                 <div class="col-12 p-1 d-flex justify-content-md-end">
                         <button 
-                            type="button" 
+                            type="submit" 
                             class="btn btn-secondary col-1 m-1" 
                             @click="cleanInput()">Clean
                         </button>
                         <button 
                             type="button" 
                             class="btn btn-success col-3 me-md-2 m-1" 
-                            @click="createallAddressObject()">Calculate
+                            @click="checkBlankForm();createallAddressObject()">Calculate
                         </button>
                     </div>
-                <div class="alert alert-warning m-auto d-flex align-items-center" role="alert" v-if="this.awesome">     
-                    You must be logged to have access to more ckeckpoints!
-                </div>
             </div>
         </div>
     </div>
@@ -155,10 +156,55 @@
 
                 // objects
                 AddressFieldObject: [],
-                allAddressObject: [],           
+                allAddressObject: [],   
+                errors: [],        
             }
         },   
         methods: {
+
+            checkBlankForm: function (e){
+
+                if (this.nextAddressFieldID === 2) {
+                    if (this.deliveryPoint0 && this.deliveryPoint1) {return true;}
+                }
+
+                if (this.nextAddressFieldID === 3) {
+                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2']) {return true;}
+                }
+
+                if (this.nextAddressFieldID === 4) {
+                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3']) {return true;}
+                }
+
+                if (this.nextAddressFieldID === 5) {
+                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4']) {return true;}
+                }
+
+                if (this.nextAddressFieldID === 6) {
+                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5']) {return true;}
+                }
+
+                if (this.nextAddressFieldID === 7) {
+                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6']) {return true;}
+                }
+
+                if (this.nextAddressFieldID === 8) {
+                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6'] && this.arr['deliveryPoint7']) {return true;}
+                }
+
+                this.errors = [];
+
+                if (!this.deliveryPoint0){this.errors.push(0);}
+                if (!this.deliveryPoint1){this.errors.push(1);}
+
+                for (let e = 2; e < this.nextAddressFieldID; e++){
+                    if (!this.arr['deliveryPoint' + e]){this.errors.push(e);}
+                }
+
+                console.log(this.errors)
+
+                e.preventDefault();
+            },
 
             // create a object to send the address input
             createallAddressObject(){
@@ -169,6 +215,7 @@
                     otherParameters: 
                         Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice})
                 }
+
 
                 this.$store.dispatch('travellingSalesmanProblem', this.allAddressObject)
                 this.allAddressObject = []
