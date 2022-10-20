@@ -3,7 +3,8 @@ import axios from 'axios'
 export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
-        cepFullAddress: 'oi',
+        alertMessageText: 'There is an address with a error!',
+        alertVisibility: false,
         output: {
             0: {
                 address: '-',
@@ -95,7 +96,13 @@ export default createStore({
         cepSearchAPIMutation: (state, {response}) => {
             
             state.cepFullAddress = response
-        }
+        },
+
+        messageAlertMutation: (state, {visibility}) => {
+            
+            state.alertVisibility = visibility
+        },
+    
     },
     actions: {
 
@@ -190,7 +197,11 @@ export default createStore({
                             shortestAddress = destinyVariable[n]
                             index = n
                         }
-                    } catch(error){console.log('Erro na requisição da API')}
+                    } catch(error){
+
+                        await dispatch('messageAlert')
+                        this.travellingSalesmanProblem.preventDefault()
+                    }
                 }
 
                 output[c + 1] = { 
@@ -231,6 +242,19 @@ export default createStore({
             } catch(error){console.log('Erro na requisição da API')}
 
             commit('cepSearchAPIMutation', { response })
+        },
+
+        messageAlert({commit}){
+
+            let visibility = true
+            commit('messageAlertMutation', {visibility}) 
+
+                setTimeout(() => {
+
+                    visibility = false
+                    commit('messageAlertMutation', {visibility})
+                }, "4000")
+
         }
     },
     modules: {

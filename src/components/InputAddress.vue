@@ -3,8 +3,8 @@
         <div class="container p-3 py-5">
             <div class="h1 text-center p-3">Your distance calculator</div>
             <!-- message alert when there is a error-->
-            <div class="alert alert-warning m-auto d-flex align-items-center w-50 m-5" role="alert" v-if="this.alertVisibility">     
-                <div class="p w-100 text-center"> {{ this.messageAlertText }} </div>
+            <div class="alert alert-warning m-auto d-flex align-items-center w-50 m-5" role="alert" v-if="$store.state.alertVisibility">     
+                <div class="p w-100 text-center"> {{ this.$store.alertMessageText }} </div>
             </div>
             <div class="h6 w-75 m-auto p-2">Input all address</div>
             <!-- First origin address field -->
@@ -151,8 +151,6 @@
                 deliveryPoint1: '',
                 fuelPrice: '',
                 fuelConsumption: '',
-                alertVisibility: false,
-                messageAlertText: '',
 
                 // arrays
 
@@ -204,20 +202,11 @@
                     if (!this.arr['deliveryPoint' + a]){this.errors.push(a + 1);}
                 }
 
-                this.messageAlertText = `The Fields [${this.errors}] are empty! Fill or remove them.`
+                this.$store.alertMessageText = `The Fields [${this.errors}] are empty! Fill or remove them.`
 
-                this.messageAlert()
+                this.$store.dispatch('messageAlert')
 
                 e.preventDefault();
-            },
-
-            // It shows a message!
-            messageAlert(){
-                this.alertVisibility = !this.alertVisibility
-                    setTimeout(() => {
-                        this.alertVisibility = false;
-                    }, "4000")
-
             },
 
             // create a object to send the address input
@@ -247,8 +236,9 @@
                     this.newAddressField = ''
 
                 } else {
-                    this.messageAlertText = 'You must be logged to have access to more ckeckpoints!'
-                    this.messageAlert()}
+                    this.$store.alertMessageText = 'You must be logged to have access to more ckeckpoints!'
+                    this.$store.dispatch('messageAlert')
+                }
             },
 
             // remove a field address inside the html
