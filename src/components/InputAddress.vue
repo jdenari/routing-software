@@ -2,8 +2,9 @@
     <div class="bg-light">
         <div class="container p-3 py-5">
             <div class="h1 text-center p-3">Your distance calculator</div>
-            <div class="alert alert-warning m-auto d-flex align-items-center w-50 m-5" role="alert" v-if="this.awesome">     
-                <div class="p w-100 text-center">You must be logged to have access to more ckeckpoints!</div>
+            <!-- message alert when there is a error-->
+            <div class="alert alert-warning m-auto d-flex align-items-center w-50 m-5" role="alert" v-if="this.alertVisibility">     
+                <div class="p w-100 text-center"> {{ this.messageAlertText }} </div>
             </div>
             <div class="h6 w-75 m-auto p-2">Input all address</div>
             <!-- First origin address field -->
@@ -88,7 +89,6 @@
                         <div class="col-6 d-flex">Fuel Consumption</div>
                         <div class="col-6 d-flex">Fuel Price</div>
                     </div>
-                    
                 </div>
                 <div class="w-100 d-flex justify-content-between">
                     <div class="col-6 d-flex">
@@ -116,6 +116,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Main buttons -->
                 <div class="col-12 p-1 d-flex justify-content-md-end">
                         <button 
                             type="submit" 
@@ -150,7 +151,8 @@
                 deliveryPoint1: '',
                 fuelPrice: '',
                 fuelConsumption: '',
-                awesome: false,
+                alertVisibility: false,
+                messageAlertText: '',
 
                 // arrays
 
@@ -162,6 +164,7 @@
         },   
         methods: {
 
+            // it checks if all input address are filled! 
             checkBlankForm: function (e){
 
                 if (this.nextAddressFieldID === 2) {
@@ -194,16 +197,27 @@
 
                 this.errors = [];
 
-                if (!this.deliveryPoint0){this.errors.push(0);}
-                if (!this.deliveryPoint1){this.errors.push(1);}
+                if (!this.deliveryPoint0){this.errors.push(1);}
+                if (!this.deliveryPoint1){this.errors.push(2);}
 
-                for (let e = 2; e < this.nextAddressFieldID; e++){
-                    if (!this.arr['deliveryPoint' + e]){this.errors.push(e);}
+                for (let a = 2; a < this.nextAddressFieldID; a++){
+                    if (!this.arr['deliveryPoint' + a]){this.errors.push(a + 1);}
                 }
 
-                console.log(this.errors)
+                this.messageAlertText = `The Fields [${this.errors}] are empty! Fill or remove them.`
+
+                this.messageAlert()
 
                 e.preventDefault();
+            },
+
+            // It shows a message!
+            messageAlert(){
+                this.alertVisibility = !this.alertVisibility
+                    setTimeout(() => {
+                        this.alertVisibility = false;
+                    }, "4000")
+
             },
 
             // create a object to send the address input
@@ -231,12 +245,10 @@
                             })
                     this.arr[id] = ''
                     this.newAddressField = ''
+
                 } else {
-                    this.awesome = !this.awesome
-                    setTimeout(() => {
-                        this.awesome = false;
-                    }, "4000")
-                }
+                    this.messageAlertText = 'You must be logged to have access to more ckeckpoints!'
+                    this.messageAlert()}
             },
 
             // remove a field address inside the html
