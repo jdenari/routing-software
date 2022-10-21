@@ -6,6 +6,80 @@ export default createStore({
         cepFullAddress: '-',
         alertMessageText: 'There is an address with a error!',
         alertVisibility: false,
+        outputDraft: {
+            0: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+            1: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+            2: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+            3: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+            4: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+            5: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+            6: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+            7: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+            8: {
+                address: '-',
+                distance: '-',
+                cost: '-',
+                fuelConsumption: '-',
+                fuelPrice: '-',
+                fuelCost: '-'
+            },
+        },
         output: {
             0: {
                 address: '-',
@@ -85,12 +159,16 @@ export default createStore({
     },
     mutations: {
         
-        travellingSalesmanProblemMutation: (state, { output }) => {
+        travellingSalesmanProblemMutation: (state) => {
             
+            console.log(state.outputDraft)
+            console.log(state.output)
+
+
             // updating the items states
             for (let n = 0; n < Object.keys(state.output).length; n++){
 
-                state.output[n] = output[n]
+                state.output[n] = state.outputDraft[n]
             }
         },
 
@@ -110,6 +188,7 @@ export default createStore({
         async cleanLatestValues ({ state }) {
 
             for (let e = 0; e < Object.keys(state.output).length; e++){
+                
                 state.output[e] = { 
                     address: '-',
                     distance: '-',
@@ -120,33 +199,33 @@ export default createStore({
             }
         },
 
-        async calculateFuelCost({state}, output ){
+        async calculateFuelCost({state}){
 
-            for (let c = 0; c < Object.keys(output).length - 1; c++){
+            for (let c = 0; c < Object.keys(state.outputDraft).length - 1; c++){
                 
-                if (state.output[c].distance != '-'){
+                if (state.outputDraft[c].distance != '-'){
 
-                    state.output[c].fuelCost = Number(output[c].distance) * Number(state.output[c].fuelPrice) / Number(state.output[c].fuelConsumption)
+                    state.outputDraft[c].fuelCost = Number(state.outputDraft[c].distance) * Number(state.outputDraft[c].fuelPrice) / Number(state.outputDraft[c].fuelConsumption)
                 }
             }
         },
 
-        async calculateTotal ({state}, output ){
+        async calculateTotal ({state}){
 
-            output[8].distance = 0
-            output[8].fuelCost = 0
+            state.outputDraft[8].distance = 0
+            state.outputDraft[8].fuelCost = 0
             
-            for (let c = 0; c < Object.keys(output).length - 1; c++){
+            for (let c = 0; c < Object.keys(state.outputDraft).length - 1; c++){
                 
-                if (output[c].distance != '-'){
+                if (state.outputDraft[c].distance != '-'){
 
-                    output[8].distance = Number(output[8].distance) + Number(output[c].distance)
-                    output[8].fuelCost = Number(output[8].fuelCost) + Number(output[c].fuelCost)
+                    state.outputDraft[8].distance = Number(state.outputDraft[8].distance) + Number(state.outputDraft[c].distance)
+                    state.outputDraft[8].fuelCost = Number(state.outputDraft[8].fuelCost) + Number(state.outputDraft[c].fuelCost)
                 }
             }
 
-            state.output[8].distance = output[8].distance.toFixed(2)
-            state.output[8].fuelCost = output[8].fuelCost.toFixed(2)
+            state.outputDraft[8].distance = state.outputDraft[8].distance.toFixed(2)
+            state.outputDraft[8].fuelCost = state.outputDraft[8].fuelCost.toFixed(2)
         },
 
         async travellingSalesmanProblem({commit, state, dispatch}, input){
@@ -158,9 +237,8 @@ export default createStore({
             let shortestDistance = 0
             let shortestAddress
             let index
-            let output = state.output
 
-            output[0] = {
+            state.outputDraft[0] = {
             
                 address: input.address.deliveryPoint0.toUpperCase(),
                 distance: 0,
@@ -205,7 +283,7 @@ export default createStore({
                     }
                 }
 
-                output[c + 1] = { 
+                state.outputDraft[c + 1] = { 
                     address: shortestAddress.toUpperCase(),
                     distance: shortestDistance.toFixed(2), 
                     cost: 0,
@@ -220,12 +298,13 @@ export default createStore({
                 index = 0
             }
 
-            await dispatch('calculateFuelCost', output)
+            await dispatch('calculateFuelCost')
 
-            await dispatch('calculateTotal', output)
+            await dispatch('calculateTotal')
 
-            commit('travellingSalesmanProblemMutation', { output })
+            commit('travellingSalesmanProblemMutation')
         },
+
         async cepSearchAPI ({commit}, cepObject){
             
             let url = `https://viacep.com.br/ws/${cepObject.cepAddress}/json/`
