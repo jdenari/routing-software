@@ -16,9 +16,13 @@
                 </li>
             </ul>
             <div class="navbar-nav lg-auto">
-                <button type="button" class="btn btn-light me-2">Register</button>
-                <button class="btn btn-outline-success me-2" type="button">Login</button>
-                </div>
+                <router-link to="/LoginPage">
+                    <button type="button" class="btn btn-light me-2">Register</button>
+                </router-link>
+                <router-link to="/LoginPage">
+                    <button class="btn btn-outline-success me-2" type="button">Login</button>
+                </router-link>
+            </div>
         </div>       
     </nav>
 </template>

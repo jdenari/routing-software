@@ -1,40 +1,23 @@
 <template>
-  <div>
-      <!-- <RoutingComponent /> -->
-      <HeaderMain />
-      <IntroSection />
-      <LittleTutorial />
-      <InputAddress />
-      <SearchAddress />
-      <TableAddress />
-      <benefitsLogin />
-      <MainFooter />
-  </div>
+    <div>
+        <!-- <RoutingComponent /> -->
+        <HeaderMain />
+        <router-view></router-view>
+        <MainFooter />
+    </div>
 </template>
 
 <script>
     import HeaderMain from './components/HeaderMain.vue';
-    import IntroSection from './components/IntroSection.vue';
-    import LittleTutorial from './components/LittleTutorial.vue';
-    import InputAddress from './components/InputAddress.vue';
-    import TableAddress from './components/TableAddress.vue';
-    import benefitsLogin from './components/benefitsLogin.vue'
     import MainFooter from './components/MainFooter.vue'
-    import SearchAddress from './components/SearchAddress.vue';
 
-  export default {
-      name: 'App',
-      components: {
-    HeaderMain,
-    IntroSection,
-    LittleTutorial,
-    InputAddress,
-    TableAddress,
-    benefitsLogin,
-    MainFooter,
-    SearchAddress
-}
-  }
+export default {
+        name: 'App',
+        components: {
+            HeaderMain,
+            MainFooter,
+        }
+    }
 </script>
 
 <style>
