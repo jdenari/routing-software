@@ -3,7 +3,7 @@
         <!-- <RoutingComponent /> -->
         <HeaderMain />
         <router-view></router-view>
-        <MainFooter />
+        <MainFooter class="footer" />
     </div>
 </template>
 
@@ -21,7 +21,6 @@ export default {
 </script>
 
 <style>
-    
     @font-face {
         font-family: "euclid";
         src: local("euclid"),
@@ -31,4 +30,5 @@ export default {
     body{
         font-family: "euclid";
     }
+    
 </style>

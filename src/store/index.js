@@ -3,6 +3,7 @@ import axios from 'axios'
 export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
+        registerOrLogin: 'Login',
         cepFullAddress: '-',
         alertMessageText: 'There is an address with a error!',
         alertVisibility: false,
@@ -160,35 +161,32 @@ export default createStore({
     mutations: {
         
         travellingSalesmanProblemMutation: (state) => {
-            
-            console.log(state.outputDraft)
-            console.log(state.output)
-
-
             // updating the items states
             for (let n = 0; n < Object.keys(state.output).length; n++){
-
                 state.output[n] = state.outputDraft[n]
             }
         },
 
         cepSearchAPIMutation: (state, {response}) => {
-            
             state.cepFullAddress = response
         },
 
         messageAlertMutation: (state, {visibility}) => {
-            
             state.alertVisibility = visibility
         },
+
+        changeToLogin: (state) => {
+            state.registerOrLogin = 'Login'
+        },
+
+        changeToRegister: (state) => {
+            state.registerOrLogin = 'Register'
+        }
     
     },
     actions: {
-
         async cleanLatestValues ({ state }) {
-
             for (let e = 0; e < Object.keys(state.output).length; e++){
-                
                 state.output[e] = { 
                     address: '-',
                     distance: '-',
@@ -200,46 +198,34 @@ export default createStore({
         },
 
         async calculateFuelCost({state}){
-
             for (let c = 0; c < Object.keys(state.outputDraft).length - 1; c++){
-                
                 if (state.outputDraft[c].distance != '-'){
-
                     state.outputDraft[c].fuelCost = Number(state.outputDraft[c].distance) * Number(state.outputDraft[c].fuelPrice) / Number(state.outputDraft[c].fuelConsumption)
                 }
             }
         },
 
         async calculateTotal ({state}){
-
             state.outputDraft[8].distance = 0
             state.outputDraft[8].fuelCost = 0
-            
             for (let c = 0; c < Object.keys(state.outputDraft).length - 1; c++){
-                
                 if (state.outputDraft[c].distance != '-'){
-
                     state.outputDraft[8].distance = Number(state.outputDraft[8].distance) + Number(state.outputDraft[c].distance)
                     state.outputDraft[8].fuelCost = Number(state.outputDraft[8].fuelCost) + Number(state.outputDraft[c].fuelCost)
                 }
             }
-
             state.outputDraft[8].distance = state.outputDraft[8].distance.toFixed(2)
             state.outputDraft[8].fuelCost = state.outputDraft[8].fuelCost.toFixed(2)
         },
 
         async travellingSalesmanProblem({commit, state, dispatch}, input){
-    
             await dispatch('cleanLatestValues')
-
             let destinyVariable
             let originVariable
             let shortestDistance = 0
             let shortestAddress
             let index
-
             state.outputDraft[0] = {
-            
                 address: input.address.deliveryPoint0.toUpperCase(),
                 distance: 0,
                 cost: 0,
@@ -252,9 +238,7 @@ export default createStore({
             destinyVariable.splice(0,1)
             
             for (let c = 0; c < Object.keys(input.address).length -1; c++){
-
                 for (let n = 0; n < Object.values(destinyVariable).length; n++){
-                    
                     let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0='
                     + originVariable
                     + '&wp.1=' + Object.values(destinyVariable)[n]
@@ -265,24 +249,20 @@ export default createStore({
                         let response = responseAPI.data['resourceSets'][0]['resources'][0]['travelDistance']
 
                         if (shortestDistance === 0){
-
                             shortestDistance = response
                             shortestAddress = destinyVariable[n]
                             index = n
 
                         } else if (shortestDistance > response){
-
                             shortestDistance = response
                             shortestAddress = destinyVariable[n]
                             index = n
                         }
                     } catch(error){
-
                         await dispatch('messageAlert')
                         this.travellingSalesmanProblem.preventDefault()
                     }
                 }
-
                 state.outputDraft[c + 1] = { 
                     address: shortestAddress.toUpperCase(),
                     distance: shortestDistance.toFixed(2), 
@@ -290,7 +270,6 @@ export default createStore({
                     fuelConsumption: input.otherParameters.fuelConsumption,
                     fuelPrice: input.otherParameters.fuelPrice
                 }
-
                 originVariable = destinyVariable[index]
                 destinyVariable.splice(index,1)
                 shortestDistance = 0
@@ -299,38 +278,27 @@ export default createStore({
             }
 
             await dispatch('calculateFuelCost')
-
             await dispatch('calculateTotal')
-
             commit('travellingSalesmanProblemMutation')
         },
 
         async cepSearchAPI ({commit}, cepObject){
             
             let url = `https://viacep.com.br/ws/${cepObject.cepAddress}/json/`
-
             let response
-
             try{
 
                 const responseAPI = await axios.get(url)
-
                 response = `${responseAPI.data['logradouro']}, ${cepObject.cepNumber},  ${responseAPI.data['bairro']}, ${responseAPI.data['localidade']} - ${responseAPI.data['uf']}, ${responseAPI.data['cep']}`
-                
-                response = response.toUpperCase()
-                
+                response = response.toUpperCase()  
             } catch(error){console.log('Erro na requisição da API')}
-
             commit('cepSearchAPIMutation', { response })
         },
 
         messageAlert({commit}){
-
             let visibility = true
             commit('messageAlertMutation', {visibility}) 
-
                 setTimeout(() => {
-
                     visibility = false
                     commit('messageAlertMutation', {visibility})
                 }, "4000")
