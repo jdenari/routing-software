@@ -3,12 +3,18 @@
         <button 
             type="button" 
             class="btn btn-primary w-25"
-            >Entrar →
+            > {{ textButton }}
         </button>
     </div>  
 </template>
     <script>
         export default {
         name: 'ButtonSubmit',
+        props: {
+            textButton: {
+                type: String,
+                required: true
+            }
+        }
     }
 </script>

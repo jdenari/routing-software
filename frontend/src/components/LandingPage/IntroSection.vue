@@ -5,7 +5,7 @@
             <div class="lead m-2">Amet consectetur adipiscing elit pellentesque habitant morbi. Pharetra sit amet aliquam id diam maecenas ultricies mi. Sed risus pretium quam vulputate. </div>
         </div>
         <div class="col-6 p-3">
-            <img src="../assets/main-image.png" alt="" class="img-responsive w-100">
+            <img src="../../assets/main-image.png" alt="" class="img-responsive w-100">
         </div>
     </div>
 </template>

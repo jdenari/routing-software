@@ -8,7 +8,7 @@
                     :RegisterFieldItem="item"
                     >
             </RegisterField>
-            <ButtonSubmit class="my-2"/>
+            <ButtonSubmit class="my-2" textButton="Registrar"/>
         </form>
     </div>
 </template>

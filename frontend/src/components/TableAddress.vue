@@ -10,18 +10,18 @@
                         <th scope="col" class="text-center text-nowrap">COST (R$)</th>
                     </tr>
                 </thead>
-                <lineResultTable />
+                <LineResultTable />
             </table>
         </div>
     </div>
 </template>
   
 <script>
-    import lineResultTable from './lineResultTable.vue'
+    import LineResultTable from './LineResultTable.vue'
     export default {
     name: 'TableAddress',
     components:{
-        lineResultTable
+        LineResultTable
     }
     }
 </script>

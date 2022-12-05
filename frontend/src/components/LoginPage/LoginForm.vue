@@ -23,7 +23,7 @@
                     >
                 </div>
                     <a href="#" class="nav-link" @click="changeToRegister">Not yet registered?</a>
-                <ButtonSubmit />
+                <ButtonSubmit textButton="Entrar" />
             </div>
         </form>
     </div>

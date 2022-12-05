@@ -59,6 +59,6 @@
   
 <script>
     export default {
-    name: 'lineResultTable'
+    name: 'LineResultTable'
     }
 </script>
