@@ -13,7 +13,7 @@
             <ButtonSubmit 
                 class="my-2" 
                 textButton="Register"
-                @click="print"
+                @click="registerNewUser"
             />
         </form>
     </div>
@@ -42,15 +42,37 @@ export default {
                 'text', 'text', 'email', 'password','password'
             ],
             payloadRegisterData: [],
+            returnMessage: null,
         }
     },
     methods: {
-        async print(e){
+        async registerNewUser(e){
             e.preventDefault();
             this.registerDataItems.forEach((item) => {
                 this.payloadRegisterData.push(item.model);
             });
-            console.log(this.payloadRegisterData)
+            const dataObject = {
+                firstName: this.payloadRegisterData[0],
+                lastName: this.payloadRegisterData[1],
+                email: this.payloadRegisterData[2],
+                password: this.payloadRegisterData[3],
+                confirmPassword: this.payloadRegisterData[4],
+            }
+            const jsonDataObject = JSON.stringify(dataObject)
+            await fetch("http://localhost:5000/api/auth/register", {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: jsonDataObject
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                if(data.error){
+                    // it prints the error
+                    this.returnMessage = data.error;
+                } else {
+                    this.$store.commit('changeToLogin')
+                }
+            })
         }
     }
 }

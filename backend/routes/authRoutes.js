@@ -11,15 +11,15 @@ router.post("/register", async (req, res) => {
     const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
-    const confirmpassword = req.body.confirmpassword
+    const confirmPassword = req.body.confirmPassword
 
     // check for required fields
-    if(firstName == null || lastName == null || email == null || password == null || confirmpassword == null){
+    if(firstName == null || lastName == null || email == null || password == null || confirmPassword == null){
         return res.status(400).json({ error: "Por favor, preencha todos os campos!"});
     }
 
     // checks if the passwords match
-    if( password !=  confirmpassword){
+    if( password !=  confirmPassword){
         return res.status(400).json({ error: "As senhas não conferem"});
     }
 
