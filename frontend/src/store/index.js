@@ -7,11 +7,14 @@ export default createStore({
         cepFullAddress: '-',
         alertMessageText: 'There is an address with a error!',
         alertVisibility: false,
-        firstName: 'a',
-        lastName: 'b',
-        email: 'c',
-        password: 'd',
-        confirmPassword: 'e',
+        authenticated: false,
+        token: null, 
+        userId: null,
+        firstName: null,
+        lastName: null,
+        email: null,
+        password: null,
+        confirmPassword: null,
         outputDraft: {
             0: {
                 address: '-',
@@ -186,6 +189,14 @@ export default createStore({
 
         changeToRegister: (state) => {
             state.registerOrLogin = 'Register'
+        },
+        authenticate: (state, data) => {
+            state.authenticated = true
+            state.token = data.token
+            state.userId = data.userId
+            state.firstName = data.firstName
+            state.lastName = data.lastName
+            state.email = data.email
         }
     
     },
