@@ -7,6 +7,11 @@ export default createStore({
         cepFullAddress: '-',
         alertMessageText: 'There is an address with a error!',
         alertVisibility: false,
+        firstName: 'a',
+        lastName: 'b',
+        email: 'c',
+        password: 'd',
+        confirmPassword: 'e',
         outputDraft: {
             0: {
                 address: '-',
