@@ -29,7 +29,10 @@
             </div>
         </div>
         <div class="text-center p-3">
-            <button type="button" class="btn btn-success">CREATE AN ACCOUNT!</button>
+            <router-link to="/LoginPage">
+                <button type="button" class="btn btn-success" @click="this.$store.commit('changeToRegister')">CREATE AN ACCOUNT!</button>
+            </router-link>
+            
         </div>
         <div class="text-center p-3">
             <img src="../../assets/illustrate-image-2.png" alt="" class="col-4 p-3">
