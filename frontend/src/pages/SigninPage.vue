@@ -1,9 +1,9 @@
 <template>
     <div class="signin-form-div container p-3">
-        <div v-if='$store.state.registerOrLogin == "Login"'>
+        <div v-if='$store.state.registerOrLogin === "Login"'>
             <LoginForm  />
         </div>
-        <div v-if='$store.state.registerOrLogin == "Register"'>
+        <div v-if='$store.state.registerOrLogin === "Register"'>
             <RegisterForm />
         </div>
         <MainFooter class="footer" />
