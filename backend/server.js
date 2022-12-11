@@ -1,4 +1,5 @@
 // modules
+require('dotenv').config()
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -11,6 +12,8 @@ const authRouter = require("./routes/authRoutes");
 const dbName = "databaseRoutering"
 const port = 5000;
 
+const DB_USER = process.env.DB_USER
+const DB_PASS = process.env.DB_PASS
 
 const app = express();
 
@@ -26,9 +29,10 @@ app.get("/", (req, res) => {
 
 // mongoDB connection
 mongoose.connect(
-    `mongodb://localhost/${dbName}`,
+    `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.06ovsjg.mongodb.net/users?retryWrites=true&w=majority`,
 );
 
 app.listen(port, () => {
+    console.log(`Nossa variável ${process.env.MY_VARIABLE}`)
     console.log(`backend rodando na porta ${port}`)
 })
