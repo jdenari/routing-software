@@ -3,18 +3,9 @@
         <div class="container">
             <ul class="navbar-nav lg-auto">
                 <li class="nav-item px-3">
-                    <router-link to="/">
+                    <router-link to="/" class="no-underline" v-if='($store.state.authenticated === false)'>
                         <a href="#" class="nav-link">Home</a>
                     </router-link>
-                </li>
-                <li class="nav-item px-3">
-                    <a href="#" class="nav-link">Route</a>
-                </li>
-                <li class="nav-item px-3">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-                <li class="nav-item px-3">
-                    <a href="#" class="nav-link">Documentation</a>
                 </li>
             </ul>
             <LoginOffHeader v-if='($store.state.authenticated === false)'/>
@@ -33,3 +24,5 @@ export default {
     },
 }
 </script>
+<style scoped>
+</style>

@@ -59,7 +59,7 @@ export default {
                 confirmPassword: this.payloadRegisterData[4],
             }
             const jsonDataObject = JSON.stringify(dataObject)
-            await fetch("http://localhost:5000/api/auth/register", {
+            await fetch("https://routehelper.online/api/auth/register", {
                 method: "POST",
                 headers: {"Content-type": "application/json"},
                 body: jsonDataObject

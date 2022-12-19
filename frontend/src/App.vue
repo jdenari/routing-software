@@ -22,8 +22,11 @@ export default {
     src: local("euclid"),
     url(./fonts/euclid-circular-a-cufonfonts/Euclid-Circular-A-Regular.ttf) format("truetype");
 }
-
 body{
     font-family: "euclid";
-}    
+}  
+.no-underline{
+    text-decoration: none !important;
+    color: inherit !important;
+}
 </style>

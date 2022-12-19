@@ -1,27 +1,42 @@
 <template>
-    <div class="dropdown">
-        <button class="nav-item btn btn-light dropdown-toggle rounded-pill d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+    <Popper>
+        <button class="nav-item btn btn-light dropdown-toggle rounded-pill d-flex justify-content-center align-items-center">
             <img 
                 src="../../assets/perfil-photo/joao-vitor-denari-dos-santos.png" 
                 alt=""
                 class="perfil-photo m-1"
             >
             <div class="m-2 text-dark"> {{ $store.state.firstName }} </div>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
         </button>
-    </div>
+      <template #content>
+        <ul class="list-group rounded-4 text-start p-2 px-4">
+            <li class="btn btn-light p-0 py-2 border border-0">Home</li>
+            <li class="btn btn-light p-0 py-2 border border-0">Actions</li>
+            <li class="btn btn-light p-0 py-2 border border-0">Profile</li>
+            <li class="btn btn-light p-0 py-2 border border-0">Logout</li>
+        </ul>
+      </template>
+    </Popper>
 </template>
 <script>
-    export default {
-        name: 'LoginOnHeader',
-    }
+import { defineComponent } from "vue";
+import Popper from "vue3-popper";
+
+export default defineComponent({
+    name: "LoginOnHeader",
+    components: {
+    Popper,
+    },
+});
 </script>
 <style scoped>
 .perfil-photo{
     height: 30px;
+}
+.nav-item{
+    min-width: 200px;
+}
+.list-group{
+    min-width: 200px;
 }
 </style>
