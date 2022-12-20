@@ -77,7 +77,7 @@ export default {
                     this.returnMessage = data.error;
                 } else {
                     // it takes to the dashboard page and commit all the page with the user info
-                    this.$router.push({ path: '/ClientPage' })
+                    this.$router.push({ path: '/Client/Home' })
                     this.$store.commit("authenticate", {
                         token: data.token, 
                         userId: data.userId, 

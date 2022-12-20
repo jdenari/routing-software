@@ -14,7 +14,7 @@ const routes =  [
         component: SigninPage
     },
     {
-        path: "/Client",
+        path: "/Client/Home",
         component: ClientPage
     },
     {
