@@ -7,7 +7,7 @@
                         <th scope="col" class="text-center text-nowrap">ID</th>
                         <th scope="col" class="text-center text-nowrap">ROUTE</th>
                         <th scope="col" class="text-center text-nowrap">DISTANCE (KM)</th>
-                        <th scope="col" class="text-center text-nowrap">COST (R$)</th>
+                        <th scope="col" class="text-center text-nowrap">COST ($)</th>
                     </tr>
                 </thead>
                 <LineResultTable />

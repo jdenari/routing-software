@@ -6,7 +6,7 @@
             <div class="alert alert-warning m-auto d-flex align-items-center w-50 m-5" role="alert" v-if="$store.state.alertVisibility">     
                 <div class="p w-100 text-center"> {{ this.$store.alertMessageText }} </div>
             </div>
-            <div class="h6 w-75 m-auto p-2">Input all address</div>
+            <div class="h6 w-75 m-auto p-2">Input all addresses</div>
             <!-- First origin address field -->
             <div class="input-group w-75 m-auto">
                 
@@ -68,20 +68,6 @@
                     v-model="arr[addressfield.id]"
                 ></address-field>
             </ul>
-            <div class="h6 w-75 m-auto p-2">Bind Maps Key</div>
-            <div class="input-group w-75 m-auto">
-                <div class="col-9">
-                    <div class="p-1">
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            aria-label="Amount (to the nearest reais) " 
-                            placeholder="Bind Key"
-                            v-model="bindKey">
-                    </div>
-                </div>
-            </div>
-
             <!-- Other fields inputs (fuel price and the button calculate) -->
             <div class="input-group w-75 m-auto">
                 <div class="w-100 d-flex">

@@ -8,7 +8,7 @@ export default createStore({
         alertMessageText: 'There is an address with a error!',
         alertVisibility: false,
         authenticated: false,
-        modalYesNo: true,
+        modalYesNo: false,
         token: null, 
         userId: null,
         firstName: null,

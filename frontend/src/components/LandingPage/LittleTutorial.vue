@@ -25,10 +25,13 @@
                 <div class="h5 m-2">Input your address</div>
             </div>
             <div class="col-2 d-flex text-light justify-content-center">
-                <div class="h5 m-2">Input your BindMaps key</div>
+                <div>
+                    <div class="h5 m-2">Input fuel consumption and fuel costs</div>
+                    <div class="p m-2">(Optional)</div>
+                </div>
             </div>
             <div class="col-2 d-flex text-light justify-content-center">
-                <div class="h5 m-2">Press the Calculate Button</div>
+                <div class="h5 m-2">Press the calculate button</div>
             </div>
         </div>
     </div>
