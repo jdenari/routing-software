@@ -8,6 +8,7 @@ export default createStore({
         alertMessageText: 'There is an address with a error!',
         alertVisibility: false,
         authenticated: false,
+        modalYesNo: true,
         token: null, 
         userId: null,
         firstName: null,
@@ -189,6 +190,9 @@ export default createStore({
 
         changeToRegister: (state) => {
             state.registerOrLogin = 'Register'
+        },
+        changeModalYesNo: (state) => {
+            state.modalYesNo == true ? state.modalYesNo = false : state.modalYesNo = true
         },
         authenticate: (state, data) => {
             state.authenticated = true

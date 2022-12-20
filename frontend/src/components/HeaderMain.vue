@@ -8,6 +8,7 @@
                     </router-link>
                 </li>
             </ul>
+            <ModalYesNo />
             <LoginOffHeader v-if='($store.state.authenticated === false)'/>
             <LoginOnHeader v-if='($store.state.authenticated === true)'/>
         </div>       
@@ -16,11 +17,13 @@
 <script>
 import LoginOffHeader from './Header/LoginOffHeader.vue';
 import LoginOnHeader from './Header/LoginOnHeader.vue';
+import ModalYesNo from './ModalYesNo.vue';
 export default {
     name: 'HeaderMain',
     components: {
     LoginOffHeader
     , LoginOnHeader
+    , ModalYesNo
     },
 }
 </script>

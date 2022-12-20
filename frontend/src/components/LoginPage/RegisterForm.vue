@@ -20,9 +20,10 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import RegisterField from './RegisterField.vue'
 import ButtonSubmit from '../ButtonSubmit.vue'
-export default {
+export default defineComponent({
     name: 'RegisterForm',
     components: {
         RegisterField,
@@ -46,36 +47,37 @@ export default {
         }
     },
     methods: {
-        async registerNewUser(e){
-            e.preventDefault();
-            this.registerDataItems.forEach((item) => {
-                this.payloadRegisterData.push(item.model);
-            });
-            const dataObject = {
-                firstName: this.payloadRegisterData[0],
-                lastName: this.payloadRegisterData[1],
-                email: this.payloadRegisterData[2],
-                password: this.payloadRegisterData[3],
-                confirmPassword: this.payloadRegisterData[4],
-            }
-            const jsonDataObject = JSON.stringify(dataObject)
-            await fetch("https://routehelper.online/api/auth/register", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: jsonDataObject
-            })
-            .then((resp) => resp.json())
-            .then((data) => {
-                if(data.error){
-                    // it prints the error
-                    this.returnMessage = data.error;
-                } else {
-                    this.$store.commit('changeToLogin')
-                }
-            })
+        async registerNewUser(){
+            
+            this.$alert("Hello Vue Simple Alert.");
+            // this.registerDataItems.forEach((item) => {
+            //     this.payloadRegisterData.push(item.model);
+            // });
+            // const dataObject = {
+            //     firstName: this.payloadRegisterData[0],
+            //     lastName: this.payloadRegisterData[1],
+            //     email: this.payloadRegisterData[2],
+            //     password: this.payloadRegisterData[3],
+            //     confirmPassword: this.payloadRegisterData[4],
+            // }
+            // const jsonDataObject = JSON.stringify(dataObject)
+            // await fetch("https://routehelper.online/api/auth/register", {
+            //     method: "POST",
+            //     headers: {"Content-type": "application/json"},
+            //     body: jsonDataObject
+            // })
+            // .then((resp) => resp.json())
+            // .then((data) => {
+            //     if(data.error){
+            //         // it prints the error
+            //         this.returnMessage = data.error;
+            //     } else {
+            //         this.$store.commit('changeToLogin')
+            //     }
+            // })
         }
     }
-}
+})
 </script>
 
 <style scoped>
