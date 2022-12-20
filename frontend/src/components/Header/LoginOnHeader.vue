@@ -10,7 +10,7 @@
         </button>
       <template #content>
         <ul class="list-group rounded-4 text-start p-2 px-4">
-            <router-link to="/Client" class="no-underline">
+            <router-link to="/Client/Home" class="no-underline">
                 <li class="btn btn-light p-0 py-2 border border-0 w-100">Home</li>
             </router-link>
             <router-link to="/Client/ActionsRecorded" class="no-underline">
@@ -19,7 +19,9 @@
             <router-link to="/Client/UpdateProfile" class="no-underline">
                 <li class="btn btn-light p-0 py-2 border border-0 w-100">Profile</li>
             </router-link>
-            <li class="btn btn-light p-0 py-2 border border-0">Logout</li>
+            <router-link to="/" class="no-underline">
+                <li class="btn btn-light p-0 py-2 border border-0 w-100" @click="this.$store.commit('deauthenticate')">Logout</li>
+            </router-link>
         </ul>
       </template>
     </Popper>

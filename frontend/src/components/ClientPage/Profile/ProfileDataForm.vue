@@ -13,7 +13,12 @@
                 >
                 </ProfileDataField>
                 <div class="d-grid p-1 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary" type="button">Update</button>
+                    <button 
+                        class="btn btn-primary" 
+                        type="button"
+                        @click="this.$store.commit('changeModalYesNo')"
+                        >Update
+                    </button>
                 </div>
             </div>
             <div class="m-1 my-2 p-3 border">
@@ -27,7 +32,12 @@
                 >
                 </ProfilePasswordField>
                 <div class="d-grid p-1 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary" type="button">Update</button>
+                    <button 
+                        class="btn btn-primary" 
+                        type="button"
+                        @click="this.$store.commit('changeModalYesNo')"
+                        >Update
+                    </button>
                 </div>
             </div>
         </form>

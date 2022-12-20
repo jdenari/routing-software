@@ -201,8 +201,18 @@ export default createStore({
             state.firstName = data.firstName
             state.lastName = data.lastName
             state.email = data.email
+        },
+        deauthenticate: (state) => {
+            state.authenticated = false,
+            state.modalYesNo = false,
+            state.token = null, 
+            state.userId = null,
+            state.firstName = null,
+            state.lastName = null,
+            state.email = null,
+            state.password = null,
+            state.confirmPassword = null
         }
-    
     },
     actions: {
         async cleanLatestValues ({ state }) {

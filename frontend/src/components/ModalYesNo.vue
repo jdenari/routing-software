@@ -11,8 +11,7 @@
             <transition name="slide" appear>
                 <div class="mainModal card p-3" v-if='$store.state.modalYesNo'>
                     <div class="card-body">
-                        <h5 class="card-title">{{ titleModal }}</h5>
-                        <p class="card-text"> {{ textModal }}</p>
+                        <h5 class="card-text">Are you sure? </h5>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button 
                                 type="button" 
@@ -41,30 +40,20 @@ export default {
             showModal: true
         }
     },
-    props: {
-        titleModal: {
-            type: String,
-            required: true
-        },
-        textModal: {
-            type: String,
-            required: true
-        }
-    }
 }
 </script>
 
 <style scoped>
 .mainModal {
     position: fixed;
-    top: 20%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 99;
     
     width: 100%;
     max-width: 400px;
-    background-color: #FFF;
+    background-color: #F8F9FA;
     border-radius: 16px;
     
     padding: 25px;
