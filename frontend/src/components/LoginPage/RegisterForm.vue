@@ -15,6 +15,9 @@
                 textButton="Register"
                 @click="registerNewUser"
             />
+            <MessageText 
+                :messageText="$store.state.messageText"
+            />
         </form>
     </div>
 </template>
@@ -23,11 +26,13 @@
 import { defineComponent } from "vue";
 import RegisterField from './RegisterField.vue'
 import ButtonSubmit from '../ButtonSubmit.vue'
+import MessageText from "../MessageText.vue";
 export default defineComponent({
     name: 'RegisterForm',
     components: {
-        RegisterField,
-        ButtonSubmit
+        RegisterField
+        , ButtonSubmit
+        , MessageText
     },
     data () {
         return {
@@ -72,7 +77,7 @@ export default defineComponent({
             .then((data) => {
                 if(data.error){
                     // it prints the error
-                    this.returnMessage = data.error;
+                    this.$store.commit('updateMessageText', data.error)
                 } else {
                     this.$store.commit('changeToLogin')
                 }

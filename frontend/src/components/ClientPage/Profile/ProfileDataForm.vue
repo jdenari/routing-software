@@ -40,6 +40,9 @@
                     </button>
                 </div>
             </div>
+            <MessageText 
+                :messageText="$store.state.messageText"
+            />
         </form>
         <ModalYesNo 
             @function="updateProfileData()"
@@ -52,12 +55,14 @@
 import ProfileDataField from './ProfileDataField.vue'
 import ProfilePasswordField from './ProfilePasswordField.vue'
 import ModalYesNo from '@/components/ModalYesNo.vue'
+import MessageText from '@/components/MessageText.vue'
 export default {
     name: 'ProfileDataForm',
     components: {
         ProfileDataField
         , ProfilePasswordField
         , ModalYesNo
+        , MessageText
     },
     data (){
         return {
@@ -113,7 +118,8 @@ export default {
             .then((resp) => resp.json())
             .then((data) => {
                 // it prints the message from the backend and it commits all changes made
-                this.messageWarning = data.error;
+                this.$store.commit('updateMessageText', data.error)
+                this.$store.dispatch('eraseMessageText')
                 this.$store.commit("authenticate", {
                     token: data.data.token, 
                     userId: data.data.userId, 

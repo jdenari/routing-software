@@ -3,9 +3,9 @@
         <div class="container p-3 py-5">
             <div class="h1 text-center p-3">Your distance calculator</div>
             <!-- message alert when there is a error-->
-            <div class="alert alert-warning m-auto d-flex align-items-center w-50 m-5" role="alert" v-if="$store.state.alertVisibility">     
-                <div class="p w-100 text-center"> {{ this.$store.alertMessageText }} </div>
-            </div>
+            <MessageText 
+                :messageText="this.$store.state.messageText"
+            />
             <div class="h6 w-75 m-auto p-2">Input all addresses</div>
             <!-- First origin address field -->
             <div class="input-group w-75 m-auto">
@@ -120,137 +120,139 @@
     </div>
 </template>
 <script>
-        import AddressField from './AddressField.vue';
-        import { ref } from 'vue'
-        export default {
-        name: 'InputAddress',
-        components: { AddressField },
-        data() {
-            return {
-                // single
-                newAddressField: ref(''), 
-                arr: ref({}),
-                nextAddressFieldID: ref(2),
-                nextAddressFieldTitle: ref([]),
-                bindKey: '',
-                deliveryPoint0: '',
-                deliveryPoint1: '',
-                fuelPrice: '',
-                fuelConsumption: '',
+import AddressField from './AddressField.vue';
+import MessageText from './MessageText.vue';
+import { ref } from 'vue'
+export default {
+    name: 'InputAddress',
+    components: { 
+        AddressField 
+        , MessageText
+    },
+    data() {
+        return {
+            // single
+            newAddressField: ref(''), 
+            arr: ref({}),
+            nextAddressFieldID: ref(2),
+            nextAddressFieldTitle: ref([]),
+            bindKey: '',
+            deliveryPoint0: '',
+            deliveryPoint1: '',
+            fuelPrice: '',
+            fuelConsumption: '',
 
-                // arrays
+            // arrays
 
-                // objects
-                AddressFieldObject: [],
-                allAddressObject: [],   
-                errors: [],        
+            // objects
+            AddressFieldObject: [],
+            allAddressObject: [],   
+            errors: [],        
+        }
+    },   
+    methods: {
+
+        // it checks if all input address are filled! 
+        checkBlankForm: function (e){
+
+            if (this.nextAddressFieldID === 2) {
+                if (this.deliveryPoint0 && this.deliveryPoint1) {return true;}
             }
-        },   
-        methods: {
 
-            // it checks if all input address are filled! 
-            checkBlankForm: function (e){
+            if (this.nextAddressFieldID === 3) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2']) {return true;}
+            }
 
-                if (this.nextAddressFieldID === 2) {
-                    if (this.deliveryPoint0 && this.deliveryPoint1) {return true;}
-                }
+            if (this.nextAddressFieldID === 4) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3']) {return true;}
+            }
 
-                if (this.nextAddressFieldID === 3) {
-                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2']) {return true;}
-                }
+            if (this.nextAddressFieldID === 5) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4']) {return true;}
+            }
 
-                if (this.nextAddressFieldID === 4) {
-                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3']) {return true;}
-                }
+            if (this.nextAddressFieldID === 6) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5']) {return true;}
+            }
 
-                if (this.nextAddressFieldID === 5) {
-                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4']) {return true;}
-                }
+            if (this.nextAddressFieldID === 7) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6']) {return true;}
+            }
 
-                if (this.nextAddressFieldID === 6) {
-                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5']) {return true;}
-                }
+            if (this.nextAddressFieldID === 8) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6'] && this.arr['deliveryPoint7']) {return true;}
+            }
 
-                if (this.nextAddressFieldID === 7) {
-                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6']) {return true;}
-                }
+            this.errors = [];
 
-                if (this.nextAddressFieldID === 8) {
-                    if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6'] && this.arr['deliveryPoint7']) {return true;}
-                }
+            if (!this.deliveryPoint0){this.errors.push(1);}
+            if (!this.deliveryPoint1){this.errors.push(2);}
 
-                this.errors = [];
+            for (let a = 2; a < this.nextAddressFieldID; a++){
+                if (!this.arr['deliveryPoint' + a]){this.errors.push(a + 1);}
+            }
 
-                if (!this.deliveryPoint0){this.errors.push(1);}
-                if (!this.deliveryPoint1){this.errors.push(2);}
+            this.$store.commit('updateMessageText', `The Fields [${this.errors}] are empty! Fill or remove them.`)
+            this.$store.dispatch('eraseMessageText')
+            e.preventDefault();
+        },
 
-                for (let a = 2; a < this.nextAddressFieldID; a++){
-                    if (!this.arr['deliveryPoint' + a]){this.errors.push(a + 1);}
-                }
+        // create a object to send the address input
+        createallAddressObject(){
 
-                this.$store.alertMessageText = `The Fields [${this.errors}] are empty! Fill or remove them.`
-
-                this.$store.dispatch('messageAlert')
-
-                e.preventDefault();
-            },
-
-            // create a object to send the address input
-            createallAddressObject(){
-
-                this.allAddressObject = {
-                    address: 
-                        Object.assign({deliveryPoint0: this.deliveryPoint0}, {deliveryPoint1: this.deliveryPoint1}, this.arr),
-                    otherParameters: 
-                        Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice})
-                }
+            this.allAddressObject = {
+                address: 
+                    Object.assign({deliveryPoint0: this.deliveryPoint0}, {deliveryPoint1: this.deliveryPoint1}, this.arr),
+                otherParameters: 
+                    Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice})
+            }
 
 
-                this.$store.dispatch('travellingSalesmanProblem', this.allAddressObject)
-                this.allAddressObject = []
-            },
+            this.$store.dispatch('travellingSalesmanProblem', this.allAddressObject)
+            this.allAddressObject = []
+        },
 
-            // create a new field address inside the html
-            addAddressField() {
-                if (this.nextAddressFieldID < 8) {
-                    const id = 'deliveryPoint' + this.nextAddressFieldID++
-                        this.AddressFieldObject.push({
-                            id,
-                            title: this.newAddressField
-                            })
-                    this.arr[id] = ''
-                    this.newAddressField = ''
-
-                } else {
-                    this.$store.alertMessageText = 'You must be logged to have access to more ckeckpoints!'
-                    this.$store.dispatch('messageAlert')
-                }
-            },
-
-            // remove a field address inside the html
-            removeAddressField() {
-                this.nextAddressFieldID = this.nextAddressFieldID - 1
-                const id = 'deliveryPoint' + this.nextAddressFieldID
-                    this.AddressFieldObject.pop({
+        // create a new field address inside the html
+        addAddressField() {
+            if (this.nextAddressFieldID < 8) {
+                const id = 'deliveryPoint' + this.nextAddressFieldID++
+                    this.AddressFieldObject.push({
                         id,
                         title: this.newAddressField
                         })
-                delete this.arr[id]
+                this.arr[id] = ''
                 this.newAddressField = ''
-            },
 
-            // clean all the info inside the inputs
-            cleanInput(){
-                this.deliveryPoint0 = ''
-                this.deliveryPoint1 = ''
-
-                for (let e = 2; e < this.nextAddressFieldID; e++){
-                    this.arr['deliveryPoint' + e] = ''
-                }
-
-                this.fuelPrice = '',
-                this.fuelConsumption = ''
+            } else {
+                this.$store.commit('updateMessageText', 'You must be logged to have access to more ckeckpoints!')
+                this.$store.dispatch('eraseMessageText')
             }
         },
-    }
+
+        // remove a field address inside the html
+        removeAddressField() {
+            this.nextAddressFieldID = this.nextAddressFieldID - 1
+            const id = 'deliveryPoint' + this.nextAddressFieldID
+                this.AddressFieldObject.pop({
+                    id,
+                    title: this.newAddressField
+                    })
+            delete this.arr[id]
+            this.newAddressField = ''
+        },
+
+        // clean all the info inside the inputs
+        cleanInput(){
+            this.deliveryPoint0 = ''
+            this.deliveryPoint1 = ''
+
+            for (let e = 2; e < this.nextAddressFieldID; e++){
+                this.arr['deliveryPoint' + e] = ''
+            }
+
+            this.fuelPrice = '',
+            this.fuelConsumption = ''
+        }
+    },
+}
 </script>

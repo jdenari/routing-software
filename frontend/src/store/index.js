@@ -5,8 +5,7 @@ export default createStore({
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
         registerOrLogin: 'Login',
         cepFullAddress: '-',
-        alertMessageText: 'There is an address with a error!',
-        alertVisibility: false,
+        messageText: null,
         authenticated: false,
         modalYesNo: false,
         token: null, 
@@ -180,10 +179,6 @@ export default createStore({
             state.cepFullAddress = response
         },
 
-        messageAlertMutation: (state, {visibility}) => {
-            state.alertVisibility = visibility
-        },
-
         changeToLogin: (state) => {
             state.registerOrLogin = 'Login'
         },
@@ -212,6 +207,12 @@ export default createStore({
             state.email = null,
             state.password = null,
             state.confirmPassword = null
+        },
+        updateMessageText: (state, data) => {
+            state.messageText = data
+        },
+        eraseMessageText: (state) => {
+            state.messageText = null
         }
     },
     actions: {
@@ -324,15 +325,11 @@ export default createStore({
             } catch(error){console.log('Erro na requisição da API')}
             commit('cepSearchAPIMutation', { response })
         },
-
-        messageAlert({commit}){
-            let visibility = true
-            commit('messageAlertMutation', {visibility}) 
-                setTimeout(() => {
-                    visibility = false
-                    commit('messageAlertMutation', {visibility})
-                }, "4000")
-
+        
+        eraseMessageText({commit}){
+            setTimeout(() => {
+                commit('eraseMessageText')
+            }, "4000")
         }
     },
     modules: {

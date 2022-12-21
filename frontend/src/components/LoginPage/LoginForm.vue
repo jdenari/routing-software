@@ -29,7 +29,9 @@
                     textButton="Go" 
                     @click="loginVerification"
                 />
-                <div class="p"> {{ this.returnMessage }}</div>
+                <MessageText
+                    :messageText="$store.state.messageText" 
+                />
             </div>
         </form>
     </div>
@@ -37,10 +39,12 @@
 
 <script>
 import ButtonSubmit from '../ButtonSubmit.vue'
+import MessageText from '../MessageText.vue'
 export default {
     name: 'LoginForm',
     components: {
         ButtonSubmit
+        , MessageText
     },
     data (){
         return {
@@ -77,7 +81,8 @@ export default {
             .then((data) => {
                 if(data.error){
                     // it prints the error
-                    this.returnMessage = data.error;
+                    this.$store.commit('updateMessageText', data.error)
+                    this.$store.dispatch('eraseMessageText')
                 } else {
                     // it takes to the dashboard page and commit all the page with the user info
                     this.$router.push({ path: '/Client/Home' })
