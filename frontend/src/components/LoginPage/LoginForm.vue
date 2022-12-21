@@ -64,7 +64,10 @@ export default {
                 password: this.auth.password
             }
             const jsonDataObject = JSON.stringify(dataObject)
-            await fetch("https://routehelper.online/api/auth/login", {
+            // dev mode
+            await fetch("http://localhost:5000/api/auth/login", {
+            // production mode
+            // await fetch("https://routehelper.online/api/auth/login", {
                 method: "POST",
                 headers: {"Content-type": "application/json"},
                 body: jsonDataObject

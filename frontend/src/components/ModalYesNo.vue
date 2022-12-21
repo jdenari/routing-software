@@ -11,7 +11,7 @@
             <transition name="slide" appear>
                 <div class="mainModal card p-3" v-if='$store.state.modalYesNo'>
                     <div class="card-body">
-                        <h5 class="card-text">Are you sure? </h5>
+                        <h5 class="card-text"> {{ textModal }}</h5>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button 
                                 type="button" 
@@ -22,7 +22,7 @@
                             <button 
                                 type="button" 
                                 class="btn btn-primary" 
-                                @click="this.$store.commit('changeModalYesNo')"
+                                @click="$emit('function');this.$store.commit('changeModalYesNo')"
                                 >Confirm
                             </button>
                         </div>
@@ -40,6 +40,12 @@ export default {
             showModal: true
         }
     },
+    props: {
+        textModal: {
+            type: String,
+            required: true
+        },
+    }
 }
 </script>
 

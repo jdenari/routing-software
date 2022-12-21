@@ -7,6 +7,7 @@ const cors = require("cors");
 
 // routes
 const authRouter = require("./routes/authRoutes");
+const userRouter = require("./routes/userRoutes");
 
 // config
 const dbName = "databaseRoutering"
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/api/auth", authRouter)
+app.use("/api/user", userRouter)
 
 app.get("/", (req, res) => {
     res.json({ message: "Rota teste"})

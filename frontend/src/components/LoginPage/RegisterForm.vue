@@ -49,32 +49,34 @@ export default defineComponent({
     methods: {
         async registerNewUser(){
             
-            this.$alert("Hello Vue Simple Alert.");
-            // this.registerDataItems.forEach((item) => {
-            //     this.payloadRegisterData.push(item.model);
-            // });
-            // const dataObject = {
-            //     firstName: this.payloadRegisterData[0],
-            //     lastName: this.payloadRegisterData[1],
-            //     email: this.payloadRegisterData[2],
-            //     password: this.payloadRegisterData[3],
-            //     confirmPassword: this.payloadRegisterData[4],
-            // }
-            // const jsonDataObject = JSON.stringify(dataObject)
+            this.registerDataItems.forEach((item) => {
+                this.payloadRegisterData.push(item.model);
+            });
+            const dataObject = {
+                firstName: this.payloadRegisterData[0],
+                lastName: this.payloadRegisterData[1],
+                email: this.payloadRegisterData[2],
+                password: this.payloadRegisterData[3],
+                confirmPassword: this.payloadRegisterData[4],
+            }
+            const jsonDataObject = JSON.stringify(dataObject)
+            // dev mode
+            await fetch("http://localhost:5000/api/auth/register", {
+            // production mode
             // await fetch("https://routehelper.online/api/auth/register", {
-            //     method: "POST",
-            //     headers: {"Content-type": "application/json"},
-            //     body: jsonDataObject
-            // })
-            // .then((resp) => resp.json())
-            // .then((data) => {
-            //     if(data.error){
-            //         // it prints the error
-            //         this.returnMessage = data.error;
-            //     } else {
-            //         this.$store.commit('changeToLogin')
-            //     }
-            // })
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: jsonDataObject
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                if(data.error){
+                    // it prints the error
+                    this.returnMessage = data.error;
+                } else {
+                    this.$store.commit('changeToLogin')
+                }
+            })
         }
     }
 })

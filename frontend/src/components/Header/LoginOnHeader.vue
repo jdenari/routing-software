@@ -8,22 +8,22 @@
             >
             <div class="m-2 text-dark"> {{ $store.state.firstName }} </div>
         </button>
-      <template #content>
-        <ul class="list-group rounded-4 text-start p-2 px-4">
-            <router-link to="/Client/Home" class="no-underline">
-                <li class="btn btn-light p-0 py-2 border border-0 w-100">Home</li>
-            </router-link>
-            <router-link to="/Client/ActionsRecorded" class="no-underline">
-                <li class="btn btn-light p-0 py-2 border border-0 w-100">Actions</li>
-            </router-link>
-            <router-link to="/Client/UpdateProfile" class="no-underline">
-                <li class="btn btn-light p-0 py-2 border border-0 w-100">Profile</li>
-            </router-link>
-            <router-link to="/" class="no-underline">
-                <li class="btn btn-light p-0 py-2 border border-0 w-100" @click="this.$store.commit('deauthenticate')">Logout</li>
-            </router-link>
-        </ul>
-      </template>
+        <template #content>
+            <ul class="list-group rounded-4 text-start p-2 px-4">
+                <router-link to="/Client/Home" class="no-underline">
+                    <li class="btn btn-light p-0 py-2 border border-0 w-100">Home</li>
+                </router-link>
+                <router-link to="/Client/ActionsRecorded" class="no-underline">
+                    <li class="btn btn-light p-0 py-2 border border-0 w-100">Actions</li>
+                </router-link>
+                <router-link to="/Client/UpdateProfile" class="no-underline">
+                    <li class="btn btn-light p-0 py-2 border border-0 w-100">Profile</li>
+                </router-link>
+                <router-link to="/" class="no-underline">
+                    <li class="btn btn-light p-0 py-2 border border-0 w-100" @click="this.$store.commit('deauthenticate')">Logout</li>
+                </router-link>
+            </ul>
+        </template>
     </Popper>
 </template>
 <script>
@@ -33,7 +33,7 @@ import Popper from "vue3-popper";
 export default defineComponent({
     name: "LoginOnHeader",
     components: {
-    Popper,
+        Popper
     },
 });
 </script>

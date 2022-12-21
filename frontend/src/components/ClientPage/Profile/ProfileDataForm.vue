@@ -41,18 +41,23 @@
                 </div>
             </div>
         </form>
+        <ModalYesNo 
+            @function="updateProfileData()"
+            text-modal="Are you sure you want to change your profile data?"
+        />
     </div>
 </template>
 
 <script>
 import ProfileDataField from './ProfileDataField.vue'
 import ProfilePasswordField from './ProfilePasswordField.vue'
+import ModalYesNo from '@/components/ModalYesNo.vue'
 export default {
     name: 'ProfileDataForm',
     components: {
         ProfileDataField
         , ProfilePasswordField
-        , 
+        , ModalYesNo
     },
     data (){
         return {
@@ -76,7 +81,48 @@ export default {
                 { model: "" },
                 { model: "" },
             ],
+            payloadProfileData: [],
         }
+    },
+    methods: {
+        async updateProfileData(){
+            // it does not let the page reaload
+            this.profileDataItems.forEach((item) => {
+                this.payloadProfileData.push(item.model);
+            });
+            // it creates the object that will be use on API
+            const dataObject = {
+                id: this.$store.state.userId,
+                firstName: this.payloadProfileData[0],
+                lastName: this.payloadProfileData[1],
+                email: this.payloadProfileData[2]
+            }
+            const jsonDataObject = JSON.stringify(dataObject)
+            //  it access the api to update the profile data using token and the object
+            //  production mode
+            //  await fetch("https://routehelper.online/api/user/profile", {
+            // dev mode
+            await fetch("http://localhost:5000/api/user/profile", {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json",
+                    "auth-token": this.$store.state.token
+                },
+                body: jsonDataObject
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                // it prints the message from the backend and it commits all changes made
+                this.messageWarning = data.error;
+                this.$store.commit("authenticate", {
+                    token: data.data.token, 
+                    userId: data.data.userId, 
+                    firstName: data.data.firstName, 
+                    lastName: data.data.lastName,
+                    email: data.data.email
+                })
+            })
+        },
     }
 }
 </script>
