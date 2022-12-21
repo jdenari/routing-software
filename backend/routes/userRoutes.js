@@ -19,7 +19,7 @@ router.put("/profile", verifyToken, async (req, res) =>{
     const userId = user._id.toString();
 
     if(userId != userReqId){
-        res.status(401).json({error: "Acesso Negado!"});
+        res.status(401).json({error: "Access Denied!"});
     }
 
     // creating the object to update the data
@@ -32,7 +32,7 @@ router.put("/profile", verifyToken, async (req, res) =>{
     try {
         // update the data inside the mongoDB
         const updateUser = await User.findOneAndUpdate({ _id: userId }, { $set: updateData }, {new: true});
-        res.json({ error : "Usuário atualizado com sucesso!", data: updateUser})
+        res.json({ error : "User updated successfully!", data: updateUser})
     } catch(error) {
         // it returns an error
         res.status(400).json({ error })

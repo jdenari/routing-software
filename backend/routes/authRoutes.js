@@ -20,14 +20,14 @@ router.post("/register", async (req, res) => {
 
     // checks if the passwords match
     if( password !=  confirmPassword){
-        return res.status(400).json({ error: "As senhas não conferem"});
+        return res.status(400).json({ error: "The passwords does not match."});
     }
 
     // check if the user exists
     const emailExist = await User.findOne({ email: email});
 
     if(emailExist){
-        return res.status(400).json({ error: "O e-mail informado ja está em uso!"});
+        return res.status(400).json({ error: "The email provided is already in use!"});
     }
 
     // create password
@@ -55,7 +55,7 @@ router.post("/register", async (req, res) => {
 
     // return token
     res.json({  error: null, 
-                msg: "Você realizou o cadastro com sucesso!", 
+                msg: "You have successfully registered!", 
                 token: token, 
                 userId: newUser._id})
         
@@ -72,14 +72,14 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: email });
 
     if(!user){
-        return res.status(400).json({ error: "Não há um usuário cadastrado com esse email!" })
+        return res.status(400).json({ error: "There is no registered user with this email!" })
     }
 
     // check if password match
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if(!checkPassword){
-        return res.status(400).json({ error: "Senha Inválida!"});
+        return res.status(400).json({ error: "Invalid password!"});
     }
 
     // create token
@@ -92,7 +92,7 @@ router.post("/login", async (req, res) => {
     );
 
     // return token
-    res.json({ error: null, msg: "Você está autenticado!", 
+    res.json({ error: null, msg: "You are authenticated!", 
         token: token, 
         userId: user._id, 
         firstName: user.firstName, 

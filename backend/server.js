@@ -35,6 +35,6 @@ mongoose.connect(
 );
 
 app.listen(port, () => {
-    console.log(`Nossa variável ${process.env.MY_VARIABLE}`)
-    console.log(`backend rodando na porta ${port}`)
+    console.log(`Our variable ${process.env.MY_VARIABLE}`)
+    console.log(`Backend is running on port ${port}`)
 })
