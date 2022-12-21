@@ -7,7 +7,8 @@
             <input 
                 type="text" 
                 class="form-control" 
-                @input="$emit('input', $event.target.value)"
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
             >
         </div>
     </div>
@@ -19,6 +20,9 @@ export default {
     props: {
         profileDataItem: {
             type: String,
+            required: true
+        },
+        modelValue: {
             required: true
         },
     }
