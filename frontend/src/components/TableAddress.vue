@@ -10,18 +10,21 @@
                         <th scope="col" class="text-center text-nowrap">COST ($)</th>
                     </tr>
                 </thead>
-                <LineResultTable />
+                <LineResultTableLoginOff v-if='($store.state.authenticated === false)' />
+                <LineResultTableLoginOn v-else/>
             </table>
         </div>
     </div>
 </template>
   
 <script>
-    import LineResultTable from './LineResultTable.vue'
+    import LineResultTableLoginOff from './LineResultTableLoginOff.vue'
+    import LineResultTableLoginOn from './LineResultTableLoginOn.vue'
     export default {
     name: 'TableAddress',
     components:{
-        LineResultTable
+        LineResultTableLoginOff
+        , LineResultTableLoginOn
     }
     }
 </script>

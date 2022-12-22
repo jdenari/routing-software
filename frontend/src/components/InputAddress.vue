@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-2">
                     <div class="p-1">
-                        <select class="form-select" id="inputGroupSelect02">
+                        <select class="form-select"  aria-label="Disabled select example" disabled>
                             <option selected>Origin</option>
                             <option value="1">Delivery Point</option>
                             <option value="2">Last Point</option>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-2">
                     <div class="p-1">
-                        <select class="form-select" id="inputGroupSelect02">
+                        <select class="form-select"  aria-label="Disabled select example" disabled>
                             <option value="1">Origin</option>
                             <option selected>Delivery Point</option>
                             <option value="2">Last Point</option>
