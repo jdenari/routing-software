@@ -7,6 +7,7 @@ export default createStore({
         cepFullAddress: '-',
         messageText: null,
         authenticated: false,
+        quantityLimitAddress: 8,
         modalYesNo: false,
         token: null, 
         userId: null,
@@ -15,80 +16,6 @@ export default createStore({
         email: null,
         password: null,
         confirmPassword: null,
-        outputDraft: {
-            0: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-            1: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-            2: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-            3: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-            4: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-            5: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-            6: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-            7: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-            8: {
-                address: '-',
-                distance: '-',
-                cost: '-',
-                fuelConsumption: '-',
-                fuelPrice: '-',
-                fuelCost: '-'
-            },
-        },
         output: {
             0: {
                 address: '-',
@@ -167,11 +94,23 @@ export default createStore({
     getters: {
     },
     mutations: {
-        
-        travellingSalesmanProblemMutation: (state) => {
+
+        travellingSalesmanProblemMutation: (state, data) => {
             // updating the items states
-            for (let n = 0; n < Object.keys(state.output).length; n++){
-                state.output[n] = state.outputDraft[n]
+            for (let n = 0; n < Object.keys(data).length; n++){
+                state.output[n] = data[n]
+            }
+        },
+
+        cleanLatestValues () {
+            for (let e = 0; e < this.state.quantityLimitAddress; e++){
+                this.state.output[e] = { 
+                    address: '-',
+                    distance: '-',
+                    cost: '-',
+                    fuelConsumption: '-',
+                    fuelPrice: '-'
+                }
             }
         },
 
@@ -186,82 +125,78 @@ export default createStore({
         changeToRegister: (state) => {
             state.registerOrLogin = 'Register'
         },
+
         changeModalYesNo: (state) => {
             state.modalYesNo == true ? state.modalYesNo = false : state.modalYesNo = true
         },
+
         authenticate: (state, data) => {
-            state.authenticated = true
-            state.token = data.token
-            state.userId = data.userId
-            state.firstName = data.firstName
-            state.lastName = data.lastName
+            state.authenticated = true,
+            state.quantityLimitAddress = 16,
+            state.token = data.token,
+            state.userId = data.userId,
+            state.firstName = data.firstName,
+            state.lastName = data.lastName,
             state.email = data.email
         },
+
         deauthenticate: (state) => {
             state.authenticated = false,
+            state.quantityLimitAddress = 8,
             state.modalYesNo = false,
             state.token = null, 
             state.userId = null,
             state.firstName = null,
             state.lastName = null,
-            state.email = null,
-            state.password = null,
-            state.confirmPassword = null
+            state.email = null
         },
+
         updateMessageText: (state, data) => {
             state.messageText = data
         },
+
         eraseMessageText: (state) => {
             state.messageText = null
         }
     },
     actions: {
-        async cleanLatestValues ({ state }) {
-            for (let e = 0; e < Object.keys(state.output).length; e++){
-                state.output[e] = { 
-                    address: '-',
-                    distance: '-',
-                    cost: '-',
-                    fuelConsumption: '-',
-                    fuelPrice: '-'
-                }
-            }
-        },
 
-        async calculateFuelCost({state}){
-            for (let c = 0; c < Object.keys(state.outputDraft).length - 1; c++){
-                if (state.outputDraft[c].distance != '-'){
-                    state.outputDraft[c].fuelCost = Number(state.outputDraft[c].distance) * Number(state.outputDraft[c].fuelPrice) / Number(state.outputDraft[c].fuelConsumption)
-                }
-            }
-        },
+        // async calculateFuelCost({state}){
+        //     // for (let c = 0; c < state.quantityLimitAddress - 1; c++){
+        //     //     if (state.outputDraft[c].distance != '-'){
+        //     //         state.outputDraft[c].fuelCost = Number(state.outputDraft[c].distance) * Number(state.outputDraft[c].fuelPrice) / Number(state.outputDraft[c].fuelConsumption)
+        //     //     }
+        //     // }
+        // },
 
-        async calculateTotal ({state}){
-            state.outputDraft[8].distance = 0
-            state.outputDraft[8].fuelCost = 0
-            for (let c = 0; c < Object.keys(state.outputDraft).length - 1; c++){
-                if (state.outputDraft[c].distance != '-'){
-                    state.outputDraft[8].distance = Number(state.outputDraft[8].distance) + Number(state.outputDraft[c].distance)
-                    state.outputDraft[8].fuelCost = Number(state.outputDraft[8].fuelCost) + Number(state.outputDraft[c].fuelCost)
-                }
-            }
-            state.outputDraft[8].distance = state.outputDraft[8].distance.toFixed(2)
-            state.outputDraft[8].fuelCost = state.outputDraft[8].fuelCost.toFixed(2)
-        },
+        // async calculateTotal ({state}){
+        //     state.outputDraft[8].distance = 0
+        //     state.outputDraft[8].fuelCost = 0
+        //     for (let c = 0; c < Object.keys(state.outputDraft).length - 1; c++){
+        //         if (state.outputDraft[c].distance != '-'){
+        //             state.outputDraft[8].distance = Number(state.outputDraft[8].distance) + Number(state.outputDraft[c].distance)
+        //             state.outputDraft[8].fuelCost = Number(state.outputDraft[8].fuelCost) + Number(state.outputDraft[c].fuelCost)
+        //         }
+        //     }
+        //     state.outputDraft[8].distance = state.outputDraft[8].distance.toFixed(2)
+        //     state.outputDraft[8].fuelCost = state.outputDraft[8].fuelCost.toFixed(2)
+        // },
 
-        async travellingSalesmanProblem({commit, state, dispatch}, input){
-            await dispatch('cleanLatestValues')
+        async travellingSalesmanProblem({commit, dispatch}, input){
+            commit('cleanLatestValues')
             let destinyVariable
             let originVariable
             let shortestDistance = 0
             let shortestAddress
             let index
-            state.outputDraft[0] = {
-                address: input.address.deliveryPoint0.toUpperCase(),
-                distance: 0,
-                cost: 0,
-                fuelConsumption: input.otherParameters.fuelConsumption,
-                fuelPrice: input.otherParameters.fuelPrice
+            let outputDraft = {
+                0: {
+                    address: input.address.deliveryPoint0.toUpperCase(),
+                    distance: 0,
+                    cost: 0,
+                    fuelConsumption: input.otherParameters.fuelConsumption,
+                    fuelPrice: input.otherParameters.fuelPrice
+                }
             }
 
             originVariable = input.address.deliveryPoint0
@@ -294,7 +229,7 @@ export default createStore({
                         this.travellingSalesmanProblem.preventDefault()
                     }
                 }
-                state.outputDraft[c + 1] = { 
+                outputDraft[c + 1] = { 
                     address: shortestAddress.toUpperCase(),
                     distance: shortestDistance.toFixed(2), 
                     cost: 0,
@@ -308,11 +243,11 @@ export default createStore({
                 index = 0
             }
 
-            await dispatch('calculateFuelCost')
-            await dispatch('calculateTotal')
-            commit('travellingSalesmanProblemMutation')
+            // await dispatch('calculateFuelCost')
+            // await dispatch('calculateTotal')
+            commit('travellingSalesmanProblemMutation', outputDraft)
         },
-
+        // search the full correct name of the address using API
         async cepSearchAPI ({commit}, cepObject){
             
             let url = `https://viacep.com.br/ws/${cepObject.cepAddress}/json/`
@@ -325,11 +260,11 @@ export default createStore({
             } catch(error){console.log('Erro na requisição da API')}
             commit('cepSearchAPIMutation', { response })
         },
-        
+        // erase the main alert message after 3 seg
         eraseMessageText({commit}){
             setTimeout(() => {
                 commit('eraseMessageText')
-            }, "4000")
+            }, "3000")
         }
     },
     modules: {

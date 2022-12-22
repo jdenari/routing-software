@@ -199,22 +199,35 @@ export default {
 
         // create a object to send the address input
         createallAddressObject(){
-
             this.allAddressObject = {
                 address: 
                     Object.assign({deliveryPoint0: this.deliveryPoint0}, {deliveryPoint1: this.deliveryPoint1}, this.arr),
                 otherParameters: 
                     Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice})
             }
-
-
             this.$store.dispatch('travellingSalesmanProblem', this.allAddressObject)
             this.allAddressObject = []
         },
 
         // create a new field address inside the html
         addAddressField() {
-            if (this.nextAddressFieldID < 8) {
+            // if the user is logged, the limit is 16 addresses, otherwise it is 8.
+            if (this.$store.state.authenticated === true){
+                if (this.nextAddressFieldID < 16) {
+                const id = 'deliveryPoint' + this.nextAddressFieldID++
+                    this.AddressFieldObject.push({
+                        id,
+                        title: this.newAddressField
+                        })
+                this.arr[id] = ''
+                this.newAddressField = ''
+
+                } else {
+                    this.$store.commit('updateMessageText', 'The website does not support more than 16 addresses, please get in touch with the administrator')
+                    this.$store.dispatch('eraseMessageText')
+                }
+            } else {
+                if (this.nextAddressFieldID < 8) {
                 const id = 'deliveryPoint' + this.nextAddressFieldID++
                     this.AddressFieldObject.push({
                         id,
@@ -227,6 +240,7 @@ export default {
                 this.$store.commit('updateMessageText', 'You must be logged to have access to more ckeckpoints!')
                 this.$store.dispatch('eraseMessageText')
             }
+            }            
         },
 
         // remove a field address inside the html
