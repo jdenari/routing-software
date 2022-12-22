@@ -96,6 +96,7 @@ export default createStore({
     mutations: {
 
         travellingSalesmanProblemMutation: (state, data) => {
+
             // updating the items states
             for (let n = 0; n < Object.keys(data).length; n++){
                 state.output[n] = data[n]
@@ -109,7 +110,8 @@ export default createStore({
                     distance: '-',
                     cost: '-',
                     fuelConsumption: '-',
-                    fuelPrice: '-'
+                    fuelPrice: '-',
+                    fuelCost: '-'
                 }
             }
         },
@@ -161,27 +163,6 @@ export default createStore({
     },
     actions: {
 
-        // async calculateFuelCost({state}){
-        //     // for (let c = 0; c < state.quantityLimitAddress - 1; c++){
-        //     //     if (state.outputDraft[c].distance != '-'){
-        //     //         state.outputDraft[c].fuelCost = Number(state.outputDraft[c].distance) * Number(state.outputDraft[c].fuelPrice) / Number(state.outputDraft[c].fuelConsumption)
-        //     //     }
-        //     // }
-        // },
-
-        // async calculateTotal ({state}){
-        //     state.outputDraft[8].distance = 0
-        //     state.outputDraft[8].fuelCost = 0
-        //     for (let c = 0; c < Object.keys(state.outputDraft).length - 1; c++){
-        //         if (state.outputDraft[c].distance != '-'){
-        //             state.outputDraft[8].distance = Number(state.outputDraft[8].distance) + Number(state.outputDraft[c].distance)
-        //             state.outputDraft[8].fuelCost = Number(state.outputDraft[8].fuelCost) + Number(state.outputDraft[c].fuelCost)
-        //         }
-        //     }
-        //     state.outputDraft[8].distance = state.outputDraft[8].distance.toFixed(2)
-        //     state.outputDraft[8].fuelCost = state.outputDraft[8].fuelCost.toFixed(2)
-        // },
-
         async travellingSalesmanProblem({commit, dispatch}, input){
             commit('cleanLatestValues')
             let destinyVariable
@@ -195,7 +176,8 @@ export default createStore({
                     distance: 0,
                     cost: 0,
                     fuelConsumption: input.otherParameters.fuelConsumption,
-                    fuelPrice: input.otherParameters.fuelPrice
+                    fuelPrice: input.otherParameters.fuelPrice,
+                    fuelCost: '-'
                 }
             }
 
@@ -234,7 +216,8 @@ export default createStore({
                     distance: shortestDistance.toFixed(2), 
                     cost: 0,
                     fuelConsumption: input.otherParameters.fuelConsumption,
-                    fuelPrice: input.otherParameters.fuelPrice
+                    fuelPrice: input.otherParameters.fuelPrice,
+                    fuelCost: '-'
                 }
                 originVariable = destinyVariable[index]
                 destinyVariable.splice(index,1)
@@ -243,8 +226,11 @@ export default createStore({
                 index = 0
             }
 
-            // await dispatch('calculateFuelCost')
-            // await dispatch('calculateTotal')
+            for (let c = 0; c < Object.keys(outputDraft).length; c++){
+                if (outputDraft[c].distance != '-'){
+                    outputDraft[c].fuelCost = Number(outputDraft[c].distance) * Number(outputDraft[c].fuelPrice) / Number(outputDraft[c].fuelConsumption)
+                }
+            }
             commit('travellingSalesmanProblemMutation', outputDraft)
         },
         // search the full correct name of the address using API
