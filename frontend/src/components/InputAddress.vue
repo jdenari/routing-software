@@ -2,6 +2,7 @@
     <div class="bg-light">
         <div class="container p-3 py-5">
             <div class="h1 text-center p-3">Your distance calculator</div>
+            <SelectedFunction class="text-center"/>
             <!-- message alert when there is a error-->
             <MessageText 
                 :messageText="this.$store.state.messageText"
@@ -122,12 +123,14 @@
 <script>
 import AddressField from './AddressField.vue';
 import MessageText from './MessageText.vue';
+import SelectedFunction from './SelectedFunction.vue';
 import { ref } from 'vue'
 export default {
     name: 'InputAddress',
     components: { 
         AddressField 
         , MessageText
+        , SelectedFunction
     },
     data() {
         return {
@@ -205,7 +208,8 @@ export default {
                 otherParameters: 
                     Object.assign({fuelConsumption: this.fuelConsumption}, {fuelPrice: this.fuelPrice})
             }
-            this.$store.dispatch('travellingSalesmanProblem', this.allAddressObject)
+            this.$store.dispatch('checkIfAddressAreCorrect', this.allAddressObject)
+            // this.$store.dispatch('travellingSalesmanProblem', this.allAddressObject)
             this.allAddressObject = []
         },
 

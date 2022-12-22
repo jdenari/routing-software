@@ -85,6 +85,7 @@ export default {
                     this.$store.dispatch('eraseMessageText')
                 } else {
                     // it takes to the dashboard page and commit all the page with the user info
+                    this.$store.commit('cleanLatestValues')
                     this.$router.push({ path: '/Client/Home' })
                     this.$store.commit("authenticate", {
                         token: data.token, 

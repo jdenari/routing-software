@@ -4,6 +4,7 @@ export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
         registerOrLogin: 'Login',
+        functionCalculate: 'travelingSalesman', 
         cepFullAddress: '-',
         messageText: null,
         authenticated: false,
@@ -49,17 +50,8 @@ export default createStore({
             }
         },
 
-        cleanLatestValues () {
-            for (let e = 0; e < this.state.quantityLimitAddress; e++){
-                this.state.output[e] = { 
-                    address: '-',
-                    distance: '-',
-                    cost: '-',
-                    fuelConsumption: '-',
-                    fuelPrice: '-',
-                    fuelCost: '-'
-                }
-            }
+        cleanLatestValues: (state) => {
+            state.output = {}
         },
 
         cepSearchAPIMutation: (state, {response}) => {
@@ -105,11 +97,48 @@ export default createStore({
 
         eraseMessageText: (state) => {
             state.messageText = null
-        }
+        },
+
+        changeFunctionToTravelingSalesman: (state) => {
+            state.functionCalculate = 'travelingSalesman'
+        },
+
+        changeFunctionToFullOptimization: (state) => {
+            state.functionCalculate = 'fullOptimization'
+        },
+
+        changeFunctionToYourSequence: (state) => {
+            state.functionCalculate = 'yourSequence'
+        },
+
     },
     actions: {
 
-        async travellingSalesmanProblem({commit, dispatch}, input){
+        async checkIfAddressAreCorrect({dispatch}, input){
+    
+            for (let n = 0; n < Object.values(input).length; n++){
+                // distance calculation from API
+                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0='
+                + 'RUA EDGARD WERNECK, 1016 - CIDADE DE DEUS, RIO DE JANEIRO - RJ, 22763011'
+                + '&wp.1=' +  Object.values(input.address)[n]
+                + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+                
+                try{
+                    const responseAPI = await axios.get(url)
+                    responseAPI.data['resourceSets'][0]['resources'][0]['travelDistance']
+
+                // if something goes wrong
+                } catch(error){
+                    this.$store.commit('updateMessageText', `The address on field is wrong. Try to correct it!`)
+                    this.dispatch('eraseMessageText')
+                    this.checkIfAddressAreCorrect.preventDefault()
+                }
+            }
+
+            dispatch('travellingSalesmanProblem', input)
+        },
+
+        async travellingSalesmanProblem({commit}, input){
             commit('cleanLatestValues')
             let destinyVariable
             let originVariable
@@ -165,7 +194,6 @@ export default createStore({
 
                     // if something goes wrong
                     } catch(error){
-                        await dispatch('messageAlert')
                         this.travellingSalesmanProblem.preventDefault()
                     }
                 }
