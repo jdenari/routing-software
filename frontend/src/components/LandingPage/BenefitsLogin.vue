@@ -14,7 +14,7 @@
                     <img src="../../assets/geo-locate-icon.png" alt="" class="col-1 pb-3">
                     <h4 class="card-title mt-3">More Checkpoints Available</h4>
                     <div class="mt-3">
-                        <p class="card-text m-1">You have more than 8 checkpoints? NO PROBLEM! Users that have an account in this application does not have this limit at all.</p>
+                        <p class="card-text m-1">You have more than 6 checkpoints? NO PROBLEM! Users that have an account in this application does not have this limit at all.</p>
                     </div>
                 </div>
             </div>

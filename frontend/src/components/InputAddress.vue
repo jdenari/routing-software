@@ -215,9 +215,9 @@ export default {
 
         // create a new field address inside the html
         addAddressField() {
-            // if the user is logged, the limit is 16 addresses, otherwise it is 8.
+            // if the user is logged, the limit is 12 addresses, otherwise it is 6.
             if (this.$store.state.authenticated === true){
-                if (this.nextAddressFieldID < 16) {
+                if (this.nextAddressFieldID < 12) {
                 const id = 'deliveryPoint' + this.nextAddressFieldID++
                     this.AddressFieldObject.push({
                         id,
@@ -227,11 +227,11 @@ export default {
                 this.newAddressField = ''
 
                 } else {
-                    this.$store.commit('updateMessageText', 'The website does not support more than 16 addresses, please get in touch with the administrator')
+                    this.$store.commit('updateMessageText', 'The website does not support more than 12 addresses.')
                     this.$store.dispatch('eraseMessageText')
                 }
             } else {
-                if (this.nextAddressFieldID < 8) {
+                if (this.nextAddressFieldID < 6) {
                 const id = 'deliveryPoint' + this.nextAddressFieldID++
                     this.AddressFieldObject.push({
                         id,

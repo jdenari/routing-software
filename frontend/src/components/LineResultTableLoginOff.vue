@@ -36,18 +36,6 @@
             <td> {{ $store.state?.output[5]?.distance || '-' }} </td>
             <td> {{ $store.state?.output[5]?.fuelCost || '-' }} </td>
         </tr>
-        <tr>
-            <th scope="row">6</th>
-            <td> {{ $store.state?.output[6]?.address || '-' }} </td>
-            <td> {{ $store.state?.output[6]?.distance || '-' }} </td>
-            <td> {{ $store.state?.output[6]?.fuelCost || '-' }} </td>
-        </tr>
-        <tr>
-            <th scope="row">7</th>
-            <td> {{ $store.state?.output[7]?.address || '-' }} </td>
-            <td> {{ $store.state?.output[7]?.distance || '-' }} </td>
-            <td> {{ $store.state?.output[7]?.fuelCost || '-' }} </td>
-        </tr>
         <tr class="table-light">
             <th scope="row">Total</th>
             <td> {{ $store.state?.output[8]?.address || '-' }} </td>

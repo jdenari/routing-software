@@ -8,7 +8,7 @@ export default createStore({
         cepFullAddress: '-',
         messageText: null,
         authenticated: false,
-        quantityLimitAddress: 8,
+        quantityLimitAddress: 5,
         modalYesNo: false,
         token: null, 
         userId: null,
@@ -72,7 +72,7 @@ export default createStore({
 
         authenticate: (state, data) => {
             state.authenticated = true,
-            state.quantityLimitAddress = 16,
+            state.quantityLimitAddress = 12,
             state.token = data.token,
             state.userId = data.userId,
             state.firstName = data.firstName,
@@ -82,7 +82,7 @@ export default createStore({
 
         deauthenticate: (state) => {
             state.authenticated = false,
-            state.quantityLimitAddress = 8,
+            state.quantityLimitAddress = 6,
             state.modalYesNo = false,
             state.token = null, 
             state.userId = null,
@@ -103,10 +103,6 @@ export default createStore({
             state.functionCalculate = 'travelingSalesman'
         },
 
-        changeFunctionToFullOptimization: (state) => {
-            state.functionCalculate = 'fullOptimization'
-        },
-
         changeFunctionToYourSequence: (state) => {
             state.functionCalculate = 'yourSequence'
         },
@@ -114,7 +110,7 @@ export default createStore({
     },
     actions: {
 
-        async checkIfAddressAreCorrect({dispatch}, input){
+        async checkIfAddressAreCorrect({dispatch, commit, state}, input){
     
             for (let n = 0; n < Object.values(input).length; n++){
                 // distance calculation from API
@@ -122,20 +118,20 @@ export default createStore({
                 + 'RUA EDGARD WERNECK, 1016 - CIDADE DE DEUS, RIO DE JANEIRO - RJ, 22763011'
                 + '&wp.1=' +  Object.values(input.address)[n]
                 + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
-                
                 try{
                     const responseAPI = await axios.get(url)
                     responseAPI.data['resourceSets'][0]['resources'][0]['travelDistance']
 
                 // if something goes wrong
                 } catch(error){
-                    this.$store.commit('updateMessageText', `The address on field is wrong. Try to correct it!`)
-                    this.dispatch('eraseMessageText')
+                    commit('updateMessageText', `The address on ${n+1}º field is wrong. Try to correct it!`)
+                    dispatch('eraseMessageText')
                     this.checkIfAddressAreCorrect.preventDefault()
                 }
             }
 
-            dispatch('travellingSalesmanProblem', input)
+            if (state.functionCalculate == 'travellingSalesmanProblem'){dispatch('travellingSalesmanProblem', input)}
+            if (state.functionCalculate == 'yourSequence'){dispatch('yourSequence', input)}
         },
 
         async travellingSalesmanProblem({commit}, input){
@@ -225,6 +221,66 @@ export default createStore({
 
             // calls the mutation to change it on frontend
             commit('travellingSalesmanProblemMutation', outputDraft)
+        },
+
+        async yourSequence ({commit}, input){
+            commit('cleanLatestValues')
+            let destinyVariable
+            let originVariable
+            let shortestDistance = 0
+            let shortestAddress
+
+            // first information with origin
+            let outputDraft = {
+                0: {
+                    address: input.address.deliveryPoint0.toUpperCase(),
+                    distance: 0,
+                    cost: 0,
+                    fuelConsumption: input.otherParameters.fuelConsumption,
+                    fuelPrice: input.otherParameters.fuelPrice,
+                    fuelCost: '-'
+                }
+            }
+
+            // slits the origin and the rest into variables
+            originVariable = input.address.deliveryPoint0
+            destinyVariable = Object.values(input.address)
+            destinyVariable.splice(0,1)
+
+            for (let c = 0; c < Object.keys(input.address).length -1; c++){
+                
+                let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0='
+                    + originVariable
+                    + '&wp.1=' + Object.values(destinyVariable)[0]
+                    + '/&key=' + 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9NOS'
+
+                try{
+                    const responseAPI = await axios.get(url)
+                    shortestDistance = responseAPI.data['resourceSets'][0]['resources'][0]['travelDistance']
+                    shortestAddress = destinyVariable[0]
+
+                // if something goes wrong
+                } catch(error){
+                    this.travellingSalesmanProblem.preventDefault()
+                }
+
+                outputDraft[c + 1] = { 
+                    address: shortestAddress.toUpperCase(),
+                    distance: shortestDistance.toFixed(2), 
+                    cost: 0,
+                    fuelConsumption: input.otherParameters.fuelConsumption,
+                    fuelPrice: input.otherParameters.fuelPrice,
+                    fuelCost: '-'
+                }
+                originVariable = destinyVariable[0]
+                destinyVariable.splice(0,1)
+                shortestDistance = 0
+                shortestAddress = ''
+            }
+
+            // calls the mutation to change it on frontend
+            commit('travellingSalesmanProblemMutation', outputDraft)
+
         },
 
         // search the full correct name of the address using API

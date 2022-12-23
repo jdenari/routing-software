@@ -72,30 +72,6 @@
             <td> {{ $store.state?.output[11]?.distance || '-' }} </td>
             <td> {{ $store.state?.output[11]?.fuelCost || '-' }} </td>
         </tr>
-        <tr>
-            <th scope="row">12</th>
-            <td> {{ $store.state?.output[12]?.address || '-' }} </td>
-            <td> {{ $store.state?.output[12]?.distance || '-' }} </td>
-            <td> {{ $store.state?.output[12]?.fuelCost || '-' }} </td>
-        </tr>
-        <tr>
-            <th scope="row">13</th>
-            <td> {{ $store.state?.output[13]?.address || '-' }} </td>
-            <td> {{ $store.state?.output[13]?.distance || '-' }} </td>
-            <td> {{ $store.state?.output[13]?.fuelCost || '-' }} </td>
-        </tr>
-        <tr>
-            <th scope="row">14</th>
-            <td> {{ $store.state?.output[14]?.address || '-' }} </td>
-            <td> {{ $store.state?.output[14]?.distance || '-' }} </td>
-            <td> {{ $store.state?.output[14]?.fuelCost || '-' }} </td>
-        </tr>
-        <tr>
-            <th scope="row">15</th>
-            <td> {{ $store.state?.output[15]?.address || '-' }} </td>
-            <td> {{ $store.state?.output[15]?.distance || '-' }} </td>
-            <td> {{ $store.state?.output[15]?.fuelCost || '-' }} </td>
-        </tr>
         <tr class="table-light">
             <th scope="row">Total</th>
             <td> {{ $store.state?.output[16]?.address || '-' }} </td>
