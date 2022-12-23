@@ -2,7 +2,7 @@
     <Popper>
         <button class="nav-item btn btn-light dropdown-toggle rounded-pill d-flex justify-content-center align-items-center">
             <img 
-                src="../../assets/perfil-photo/joao-vitor-denari-dos-santos.png" 
+                src="../../assets/perfil-photo/default-avatar.png" 
                 alt=""
                 class="perfil-photo m-1"
             >
@@ -13,9 +13,9 @@
                 <router-link to="/Client/Home" class="no-underline">
                     <li class="btn btn-light p-0 py-2 border border-0 w-100">Home</li>
                 </router-link>
-                <router-link to="/Client/ActionsRecorded" class="no-underline">
+                <!-- <router-link to="/Client/ActionsRecorded" class="no-underline">
                     <li class="btn btn-light p-0 py-2 border border-0 w-100">Actions</li>
-                </router-link>
+                </router-link> -->
                 <router-link to="/Client/UpdateProfile" class="no-underline">
                     <li class="btn btn-light p-0 py-2 border border-0 w-100">Profile</li>
                 </router-link>

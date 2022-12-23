@@ -38,9 +38,9 @@
         </tr>
         <tr class="table-light">
             <th scope="row">Total</th>
-            <td> {{ $store.state?.output[8]?.address || '-' }} </td>
-            <td> {{ $store.state?.output[8]?.distance || '-' }} </td>
-            <td> {{ $store.state?.output[8]?.fuelCost || '-' }} </td>
+            <td> {{ $store.state?.output[6]?.address || '-' }} </td>
+            <td> {{ $store.state?.output[6]?.distance || '-' }} </td>
+            <td> {{ $store.state?.output[6]?.fuelCost || '-' }} </td>
         </tr>
     </tbody>
 </template>

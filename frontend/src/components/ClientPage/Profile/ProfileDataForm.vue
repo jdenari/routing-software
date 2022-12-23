@@ -21,10 +21,10 @@
                     </button>
                 </div>
             </div>
-            <div class="m-1 my-2 p-3 border">
-                <div class="h4">Update your password</div>
+            <!-- <div class="m-1 my-2 p-3 border">
+                <div class="h4">Update your password</div> -->
                 <!-- looping for password field-->
-                <ProfilePasswordField
+                <!-- <ProfilePasswordField
                     v-for="(item, index) in listPassword" 
                     :key="index"
                     :profilePasswordItem="profilePasswordItems[index]"
@@ -39,7 +39,7 @@
                         >Update
                     </button>
                 </div>
-            </div>
+            </div> -->
             <MessageText 
                 :messageText="$store.state.messageText"
             />
@@ -53,14 +53,14 @@
 
 <script>
 import ProfileDataField from './ProfileDataField.vue'
-import ProfilePasswordField from './ProfilePasswordField.vue'
+// import ProfilePasswordField from './ProfilePasswordField.vue'
 import ModalYesNo from '@/components/ModalYesNo.vue'
 import MessageText from '@/components/MessageText.vue'
 export default {
     name: 'ProfileDataForm',
     components: {
         ProfileDataField
-        , ProfilePasswordField
+        // , ProfilePasswordField
         , ModalYesNo
         , MessageText
     },

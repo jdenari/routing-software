@@ -4,11 +4,12 @@ export default createStore({
     state: {
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
         registerOrLogin: 'Login',
-        functionCalculate: 'travelingSalesman', 
+        functionCalculate: 'travellingSalesman', 
         cepFullAddress: '-',
         messageText: null,
         authenticated: false,
-        quantityLimitAddress: 5,
+        quantityLimitAddress: 6,
+        loadingSpinner: false,
         modalYesNo: false,
         token: null, 
         userId: null,
@@ -27,6 +28,8 @@ export default createStore({
 
             let totalDistance = 0
             let totalCost = 0
+
+            console.log(data)
 
             // calculate cost and distance total
             for (let n = 0; n < Object.keys(data).length; n++){
@@ -70,6 +73,14 @@ export default createStore({
             state.modalYesNo == true ? state.modalYesNo = false : state.modalYesNo = true
         },
 
+        activateLoadingSpinner: (state) => {
+            state.loadingSpinner = true 
+        },
+
+        deactivateLoadingSpinner: (state) => {
+            state.loadingSpinner = false 
+        },
+
         authenticate: (state, data) => {
             state.authenticated = true,
             state.quantityLimitAddress = 12,
@@ -99,8 +110,8 @@ export default createStore({
             state.messageText = null
         },
 
-        changeFunctionToTravelingSalesman: (state) => {
-            state.functionCalculate = 'travelingSalesman'
+        changeFunctionToTravellingSalesman: (state) => {
+            state.functionCalculate = 'travellingSalesman'
         },
 
         changeFunctionToYourSequence: (state) => {
@@ -111,8 +122,8 @@ export default createStore({
     actions: {
 
         async checkIfAddressAreCorrect({dispatch, commit, state}, input){
-    
-            for (let n = 0; n < Object.values(input).length; n++){
+
+            for (let n = 0; n < Object.values(input.address).length; n++){
                 // distance calculation from API
                 let url = 'http://dev.virtualearth.net/REST/V1/routes/Driving?wp.0='
                 + 'RUA EDGARD WERNECK, 1016 - CIDADE DE DEUS, RIO DE JANEIRO - RJ, 22763011'
@@ -125,12 +136,15 @@ export default createStore({
                 // if something goes wrong
                 } catch(error){
                     commit('updateMessageText', `The address on ${n+1}º field is wrong. Try to correct it!`)
+                    commit('deactivateLoadingSpinner')
                     dispatch('eraseMessageText')
                     this.checkIfAddressAreCorrect.preventDefault()
                 }
             }
 
-            if (state.functionCalculate == 'travellingSalesmanProblem'){dispatch('travellingSalesmanProblem', input)}
+            console.log('oi')
+
+            if (state.functionCalculate == 'travellingSalesman'){dispatch('travellingSalesmanProblem', input)}
             if (state.functionCalculate == 'yourSequence'){dispatch('yourSequence', input)}
         },
 
@@ -190,6 +204,7 @@ export default createStore({
 
                     // if something goes wrong
                     } catch(error){
+                        commit('deactivateLoadingSpinner')
                         this.travellingSalesmanProblem.preventDefault()
                     }
                 }
@@ -221,6 +236,7 @@ export default createStore({
 
             // calls the mutation to change it on frontend
             commit('travellingSalesmanProblemMutation', outputDraft)
+            commit('deactivateLoadingSpinner')
         },
 
         async yourSequence ({commit}, input){
@@ -262,6 +278,7 @@ export default createStore({
                 // if something goes wrong
                 } catch(error){
                     this.travellingSalesmanProblem.preventDefault()
+                    commit('deactivateLoadingSpinner')
                 }
 
                 outputDraft[c + 1] = { 
@@ -294,7 +311,10 @@ export default createStore({
                 response = `${responseAPI.data['logradouro']}, ${cepObject.cepNumber},  ${responseAPI.data['bairro']}, ${responseAPI.data['localidade']} - ${responseAPI.data['uf']}, ${responseAPI.data['cep']}`
                 response = response.toUpperCase()  
 
-            } catch(error){console.log('Erro na requisição da API')}
+            } catch(error){
+                console.log('Erro na requisição da API')
+                commit('deactivateLoadingSpinner')
+            }
             
             // calls the mutation to change it on frontend
             commit('cepSearchAPIMutation', { response })

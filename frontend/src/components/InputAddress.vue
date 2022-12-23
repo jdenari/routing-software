@@ -105,17 +105,18 @@
                 </div>
                 <!-- Main buttons -->
                 <div class="col-12 p-1 d-flex justify-content-md-end">
-                        <button 
-                            type="submit" 
-                            class="btn btn-secondary col-1 m-1" 
-                            @click="cleanInput()">Clean
-                        </button>
-                        <button 
-                            type="button" 
-                            class="btn btn-success col-3 m-1" 
-                            @click="checkBlankForm();createallAddressObject()">Calculate
-                        </button>
-                    </div>
+                    <button 
+                        type="submit" 
+                        class="btn btn-secondary col-1 m-1" 
+                        @click="cleanInput()">Clean
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-success col-3 m-1" 
+                        @click="checkBlankForm();createallAddressObject()">Calculate
+                    </button>
+                </div>
+                <LoadingSpinner />
             </div>
         </div>
     </div>
@@ -124,6 +125,7 @@
 import AddressField from './AddressField.vue';
 import MessageText from './MessageText.vue';
 import SelectedFunction from './SelectedFunction.vue';
+import LoadingSpinner from './LoadingSpinner.vue'
 import { ref } from 'vue'
 export default {
     name: 'InputAddress',
@@ -131,6 +133,7 @@ export default {
         AddressField 
         , MessageText
         , SelectedFunction
+        , LoadingSpinner
     },
     data() {
         return {
@@ -157,6 +160,8 @@ export default {
 
         // it checks if all input address are filled! 
         checkBlankForm: function (e){
+
+            this.$store.commit('activateLoadingSpinner')
 
             if (this.nextAddressFieldID === 2) {
                 if (this.deliveryPoint0 && this.deliveryPoint1) {return true;}
@@ -195,7 +200,8 @@ export default {
                 if (!this.arr['deliveryPoint' + a]){this.errors.push(a + 1);}
             }
 
-            this.$store.commit('updateMessageText', `The Fields [${this.errors}] are empty! Fill or remove them.`)
+            this.$store.commit('updateMessageText', `The Field [${this.errors}] is empty! Fill or remove it.`)
+            this.$store.commit('deactivateLoadingSpinner')
             this.$store.dispatch('eraseMessageText')
             e.preventDefault();
         },
