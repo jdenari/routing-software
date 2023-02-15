@@ -105,15 +105,25 @@
                 </div>
                 <!-- Main buttons -->
                 <div class="col-12 p-1 d-flex justify-content-md-end">
+                    <div class="col-8 px-3">
+                        <button 
+                            type="submit" 
+                            class="btn btn-secondary col-4 " 
+                            @click="fillWithAddresses()">
+                            Fill with Addresses
+                        </button>
+                    </div>
                     <button 
                         type="submit" 
                         class="btn btn-secondary col-1 m-1" 
-                        @click="cleanInput()">Clean
+                        @click="cleanInput()">
+                        Clean
                     </button>
                     <button 
                         type="button" 
                         class="btn btn-success col-3 m-1" 
-                        @click="checkBlankForm();createallAddressObject()">Calculate
+                        @click="checkBlankForm();createallAddressObject()">
+                        Calculate
                     </button>
                 </div>
                 <LoadingSpinner />
@@ -159,7 +169,7 @@ export default {
     methods: {
 
         // it checks if all input address are filled! 
-        checkBlankForm: function (e){
+        checkBlankForm: function (){
 
             this.$store.commit('ACTIVATELOADINGSPINNER')
 
@@ -202,8 +212,7 @@ export default {
 
             this.$store.commit('UPDATEMESSAGETEXT', `The Field [${this.errors}] is empty! Fill or remove it.`)
             this.$store.commit('DEACTIVATELOADINGSPINNER')
-            this.$store.dispatch('ERASEMESSAGETEXT')
-            e.preventDefault();
+            this.$store.dispatch('eraseTextMessage')
         },
 
         // create a object to send the address input
@@ -248,7 +257,7 @@ export default {
 
             } else {
                 this.$store.commit('UPDATEMESSAGETEXT', 'You must be logged to have access to more ckeckpoints!')
-                this.$store.dispatch('ERASEMESSAGETEXT')
+                this.$store.dispatch('eraseMessageText')
             }
             }            
         },
@@ -276,6 +285,34 @@ export default {
 
             this.fuelPrice = '',
             this.fuelConsumption = ''
+        },
+
+        async fillWithAddresses() {
+            try {
+                // get the data from the database mongodb
+                await this.$store.dispatch('fillWithAddresses')
+                const data = this.$store.state.addressesExample
+                
+                // create a list random numbers
+                var randomNumbers = [];
+                for(var index = 0; index < this.nextAddressFieldID ; index++){
+                    var temp = Math.floor(Math.random()*data.length);
+                    if(randomNumbers.indexOf(temp) == -1){
+                        randomNumbers.push(temp);
+                    }
+                    else
+                    index--;
+                }
+
+                // fill the new random address according to the list created above
+                this.deliveryPoint0 = data[randomNumbers[0]].address
+                this.deliveryPoint1 = data[randomNumbers[1]].address
+                for (var e = 1; e < this.nextAddressFieldID; e++){
+                    this.arr[`deliveryPoint${e}`] = data[randomNumbers[e]].address
+                }
+            } catch (error) {
+                console.error(error)
+            }
         }
     },
 }

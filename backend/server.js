@@ -8,6 +8,7 @@ const cors = require("cors");
 // routes
 const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
+const addressesExampleRouter = require("./routes/addressesExampleRoutes");
 
 // config
 const dbName = "databaseRoutering"
@@ -24,6 +25,7 @@ app.use(express.static("public"));
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
+app.use("/api/address", addressesExampleRouter)
 
 app.get("/", (req, res) => {
     res.json({ message: "Rota teste"})
@@ -31,7 +33,7 @@ app.get("/", (req, res) => {
 
 // mongoDB connection
 mongoose.connect(
-    `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.06ovsjg.mongodb.net/users?retryWrites=true&w=majority`,
+    `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.06ovsjg.mongodb.net/routeHelper?retryWrites=true&w=majority`,
 );
 
 app.listen(port, () => {

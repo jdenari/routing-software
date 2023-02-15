@@ -23,7 +23,8 @@ export default createStore({
         email: null,
         password: null,
         confirmPassword: null,
-        output: {}
+        output: {},
+        addressesExample: null
     },
     getters: {
     },
@@ -33,8 +34,6 @@ export default createStore({
 
             let totalDistance = 0
             let totalCost = 0
-
-            console.log(data)
 
             // calculate cost and distance total
             for (let n = 0; n < Object.keys(data).length; n++){
@@ -101,6 +100,7 @@ export default createStore({
 
         CHANGEFUNCTIONTOYOURSEQUENCE: (state) => {state.functionCalculate = 'yourSequence'},
 
+        FILLWITHADDRESSES: (state, payload) => {state.addressesExample = payload}
     },
     actions: {
 
@@ -379,6 +379,18 @@ export default createStore({
                     lastName: data.data.lastName,
                     email: data.data.email
                 })
+            })
+        },
+
+        async fillWithAddresses({state, commit}){
+            await fetch(`${state.url}/api/address/addressesExample`, {
+                method: "GET",
+                headers: {},
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                // it prints the message from the backend and it commits all changes made
+                commit('FILLWITHADDRESSES', data)
             })
         }
     },

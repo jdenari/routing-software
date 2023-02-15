@@ -86,7 +86,7 @@ router.post("/login", async (req, res) => {
         "oursecret"
     );
     // return token
-    res.json({ error: null, msg: "You are AUTHENTICATEd!", 
+    res.json({ error: null, msg: "You are authenticated!", 
         token: token, 
         userId: user._id, 
         firstName: user.firstName, 
