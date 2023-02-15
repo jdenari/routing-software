@@ -280,6 +280,7 @@ export default createStore({
 
             // calls the mutation to change it on frontend
             commit('TRAVELLINGSALESMANPROBLEM', outputDraft)
+            commit('DEACTIVATELOADINGSPINNER')
 
         },
 

@@ -311,7 +311,8 @@ export default {
                     this.arr[`deliveryPoint${e}`] = data[randomNumbers[e]].address
                 }
             } catch (error) {
-                console.error(error)
+                this.$store.commit('UPDATEMESSAGETEXT', 'Something went wrong! Please contact the website manager.')
+                this.$store.dispatch('eraseMessageText')
             }
         }
     },
