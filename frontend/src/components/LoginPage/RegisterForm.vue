@@ -64,24 +64,7 @@ export default defineComponent({
                 password: this.payloadRegisterData[3],
                 confirmPassword: this.payloadRegisterData[4],
             }
-            const jsonDataObject = JSON.stringify(dataObject)
-            // dev mode
-            await fetch("http://localhost:5000/api/auth/register", {
-            // production mode
-            // await fetch("https://routehelper.online/api/auth/register", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: jsonDataObject
-            })
-            .then((resp) => resp.json())
-            .then((data) => {
-                if(data.error){
-                    // it prints the error
-                    this.$store.commit('updateMessageText', data.error)
-                } else {
-                    this.$store.commit('changeToLogin')
-                }
-            })
+            this.$store.dispatch('registerNewUser', dataObject)
         }
     }
 })

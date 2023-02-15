@@ -24,7 +24,7 @@
                         v-model="auth.password"
                     >
                 </div>
-                    <a href="#" class="nav-link" @click="changeToRegister">Not yet registered?</a>
+                    <a href="#" class="nav-link" @click="CHANGETOREGISTER">Not yet registered?</a>
                 <ButtonSubmit 
                     textButton="Go" 
                     @click="loginVerification"
@@ -56,8 +56,8 @@ export default {
         }
     },
     methods: {
-        changeToRegister() {
-                this.$store.commit('changeToRegister')
+        CHANGETOREGISTER() {
+                this.$store.commit('CHANGETOREGISTER')
         },
         async loginVerification(e) {
             // it does not let the page reaload
@@ -67,35 +67,7 @@ export default {
                 email: this.auth.email,
                 password: this.auth.password
             }
-            const jsonDataObject = JSON.stringify(dataObject)
-            // dev mode
-            await fetch("http://localhost:5000/api/auth/login", {
-            // production mode
-            // await fetch("https://routehelper.online/api/auth/login", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: jsonDataObject
-            })
-            .then((resp) => resp.json())
-            // it access the api to update the profile data using token and the object
-            .then((data) => {
-                if(data.error){
-                    // it prints the error
-                    this.$store.commit('updateMessageText', data.error)
-                    this.$store.dispatch('eraseMessageText')
-                } else {
-                    // it takes to the dashboard page and commit all the page with the user info
-                    this.$store.commit('cleanLatestValues')
-                    this.$router.push({ path: '/Client/Home' })
-                    this.$store.commit("authenticate", {
-                        token: data.token, 
-                        userId: data.userId, 
-                        firstName: data.firstName, 
-                        lastName: data.lastName,
-                        email: data.email,
-                    })
-                }
-            })
+            this.$store.dispatch('loginVerification', dataObject)
         },
     }
 }

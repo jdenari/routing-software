@@ -1,13 +1,18 @@
 import { createStore } from 'vuex'
+import router from '../router/index'
 import axios from 'axios'
 export default createStore({
     state: {
+        // dev env: http://localhost:5000
+        // pro env: https://routehelper.online
+        url: 'http://localhost:5000',
+
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
         registerOrLogin: 'Login',
         functionCalculate: 'travellingSalesman', 
         cepFullAddress: '-',
         messageText: null,
-        authenticated: false,
+        AUTHENTICATEd: false,
         quantityLimitAddress: 6,
         loadingSpinner: false,
         modalYesNo: false,
@@ -24,7 +29,7 @@ export default createStore({
     },
     mutations: {
 
-        travellingSalesmanProblemMutation: (state, data) => {
+        TRAVELLINGSALESMANPROBLEM: (state, data) => {
 
             let totalDistance = 0
             let totalCost = 0
@@ -53,36 +58,22 @@ export default createStore({
             }
         },
 
-        cleanLatestValues: (state) => {
-            state.output = {}
-        },
+        CLEANLATESTVALUES: (state) => {state.output = {}},
 
-        cepSearchAPIMutation: (state, {response}) => {
-            state.cepFullAddress = response
-        },
+        CEPSEARCHMUTATION: (state, {response}) => {state.cepFullAddress = response},
 
-        changeToLogin: (state) => {
-            state.registerOrLogin = 'Login'
-        },
+        CHANGETOLOGIN: (state) => {state.registerOrLogin = 'Login'},
 
-        changeToRegister: (state) => {
-            state.registerOrLogin = 'Register'
-        },
+        CHANGETOREGISTER: (state) => {state.registerOrLogin = 'Register'},
 
-        changeModalYesNo: (state) => {
-            state.modalYesNo == true ? state.modalYesNo = false : state.modalYesNo = true
-        },
+        CHANGEMODALYESNO: (state) => {state.modalYesNo == true ? state.modalYesNo = false : state.modalYesNo = true},
 
-        activateLoadingSpinner: (state) => {
-            state.loadingSpinner = true 
-        },
+        ACTIVATELOADINGSPINNER: (state) => {state.loadingSpinner = true },
 
-        deactivateLoadingSpinner: (state) => {
-            state.loadingSpinner = false 
-        },
+        DEACTIVATELOADINGSPINNER: (state) => {state.loadingSpinner = false },
 
-        authenticate: (state, data) => {
-            state.authenticated = true,
+        AUTHENTICATE: (state, data) => {
+            state.AUTHENTICATEd = true,
             state.quantityLimitAddress = 12,
             state.token = data.token,
             state.userId = data.userId,
@@ -91,8 +82,8 @@ export default createStore({
             state.email = data.email
         },
 
-        deauthenticate: (state) => {
-            state.authenticated = false,
+        DEAUTHENTICATE: (state) => {
+            state.AUTHENTICATEd = false,
             state.quantityLimitAddress = 6,
             state.modalYesNo = false,
             state.token = null, 
@@ -102,21 +93,13 @@ export default createStore({
             state.email = null
         },
 
-        updateMessageText: (state, data) => {
-            state.messageText = data
-        },
+        UPDATEMESSAGETEXT: (state, data) => {state.messageText = data},
 
-        eraseMessageText: (state) => {
-            state.messageText = null
-        },
+        ERASEMESSAGETEXT: (state) => {state.messageText = null},
 
-        changeFunctionToTravellingSalesman: (state) => {
-            state.functionCalculate = 'travellingSalesman'
-        },
+        CHANGEFUNCTIONTOTRAVELLINGSALESMAN: (state) => {state.functionCalculate = 'travellingSalesman'},
 
-        changeFunctionToYourSequence: (state) => {
-            state.functionCalculate = 'yourSequence'
-        },
+        CHANGEFUNCTIONTOYOURSEQUENCE: (state) => {state.functionCalculate = 'yourSequence'},
 
     },
     actions: {
@@ -135,9 +118,9 @@ export default createStore({
 
                 // if something goes wrong
                 } catch(error){
-                    commit('updateMessageText', `The address on ${n+1}º field is wrong. Try to correct it!`)
-                    commit('deactivateLoadingSpinner')
-                    dispatch('eraseMessageText')
+                    commit('UPDATEMESSAGETEXT', `The address on ${n+1}º field is wrong. Try to correct it!`)
+                    commit('DEACTIVATELOADINGSPINNER')
+                    dispatch('ERASEMESSAGETEXT')
                     this.checkIfAddressAreCorrect.preventDefault()
                 }
             }
@@ -149,7 +132,7 @@ export default createStore({
         },
 
         async travellingSalesmanProblem({commit}, input){
-            commit('cleanLatestValues')
+            commit('CLEANLATESTVALUES')
             let destinyVariable
             let originVariable
             let shortestDistance = 0
@@ -204,7 +187,7 @@ export default createStore({
 
                     // if something goes wrong
                     } catch(error){
-                        commit('deactivateLoadingSpinner')
+                        commit('DEACTIVATELOADINGSPINNER')
                         this.travellingSalesmanProblem.preventDefault()
                     }
                 }
@@ -235,12 +218,12 @@ export default createStore({
             }
 
             // calls the mutation to change it on frontend
-            commit('travellingSalesmanProblemMutation', outputDraft)
-            commit('deactivateLoadingSpinner')
+            commit('TRAVELLINGSALESMANPROBLEM', outputDraft)
+            commit('DEACTIVATELOADINGSPINNER')
         },
 
         async yourSequence ({commit}, input){
-            commit('cleanLatestValues')
+            commit('CLEANLATESTVALUES')
             let destinyVariable
             let originVariable
             let shortestDistance = 0
@@ -278,7 +261,7 @@ export default createStore({
                 // if something goes wrong
                 } catch(error){
                     this.travellingSalesmanProblem.preventDefault()
-                    commit('deactivateLoadingSpinner')
+                    commit('DEACTIVATELOADINGSPINNER')
                 }
 
                 outputDraft[c + 1] = { 
@@ -296,7 +279,7 @@ export default createStore({
             }
 
             // calls the mutation to change it on frontend
-            commit('travellingSalesmanProblemMutation', outputDraft)
+            commit('TRAVELLINGSALESMANPROBLEM', outputDraft)
 
         },
 
@@ -313,18 +296,90 @@ export default createStore({
 
             } catch(error){
                 console.log('Erro na requisição da API')
-                commit('deactivateLoadingSpinner')
+                commit('DEACTIVATELOADINGSPINNER')
             }
             
             // calls the mutation to change it on frontend
-            commit('cepSearchAPIMutation', { response })
+            commit('CEPSEARCHMUTATION', { response })
         },
         
         // erase the main alert message after 3 seg
         eraseMessageText({commit}){
             setTimeout(() => {
-                commit('eraseMessageText')}, "3000"
+                commit('ERASEMESSAGETEXT')}, "3000"
             )
+        },
+
+        async loginVerification({commit, dispatch, state}, dataObject){
+            const jsonDataObject = JSON.stringify(dataObject)
+            await fetch(`${state.url}/api/auth/login`, {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: jsonDataObject
+            })
+            .then((resp) => resp.json())
+            // it access the api to update the profile data using token and the object
+            .then((data) => {
+                if(data.error){
+                    // it prints the error
+                    commit('UPDATEMESSAGETEXT', data.error)
+                    dispatch('eraseMessageText')
+                } else {
+                    // it takes to the dashboard page and commit all the page with the user info
+                    commit('CLEANLATESTVALUES')
+                    router.push({ path: '/Client/Home' })
+                    commit("AUTHENTICATE", {
+                        token: data.token, 
+                        userId: data.userId, 
+                        firstName: data.firstName, 
+                        lastName: data.lastName,
+                        email: data.email,
+                    })
+                }
+            })
+        },
+        async registerNewUser({commit, state, dispatch}, dataObject){
+            const jsonDataObject = JSON.stringify(dataObject)
+            await fetch(`${state.url}/api/auth/register`, {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: jsonDataObject
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                if(data.error){
+                    // it prints the error
+                    commit('UPDATEMESSAGETEXT', data.error)
+                    dispatch('eraseMessageText')
+                } else {
+                    commit('CHANGETOLOGIN')
+                }
+            })
+        },
+
+        async updateProfileData({commit, dispatch, state}, dataObject){
+            const jsonDataObject = JSON.stringify(dataObject)
+            await fetch(`${state.url}/api/user/profile`, {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json",
+                    "auth-token": state.token
+                },
+                body: jsonDataObject
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                // it prints the message from the backend and it commits all changes made
+                commit('UPDATEMESSAGETEXT', data.error)
+                dispatch('eraseMessageText')
+                commit("AUTHENTICATE", {
+                    token: data.data.token, 
+                    userId: data.data.userId, 
+                    firstName: data.data.firstName, 
+                    lastName: data.data.lastName,
+                    email: data.data.email
+                })
+            })
         }
     },
     modules: {

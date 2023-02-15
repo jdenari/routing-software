@@ -15,7 +15,7 @@ router.post("/register", async (req, res) => {
 
     // check for required fields
     if(firstName == null || lastName == null || email == null || password == null || confirmPassword == null){
-        return res.status(400).json({ error: "Por favor, preencha todos os campos!"});
+        return res.status(400).json({ error: "Please you need to fill all the fields!"});
     }
 
     // checks if the passwords match
@@ -43,7 +43,6 @@ router.post("/register", async (req, res) => {
 
     try{
         const newUser = await user.save();
-
         // create token
         const token = jwt.sign(
             {
@@ -52,7 +51,6 @@ router.post("/register", async (req, res) => {
             },
             "oursecret"
         );
-
     // return token
     res.json({  error: null, 
                 msg: "You have successfully registered!", 
@@ -68,20 +66,17 @@ router.post("/login", async (req, res) => {
     
     const email = req.body.email;
     const password = req.body.password;
-
     const user = await User.findOne({ email: email });
 
     if(!user){
         return res.status(400).json({ error: "There is no registered user with this email!" })
     }
-
     // check if password match
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if(!checkPassword){
         return res.status(400).json({ error: "Invalid password!"});
     }
-
     // create token
     const token = jwt.sign(
         {
@@ -90,9 +85,8 @@ router.post("/login", async (req, res) => {
         },
         "oursecret"
     );
-
     // return token
-    res.json({ error: null, msg: "You are authenticated!", 
+    res.json({ error: null, msg: "You are AUTHENTICATEd!", 
         token: token, 
         userId: user._id, 
         firstName: user.firstName, 

@@ -161,7 +161,7 @@ export default {
         // it checks if all input address are filled! 
         checkBlankForm: function (e){
 
-            this.$store.commit('activateLoadingSpinner')
+            this.$store.commit('ACTIVATELOADINGSPINNER')
 
             if (this.nextAddressFieldID === 2) {
                 if (this.deliveryPoint0 && this.deliveryPoint1) {return true;}
@@ -200,9 +200,9 @@ export default {
                 if (!this.arr['deliveryPoint' + a]){this.errors.push(a + 1);}
             }
 
-            this.$store.commit('updateMessageText', `The Field [${this.errors}] is empty! Fill or remove it.`)
-            this.$store.commit('deactivateLoadingSpinner')
-            this.$store.dispatch('eraseMessageText')
+            this.$store.commit('UPDATEMESSAGETEXT', `The Field [${this.errors}] is empty! Fill or remove it.`)
+            this.$store.commit('DEACTIVATELOADINGSPINNER')
+            this.$store.dispatch('ERASEMESSAGETEXT')
             e.preventDefault();
         },
 
@@ -222,7 +222,7 @@ export default {
         // create a new field address inside the html
         addAddressField() {
             // if the user is logged, the limit is 12 addresses, otherwise it is 6.
-            if (this.$store.state.authenticated === true){
+            if (this.$store.state.AUTHENTICATEd === true){
                 if (this.nextAddressFieldID < 12) {
                 const id = 'deliveryPoint' + this.nextAddressFieldID++
                     this.AddressFieldObject.push({
@@ -233,8 +233,8 @@ export default {
                 this.newAddressField = ''
 
                 } else {
-                    this.$store.commit('updateMessageText', 'The website does not support more than 12 addresses.')
-                    this.$store.dispatch('eraseMessageText')
+                    this.$store.commit('UPDATEMESSAGETEXT', 'The website does not support more than 12 addresses.')
+                    this.$store.dispatch('ERASEMESSAGETEXT')
                 }
             } else {
                 if (this.nextAddressFieldID < 6) {
@@ -247,8 +247,8 @@ export default {
                 this.newAddressField = ''
 
             } else {
-                this.$store.commit('updateMessageText', 'You must be logged to have access to more ckeckpoints!')
-                this.$store.dispatch('eraseMessageText')
+                this.$store.commit('UPDATEMESSAGETEXT', 'You must be logged to have access to more ckeckpoints!')
+                this.$store.dispatch('ERASEMESSAGETEXT')
             }
             }            
         },

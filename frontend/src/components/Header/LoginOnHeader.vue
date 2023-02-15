@@ -20,7 +20,7 @@
                     <li class="btn btn-light p-0 py-2 border border-0 w-100">Profile</li>
                 </router-link>
                 <router-link to="/" class="no-underline">
-                    <li class="btn btn-light p-0 py-2 border border-0 w-100" @click="this.$store.commit('deauthenticate')">Logout</li>
+                    <li class="btn btn-light p-0 py-2 border border-0 w-100" @click="this.$store.commit('DEAUTHENTICATE')">Logout</li>
                 </router-link>
             </ul>
         </template>

@@ -10,7 +10,7 @@
                         <th scope="col" class="text-center text-nowrap">COST ($)</th>
                     </tr>
                 </thead>
-                <LineResultTableLoginOff v-if='($store.state.authenticated === false)' />
+                <LineResultTableLoginOff v-if='($store.state.AUTHENTICATEd === false)' />
                 <LineResultTableLoginOn v-else/>
             </table>
         </div>

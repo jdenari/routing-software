@@ -16,13 +16,13 @@
                             <button 
                                 type="button" 
                                 class="btn btn-secondary" 
-                                @click="this.$store.commit('changeModalYesNo')"
+                                @click="this.$store.commit('CHANGEMODALYESNO')"
                                 >No
                             </button>
                             <button 
                                 type="button" 
                                 class="btn btn-primary" 
-                                @click="$emit('function');this.$store.commit('changeModalYesNo')"
+                                @click="$emit('function');this.$store.commit('CHANGEMODALYESNO')"
                                 >Confirm
                             </button>
                         </div>

@@ -39,7 +39,7 @@
         </div>
         <div class="text-center p-3">
             <router-link to="/LoginPage">
-                <button type="button" class="btn btn-success" @click="this.$store.commit('changeToRegister')">CREATE AN ACCOUNT!</button>
+                <button type="button" class="btn btn-success" @click="this.$store.commit('CHANGETOREGISTER')">CREATE AN ACCOUNT!</button>
             </router-link>
             
         </div>
