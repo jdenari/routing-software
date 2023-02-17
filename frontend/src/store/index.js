@@ -30,7 +30,7 @@ export default createStore({
     },
     mutations: {
 
-        TRAVELLINGSALESMANPROBLEM: (state, data) => {
+        SPLITRESULT: (state, data) => {
 
             let totalDistance = 0
             let totalCost = 0
@@ -39,6 +39,10 @@ export default createStore({
             for (let n = 0; n < Object.keys(data).length; n++){
                 totalDistance = Number(data[n].distance) + Number(totalDistance)
                 totalCost = Number(data[n].fuelCost) + Number(totalCost)
+                
+                if (!isNaN(totalCost)) {
+                    totalCost = totalCost.toFixed(2);
+                }
             }
 
             // update the items states
@@ -49,7 +53,7 @@ export default createStore({
             // update the state with total info
             state.output[state.quantityLimitAddress] = { 
                 address: '-',
-                distance: totalDistance,
+                distance: totalDistance.toFixed(2),
                 cost: '-',
                 fuelConsumption: '-',
                 fuelPrice: '-',
@@ -124,8 +128,6 @@ export default createStore({
                     this.checkIfAddressAreCorrect.preventDefault()
                 }
             }
-
-            console.log('oi')
 
             if (state.functionCalculate == 'travellingSalesman'){dispatch('travellingSalesmanProblem', input)}
             if (state.functionCalculate == 'yourSequence'){dispatch('yourSequence', input)}
@@ -212,13 +214,16 @@ export default createStore({
 
             // calculates the cost total
             for (let c = 0; c < Object.keys(outputDraft).length; c++){
-                if (outputDraft[c].distance != '-'){
-                    outputDraft[c].fuelCost = Number(outputDraft[c].distance) * Number(outputDraft[c].fuelPrice) / Number(outputDraft[c].fuelConsumption)
+                if (outputDraft[c].distance != '-') {
+                    let fuelCost = Number(outputDraft[c].distance) * Number(outputDraft[c].fuelPrice) / Number(outputDraft[c].fuelConsumption);
+                    if (!isNaN(fuelCost)) {
+                        outputDraft[c].fuelCost = Number(fuelCost.toFixed(2));
+                    }
                 }
             }
 
             // calls the mutation to change it on frontend
-            commit('TRAVELLINGSALESMANPROBLEM', outputDraft)
+            commit('SPLITRESULT', outputDraft)
             commit('DEACTIVATELOADINGSPINNER')
         },
 
@@ -278,8 +283,18 @@ export default createStore({
                 shortestAddress = ''
             }
 
+            // calculates the cost total
+            for (let c = 0; c < Object.keys(outputDraft).length; c++){
+                if (outputDraft[c].distance != '-') {
+                    let fuelCost = Number(outputDraft[c].distance) * Number(outputDraft[c].fuelPrice) / Number(outputDraft[c].fuelConsumption);
+                    if (!isNaN(fuelCost)) {
+                        outputDraft[c].fuelCost = Number(fuelCost.toFixed(2));
+                    }
+                }
+            }
+
             // calls the mutation to change it on frontend
-            commit('TRAVELLINGSALESMANPROBLEM', outputDraft)
+            commit('SPLITRESULT', outputDraft)
             commit('DEACTIVATELOADINGSPINNER')
 
         },
@@ -358,7 +373,7 @@ export default createStore({
             })
         },
 
-        async updateProfileData({commit, dispatch, state}, dataObject){
+        async updateProfile({commit, dispatch, state}, dataObject){
             const jsonDataObject = JSON.stringify(dataObject)
             await fetch(`${state.url}/api/user/profile`, {
                 method: "PUT",
@@ -380,6 +395,24 @@ export default createStore({
                     lastName: data.data.lastName,
                     email: data.data.email
                 })
+            })
+        },
+
+        async updatePassword({commit, dispatch, state}, dataObject){
+            const jsonDataObject = JSON.stringify(dataObject)
+            await fetch(`${state.url}/api/user/password`, {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json",
+                    "auth-token": state.token
+                },
+                body: jsonDataObject
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                // it prints the message from the backend and it commits all changes made
+                commit('UPDATEMESSAGETEXT', data.error)
+                dispatch('eraseMessageText')
             })
         },
 

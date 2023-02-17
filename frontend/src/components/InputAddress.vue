@@ -201,6 +201,22 @@ export default {
                 if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6'] && this.arr['deliveryPoint7']) {return true;}
             }
 
+            if (this.nextAddressFieldID === 9) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6'] && this.arr['deliveryPoint7'] && this.arr['deliveryPoint8']) {return true;}
+            }
+
+            if (this.nextAddressFieldID === 10) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6'] && this.arr['deliveryPoint7'] && this.arr['deliveryPoint8'] && this.arr['deliveryPoint9']) {return true;}
+            }
+
+            if (this.nextAddressFieldID === 11) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6'] && this.arr['deliveryPoint7'] && this.arr['deliveryPoint8'] && this.arr['deliveryPoint9'] && this.arr['deliveryPoint10']) {return true;}
+            }
+
+            if (this.nextAddressFieldID === 12) {
+                if (this.deliveryPoint0 && this.deliveryPoint1 && this.arr['deliveryPoint2'] && this.arr['deliveryPoint3'] && this.arr['deliveryPoint4'] && this.arr['deliveryPoint5'] && this.arr['deliveryPoint6'] && this.arr['deliveryPoint7'] && this.arr['deliveryPoint8'] && this.arr['deliveryPoint9'] && this.arr['deliveryPoint10'] && this.arr['deliveryPoint11']) {return true;}
+            }
+
             this.errors = [];
 
             if (!this.deliveryPoint0){this.errors.push(1);}
@@ -243,7 +259,7 @@ export default {
 
                 } else {
                     this.$store.commit('UPDATEMESSAGETEXT', 'The website does not support more than 12 addresses.')
-                    this.$store.dispatch('ERASEMESSAGETEXT')
+                    this.$store.dispatch('eraseMessageText')
                 }
             } else {
                 if (this.nextAddressFieldID < 6) {

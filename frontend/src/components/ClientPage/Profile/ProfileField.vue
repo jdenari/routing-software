@@ -1,7 +1,7 @@
 <template>
     <div class="row p-1 g-3 align-items-center">
         <div class="col-4">
-            <label class="col-form-label row justify-content-end">{{ profileDataItem }}</label>
+            <label class="col-form-label row justify-content-end">{{ profileItem }}</label>
         </div>
         <div class="col-8">
             <input 
@@ -16,9 +16,9 @@
 
 <script>
 export default {
-    name: 'ProfileDataField',
+    name: 'ProfileField',
     props: {
-        profileDataItem: {
+        profileItem: {
             type: String,
             required: true
         },

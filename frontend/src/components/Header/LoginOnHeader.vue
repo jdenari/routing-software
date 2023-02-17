@@ -20,20 +20,26 @@
                     <li class="btn btn-light p-0 py-2 border border-0 w-100">Profile</li>
                 </router-link>
                 <router-link to="/" class="no-underline">
-                    <li class="btn btn-light p-0 py-2 border border-0 w-100" @click="this.$store.commit('DEAUTHENTICATE')">Logout</li>
+                    <li class="btn btn-light p-0 py-2 border border-0 w-100" @click="this.$store.commit('CHANGEMODALYESNO')">Logout</li>
                 </router-link>
             </ul>
         </template>
+        <ModalYesNo 
+            @function="this.$store.commit('DEAUTHENTICATE')"
+            text-modal="Are you sure you want to logout?"
+        />
     </Popper>
 </template>
 <script>
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
+import ModalYesNo from "../ModalYesNo.vue";
 
 export default defineComponent({
     name: "LoginOnHeader",
     components: {
         Popper
+        , ModalYesNo
     },
 });
 </script>

@@ -1,17 +1,17 @@
 <template>
     <div class="container"> 
-        <ProfileDataForm />
+        <ProfileForm />
         <MainFooter class="footer"/>
     </div>
 </template>
 
 <script>
-import ProfileDataForm from '../../components/ClientPage/Profile/ProfileDataForm.vue'
+import ProfileForm from '../../components/ClientPage/Profile/ProfileForm.vue'
 import MainFooter from '@/components/MainFooter.vue';
 export default {
     name: 'UpdateProfile',
     components: {
-        ProfileDataForm
+        ProfileForm
         , MainFooter
     }
 }
