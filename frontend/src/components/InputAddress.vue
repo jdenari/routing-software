@@ -1,6 +1,6 @@
 <template>
     <div class="bg-light">
-        <div class="container p-3 py-5">
+        <div class="container-fluid container-xl p-3 py-5">
             <div class="h1 text-center p-3">Your distance calculator</div>
             <SelectedFunction class="text-center"/>
             <!-- message alert when there is a error-->
@@ -10,7 +10,7 @@
             <div class="h6 w-75 m-auto p-2">Input all addresses</div>
             <!-- First origin address field -->
             <div class="input-group w-75 m-auto">
-                
+
                 <div class="col-9">
                     <div class="p-1">
                         <input 
