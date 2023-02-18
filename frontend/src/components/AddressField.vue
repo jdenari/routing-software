@@ -1,5 +1,5 @@
 <template>
-    <div class="input-group w-75 m-auto">
+    <div class="input-group input-address-width w-75 m-auto">
         <div class="col-9">
             <div class="p-1">
                 <input 

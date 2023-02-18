@@ -1,7 +1,7 @@
 <template>
     <div class="bg-light">
-        <div class="container p-3">
-            <div class="p-1 w-75 m-auto">
+        <div class="container-fluid container-xl p-3">
+            <div class="p-1 input-address-width w-75 m-auto">
                 <div class=" m-auto d-flex">
                     <div class="h6 p-2 col-6 m-0">CEP</div>
                     <div class="h6 p-2 col-3 m-0">Number</div>
@@ -35,9 +35,9 @@
                     </div>
                 </div>
             </div>
-            <div class="p-3">
+            <div class="px-2 px-sm-3">
                 <div 
-                    class="w-75 m-auto text-center border border-secondary border-opacity-75 rounded p-3"
+                    class="input-address-width w-75 m-auto text-center border border-secondary border-opacity-75 rounded p-3"
                     style="background-color: white"
                 >{{ $store.state.cepFullAddress }}</div>
             </div>
@@ -50,8 +50,8 @@
         name: 'SearchAddress',
         data() {
             return{
-                cepAddress: '70083900',
-                numberAddress: '13'
+                cepAddress: '01310000',
+                numberAddress: '1000'
             }
         },
         methods: {

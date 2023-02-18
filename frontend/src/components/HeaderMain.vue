@@ -3,13 +3,13 @@
         <div class="container">
             <ul class="navbar-nav lg-auto">
                 <li class="nav-item px-3">
-                    <router-link to="/" class="no-underline" v-if='($store.state.AUTHENTICATEd === false)'>
+                    <router-link to="/" class="no-underline" v-if='($store.state.authenticated === false)'>
                         <a href="#" class="nav-link">Home</a>
                     </router-link>
                 </li>
             </ul>
-            <LoginOffHeader v-if='($store.state.AUTHENTICATEd === false)'/>
-            <LoginOnHeader v-if='($store.state.AUTHENTICATEd === true)'/>
+            <LoginOffHeader v-if='($store.state.authenticated === false)'/>
+            <LoginOnHeader v-if='($store.state.authenticated === true)'/>
         </div>       
     </nav>
 </template>

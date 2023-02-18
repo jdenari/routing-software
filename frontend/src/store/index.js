@@ -12,7 +12,7 @@ export default createStore({
         functionCalculate: 'travellingSalesman', 
         cepFullAddress: '-',
         messageText: null,
-        AUTHENTICATEd: false,
+        authenticated: false,
         quantityLimitAddress: 6,
         loadingSpinner: false,
         modalYesNo: false,
@@ -76,7 +76,7 @@ export default createStore({
         DEACTIVATELOADINGSPINNER: (state) => {state.loadingSpinner = false },
 
         AUTHENTICATE: (state, data) => {
-            state.AUTHENTICATEd = true,
+            state.authenticated = true,
             state.quantityLimitAddress = 12,
             state.token = data.token,
             state.userId = data.userId,
@@ -86,7 +86,7 @@ export default createStore({
         },
 
         DEAUTHENTICATE: (state) => {
-            state.AUTHENTICATEd = false,
+            state.authenticated = false,
             state.quantityLimitAddress = 6,
             state.modalYesNo = false,
             state.token = null, 
@@ -124,7 +124,7 @@ export default createStore({
                 } catch(error){
                     commit('UPDATEMESSAGETEXT', `The address on ${n+1}º field is wrong. Try to correct it!`)
                     commit('DEACTIVATELOADINGSPINNER')
-                    dispatch('ERASEMESSAGETEXT')
+                    dispatch('eraseMessageText')
                     this.checkIfAddressAreCorrect.preventDefault()
                 }
             }

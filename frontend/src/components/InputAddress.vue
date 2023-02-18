@@ -7,9 +7,9 @@
             <MessageText 
                 :messageText="this.$store.state.messageText"
             />
-            <div class="h6 w-75 m-auto p-2">Input all addresses</div>
+            <div class="h6 input-address-width w-75 m-auto p-2">Input all addresses</div>
             <!-- First origin address field -->
-            <div class="input-group w-75 m-auto">
+            <div class="input-group input-address-width w-75 m-auto">
 
                 <div class="col-9">
                     <div class="p-1">
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <!-- Second address field -->
-            <div class="input-group w-75 m-auto">
+            <div class="input-group input-address-width w-75 m-auto">
                 <div class="col-9">
                     <div class="p-1">
                         <input 
@@ -70,15 +70,15 @@
                 ></address-field>
             </ul>
             <!-- Other fields inputs (fuel price and the button calculate) -->
-            <div class="input-group w-75 m-auto">
+            <div class="input-group input-address-width w-75 m-auto">
                 <div class="w-100 d-flex">
-                    <div class="col-6 d-flex p-1">
+                    <div class="col-9 d-flex p-1">
                         <div class="col-6 d-flex">Fuel Consumption</div>
                         <div class="col-6 d-flex">Fuel Price</div>
                     </div>
                 </div>
                 <div class="w-100 d-flex justify-content-between">
-                    <div class="col-6 d-flex">
+                    <div class="col-9 d-flex">
                         <div class="col-6 p-1">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">km/l</span>
@@ -86,7 +86,7 @@
                                     type="number" 
                                     class="form-control" 
                                     aria-label="Amount (to the nearest reais) " 
-                                    placeholder="Fuel Consumption"
+                                    placeholder="Fuel"
                                     v-model.number="fuelConsumption">
                             </div>
                         </div>
@@ -105,17 +105,17 @@
                 </div>
                 <!-- Main buttons -->
                 <div class="col-12 p-1 d-flex justify-content-md-end">
-                    <div class="col-8 px-3">
+                    <div class="col-7 px-0 px-sm-3">
                         <button 
                             type="submit" 
-                            class="btn btn-secondary col-4 " 
+                            class="btn btn-secondary col-6" 
                             @click="fillWithAddresses()">
                             Fill with Addresses
                         </button>
                     </div>
                     <button 
                         type="submit" 
-                        class="btn btn-secondary col-1 m-1" 
+                        class="btn btn-secondary col-2 m-1" 
                         @click="cleanInput()">
                         Clean
                     </button>
@@ -247,7 +247,7 @@ export default {
         // create a new field address inside the html
         addAddressField() {
             // if the user is logged, the limit is 12 addresses, otherwise it is 6.
-            if (this.$store.state.AUTHENTICATEd === true){
+            if (this.$store.state.authenticated === true){
                 if (this.nextAddressFieldID < 12) {
                 const id = 'deliveryPoint' + this.nextAddressFieldID++
                     this.AddressFieldObject.push({
@@ -334,3 +334,19 @@ export default {
     },
 }
 </script>
+
+<style>
+/*-----------------------------------992px-lg-------------------------------------------*/ 
+@media screen and (max-width: 992px) {
+    .input-address-width{
+        width: 90% !important;
+    }
+}
+/*------------------------------------768px-md-------------------------------------------*/
+@media screen and (max-width: 768px) {
+    .input-address-width{
+        width: 100% !important;
+    }
+}
+
+</style>

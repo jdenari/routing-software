@@ -1,7 +1,7 @@
 <template>
     <div class="bg-light">
-        <div class="container p-3 py-5">
-            <table class="table table-striped w-75 m-auto">
+        <div class="container-fluid container-xl p-3 px-4 py-5">
+            <table class="table table-striped input-address-width w-75 m-auto">
                 <thead>
                     <tr class="table-dark">
                         <th scope="col" class="text-center text-nowrap">ID</th>
@@ -10,7 +10,7 @@
                         <th scope="col" class="text-center text-nowrap">COST ($)</th>
                     </tr>
                 </thead>
-                <LineResultTableLoginOff v-if='($store.state.AUTHENTICATEd === false)' />
+                <LineResultTableLoginOff v-if='($store.state.authenticated === false)' />
                 <LineResultTableLoginOn v-else/>
             </table>
         </div>
