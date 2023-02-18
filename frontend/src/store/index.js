@@ -5,7 +5,7 @@ export default createStore({
     state: {
         // dev env: http://localhost:5000
         // pro env: https://routehelper.online
-        url: 'http://localhost:5000',
+        url: 'https://routehelper.online',
 
         bindKey: 'AozZGLcvhDECgWnjhqzTzjpCOc0yuBDHn6d16Rd7rsVi4mAkgx-J9qsHRWzh9',
         registerOrLogin: 'Login',

@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 
 // mongoDB connection
 mongoose.connect(
-    `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.06ovsjg.mongodb.net/routeHelper?retryWrites=true&w=majority`,
+    `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.06ovsjg.mongodb.net/users?retryWrites=true&w=majority`,
 );
 
 app.listen(port, () => {

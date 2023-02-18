@@ -1,6 +1,6 @@
 <template>
-    <div class="container border-top p-3 d-flex">
-        <div class="container h5 d-flex px-4 align-items-center">Designed by João Denari, 2022</div>      
+    <div class="container border-top p-3 d-sm-flex d-block text-sm-start text-center">
+        <div class="container h5 px-4 align-items-center w-100 my-2 mb-4">Designed by João Denari, 2022</div>      
         <a  href="https://github.com/jdenari" 
             class="" 
             target="_blank" 

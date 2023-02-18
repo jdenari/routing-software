@@ -10,8 +10,8 @@
                 v-model="item.model"
             >
             </RegisterField>
-            <ButtonSubmit 
-                class="my-2" 
+                <ButtonSubmit 
+                class="my-2 d-flex w-100 justify-content-end" 
                 textButton="Register"
                 @click="registerNewUser"
             />
@@ -73,5 +73,20 @@ export default defineComponent({
 <style scoped>
 .form-register{
     width: 550px;
+}
+</style>
+
+<style scoped>
+/*------------------------------------768px-md-------------------------------------------*/
+@media screen and (max-width: 768px) {
+    .form-register{
+        width: 450px
+    }
+}
+/*------------------------------------576px-sm-------------------------------------------*/
+@media screen and (max-width: 576px) {
+    .form-register{
+        width: 400px
+    }
 }
 </style>

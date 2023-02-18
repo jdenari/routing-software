@@ -9,7 +9,7 @@
             To get full access, make a free account in this application and bring the benefits below to you.
         </div>
         <div class="d-xl-flex d-block">
-            <div class="card m-xl-3 col-xl-4 col-7 m-auto my-1 text-xl-start text-center">
+            <div class="card m-xl-3 col-xl-4 col-sm-9 col-10 m-auto my-2 text-xl-start text-center">
                 <div class="card-body p-4 pb-3">
                     <img src="../../assets/geo-locate-icon.png" alt="" class="col-1 pb-3">
                     <h4 class="card-title mt-3">More Checkpoints Available</h4>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card m-xl-3 col-xl-4 col-7 m-auto my-1 text-xl-start text-center">
+            <div class="card m-xl-3 col-xl-4 col-sm-9 col-10 m-auto my-2 text-xl-start text-center">
                 <div class="card-body p-4 pb-3">
                     <img src="../../assets/database-icon.png" alt="" class="col-1 pb-3">
                     <h4 class="card-title mt-3">Database Control</h4>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card m-xl-3 col-xl-4 col-7 m-auto my-1 text-xl-start text-center">
+            <div class="card m-xl-3 col-xl-4 col-sm-9 col-10 m-auto my-2 text-xl-start text-center">
                 <div class="card-body p-4 pb-5">
                     <img src="../../assets/excel-icon.png" alt="" class="col-1 pb-3">
                     <h4 class="card-title mt-3">Excel Spreadsheet</h4>

@@ -1,6 +1,6 @@
 <template>
     <div class="input-group input-address-width w-75 m-auto">
-        <div class="col-9">
+        <div class="col-sm-9 col-8">
             <div class="p-1">
                 <input 
                     type="text" 
@@ -14,11 +14,7 @@
         </div>
         <div class="col-2">
             <div class="p-1">
-                <select class="form-select" aria-label="Disabled select example" disabled>
-                    <option value="2">Origin</option>
-                    <option selected>Delivery Point</option>z
-                    <option value="1">Last Point</option>
-                </select>
+                <input type="text" id="disabledTextInput" class="form-control" placeholder="Delivery Point" disabled>
             </div>
         </div>
     </div>

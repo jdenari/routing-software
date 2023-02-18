@@ -11,7 +11,7 @@
             <!-- First origin address field -->
             <div class="input-group input-address-width w-75 m-auto">
 
-                <div class="col-9">
+                <div class="col-sm-9 col-8">
                     <div class="p-1">
                         <input 
                             type="text" 
@@ -24,20 +24,16 @@
                 </div>
                 <div class="col-2">
                     <div class="p-1">
-                        <select class="form-select"  aria-label="Disabled select example" disabled>
-                            <option selected>Origin</option>
-                            <option value="1">Delivery Point</option>
-                            <option value="2">Last Point</option>
-                        </select>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Origin" disabled> 
                     </div>
                 </div>
-                <div class="col-1 p-1 px-2">
+                <div class="col-sm-1 col-2 p-1 px-2">
                     <button type="button" class="btn btn-outline-success w-100" @click="addAddressField">+</button>
                 </div>
             </div>
             <!-- Second address field -->
             <div class="input-group input-address-width w-75 m-auto">
-                <div class="col-9">
+                <div class="col-sm-9 col-8">
                     <div class="p-1">
                         <input 
                             type="text" 
@@ -49,14 +45,10 @@
                 </div>
                 <div class="col-2">
                     <div class="p-1">
-                        <select class="form-select"  aria-label="Disabled select example" disabled>
-                            <option value="1">Origin</option>
-                            <option selected>Delivery Point</option>
-                            <option value="2">Last Point</option>
-                        </select>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Delivery Point" disabled>      
                     </div>
                 </div>
-                <div class="col-1 p-1 px-2">
+                <div class="col-sm-1 col-2 p-1 px-2">
                     <button type="button" class="btn btn-outline-danger w-100" @click="removeAddressField">-</button>
                 </div>
             </div>
@@ -110,7 +102,7 @@
                             type="submit" 
                             class="btn btn-secondary col-6" 
                             @click="fillWithAddresses()">
-                            Fill with Addresses
+                            Fill Addresses
                         </button>
                     </div>
                     <button 

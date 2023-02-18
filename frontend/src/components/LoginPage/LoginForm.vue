@@ -28,6 +28,7 @@
                 <ButtonSubmit 
                     textButton="Go" 
                     @click="loginVerification"
+                    class="mt-2"
                 />
                 <MessageText
                     :messageText="$store.state.messageText" 
@@ -76,5 +77,20 @@ export default {
 <style scoped>
 .form-login{
     width: 550px;
+}
+</style>
+
+<style scoped>
+/*------------------------------------768px-md-------------------------------------------*/
+@media screen and (max-width: 768px) {
+    .form-login{
+        width: 450px
+    }
+}
+/*------------------------------------576px-sm-------------------------------------------*/
+@media screen and (max-width: 576px) {
+    .form-login{
+        width: 400px
+    }
 }
 </style>
