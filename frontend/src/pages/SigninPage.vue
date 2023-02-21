@@ -1,12 +1,12 @@
 <template>
-    <div class="signin-form-div container p-3">
-        <div v-if='$store.state.registerOrLogin === "Login"'>
+    <div class="signin-form container p-3">
+        <div v-if='$store.state.registerOrLogin === "Login"' class="login my-5">
             <LoginForm  />
         </div>
-        <div v-if='$store.state.registerOrLogin === "Register"'>
+        <div v-if='$store.state.registerOrLogin === "Register"' class="register my-4">
             <RegisterForm />
         </div>
-        <MainFooter class="footer" />
+        <MainFooter class="footer mt-5" />
     </div>
 </template>
 
@@ -21,13 +21,11 @@ export default {
 </script>
 
 <style>
-.signin-form-div{
-    margin-top: 150px;
+.signin-form{
+    margin-top: 150px !important;
 }
-.footer {
-    position: fixed;
-    bottom: 0px;
-    left:50;
-    transform: translate(0%, 0%);
+.footer{
+    margin-top: 180px !important
 }
+
 </style>

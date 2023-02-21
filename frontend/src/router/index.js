@@ -4,32 +4,62 @@ import LandingPage from '../pages/LandingPage.vue'
 import ClientPage from '../pages/ClientPage/index.vue'
 import UpdateProfile from '../pages/ClientPage/UpdateProfile.vue'
 import ActionsRecorded from '../pages/ClientPage/ActionsRecorded.vue'
-const routes =  [
-    {
-        path: "/",
-        component: LandingPage
-    },
-    {
-        path: "/LoginPage",
-        component: SigninPage
-    },
-    {
-        path: "/Client/Home",
-        component: ClientPage
-    },
-    {
-        path: "/Client/UpdateProfile",
-        component: UpdateProfile
-    },
-    {
-        path: "/Client/ActionsRecorded",
-        component: ActionsRecorded
-    },
-]
+import store from '../store'
 
-let router = createRouter({
-  history: createWebHistory(),
-  routes,
-})
+const routes = [
+    {
+        path: '/',
+        component: LandingPage,
+    },
+    {
+        path: '/LoginPage',
+        component: SigninPage,
+    },
+    {
+        path: '/Client/Home',
+        component: ClientPage,
+        beforeEnter: (to, from, next) => {
+            const authenticated = store.state.authenticated
+            console.log(authenticated)
+            if (!authenticated) {
+                next('/LoginPage')
+            } else {
+                next()
+            }
+        },
+    },    
+    {
+        path: '/Client/UpdateProfile',
+        component: UpdateProfile,
+        beforeEnter: (to, from, next) => {
+            const authenticated = store.state.authenticated
+            console.log(authenticated)
+            if (!authenticated) {
+                next('/LoginPage')
+            } else {
+                next()
+            }
+        },
+    },
+    {
+        path: '/Client/ActionsRecorded',
+        component: ActionsRecorded,
+        beforeEnter: (to, from, next) => {
+            const authenticated = store.state.authenticated
+            console.log(authenticated)
+            if (!authenticated) {
+                next('/LoginPage')
+            } else {
+                next()
+            }
+        },
+    },
+    ]
 
-export default router;
+    const router = createRouter({
+    history: createWebHistory(),
+    routes,
+    })
+
+export default router
+

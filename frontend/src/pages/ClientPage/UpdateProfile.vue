@@ -1,7 +1,7 @@
 <template>
     <div class="container"> 
         <ProfileForm />
-        <MainFooter class="footer"/>
+        <MainFooter />
     </div>
 </template>
 
@@ -18,10 +18,5 @@ export default {
 </script>
 
 <style>
-.footer {
-    position: fixed;
-    bottom: 0px;
-    left:50;
-    transform: translate(0%, 0%);
-}
+
 </style>
