@@ -133,7 +133,37 @@ export default createStore({
             if (state.functionCalculate == 'yourSequence'){dispatch('yourSequence', input)}
         },
 
-        async travellingSalesmanProblem({commit}, input){
+        async sendAddressToDatabase({ state }, payload) {
+            try {
+                const dataToSend = {}
+                const keys = Object.keys(payload);
+            
+                for (let i of keys) {
+                    const item = payload[i];
+                    
+                    const objToSend = {
+                        address: item.address,
+                        lastData: new Date().toLocaleDateString("pt-BR"),
+                        idUser: state.userId,
+                        fullName: `${state.firstName} ${state.lastName}`,
+                        distance: item.distance,
+                        fullCost: (Number(item.distance) * Number(item.fuelPrice) / Number(item.fuelConsumption)).toFixed(2)
+                    }
+                dataToSend[i] = objToSend;
+                }
+          
+                const response = await fetch(`${state.url}/api/addresUser/saveAddressUser`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend),
+                })
+          
+                if (!response.ok) {throw new Error(`HTTP error ${response.status}`);}
+                
+                } catch (error) {console.error("Error sending data to the database:", error);}
+        },
+
+        async travellingSalesmanProblem({commit, state, dispatch}, input){
             commit('CLEANLATESTVALUES')
             let destinyVariable
             let originVariable
@@ -225,9 +255,11 @@ export default createStore({
             // calls the mutation to change it on frontend
             commit('SPLITRESULT', outputDraft)
             commit('DEACTIVATELOADINGSPINNER')
+            
+            if (state.authenticated == true){dispatch('sendAddressToDatabase', outputDraft)}
         },
 
-        async yourSequence ({commit}, input){
+        async yourSequence ({commit, state, dispatch}, input){
             commit('CLEANLATESTVALUES')
             let destinyVariable
             let originVariable
@@ -296,7 +328,7 @@ export default createStore({
             // calls the mutation to change it on frontend
             commit('SPLITRESULT', outputDraft)
             commit('DEACTIVATELOADINGSPINNER')
-
+            if (state.authenticated == true){dispatch('sendAddressToDatabase', input)}
         },
 
         // search the full correct name of the address using API
