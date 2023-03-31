@@ -1,6 +1,6 @@
 <template>
     <div class="p-3 m-auto mt-5">
-        <form class="col-6 p-3 border m-auto">
+        <form class="col-md-6 col-11 p-3 border m-auto">
             <div class="h1">Profile</div>
             <div class="m-1 my-2 p-3 border">
                 <div class="h4">Update your profile: </div>
@@ -12,7 +12,7 @@
                     v-model="item.model"
                 >
                 </ProfileField>
-                <div class="d-grid p-1 d-md-flex justify-content-md-end">
+                <div class="d-grid p-1 d-md-flex justify-content-end">
                     <button 
                         class="btn btn-primary" 
                         type="button"
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </form>
-        <form class="col-6 p-3 border m-auto">
+        <form class="col-md-6 col-11 p-3 border m-auto">
             <div class="h1">Password</div>
             <div class="m-1 my-2 p-3 border">
                 <div class="h4">Update your password: </div>
@@ -34,7 +34,7 @@
                     v-model="item.model"
                 >
                 </ProfilePasswordField>
-                <div class="d-grid p-1 d-md-flex justify-content-md-end">
+                <div class="d-grid p-1 d-md-flex justify-content-end">
                     <button 
                         class="btn btn-primary" 
                         type="button"

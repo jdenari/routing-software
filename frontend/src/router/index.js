@@ -32,7 +32,6 @@ const routes = [
         component: UpdateProfile,
         beforeEnter: (to, from, next) => {
             const authenticated = store.state.authenticated
-            console.log(authenticated)
             if (!authenticated) {
                 next('/LoginPage')
             } else {
@@ -45,7 +44,6 @@ const routes = [
         component: ActionsRecorded,
         beforeEnter: (to, from, next) => {
             const authenticated = store.state.authenticated
-            console.log(authenticated)
             if (!authenticated) {
                 next('/LoginPage')
             } else {

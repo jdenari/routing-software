@@ -90,7 +90,7 @@ export default {
 /*------------------------------------576px-sm-------------------------------------------*/
 @media screen and (max-width: 576px) {
     .form-login{
-        width: 400px
+        width: 350px
     }
 }
 </style>
